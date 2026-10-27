@@ -490,3 +490,15 @@ def test_tracking_hints_carry_the_agent_authority(shop, knowledge_base):
         assert "authority" not in legacy and "P-SVC-04" not in "".join(legacy["notes"])
     normal = shop.place_order("U000003", "A1", BLACK, now=T0, scenario="正常")
     assert "authority" not in Toolbox(shop, knowledge_base, "U000003", T0 + timedelta(hours=1), yes).call("track_shipment", {"order_id": normal})
+
+
+def test_rate_limits_are_retried_with_capped_backoff():
+    """限流严的接口：429 按 backoff 翻倍重试，单次等待不超过 max_wait。"""
+    calls, sleeps = [], []
+    server = _serve([429, 429, 429, 200], calls)
+    try:
+        model = RetryingModel(OpenAIModel(f"http://127.0.0.1:{server.server_port}/v1", "glm", "key"), retries=3, backoff=40, sleep=sleeps.append)
+        message = model.complete([{"role": "user", "content": "我的订单"}], TOOL_SCHEMAS)
+    finally:
+        server.shutdown()
+    assert message["tool_calls"] and model.retried == 3 and sleeps == [40, 60, 60] and len(calls) == 4

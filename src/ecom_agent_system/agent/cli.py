@@ -114,13 +114,13 @@ def suite(args):
                       "not_enough_orders": short}, ensure_ascii=False, indent=2))
 
 
-def _openai(model, base_url, key_env, temperature, extra_body=None):
+def _openai(model, base_url, key_env, temperature, extra_body=None, retries=2, backoff=1.0):
     from ecom_agent_system.agent.models import OpenAIModel, RetryingModel
 
     key = os.environ.get(key_env)
     if not key:
         sys.exit(f"环境变量 {key_env} 里没有 API key")
-    return RetryingModel(OpenAIModel(base_url, model, key, temperature=temperature, extra_body=extra_body))
+    return RetryingModel(OpenAIModel(base_url, model, key, temperature=temperature, extra_body=extra_body), retries=retries, backoff=backoff)
 
 
 def _extra_body(args):
@@ -143,7 +143,7 @@ def _agent_model(args):
     if args.baseline:
         return None, BASELINES[args.baseline]
     if args.openai:
-        return _openai(args.openai, args.base_url, args.api_key_env, args.temperature, _extra_body(args)), None
+        return _openai(args.openai, args.base_url, args.api_key_env, args.temperature, _extra_body(args), args.retries, args.backoff), None
     if args.hf:
         from ecom_agent_system.agent.models import HFModel
 
@@ -176,7 +176,7 @@ def _agents(args, model):
         return stub_agents(names, args.agents_stub)
     sub_model = model
     if args.sub_openai:
-        sub_model = _openai(args.sub_openai, args.base_url, args.api_key_env, 0.0, _extra_body(args))
+        sub_model = _openai(args.sub_openai, args.base_url, args.api_key_env, 0.0, _extra_body(args), args.retries, args.backoff)
     elif args.sub_hf and args.sub_hf != args.hf:
         from ecom_agent_system.agent.models import HFModel
 
@@ -192,7 +192,8 @@ def _customer_model(args):
     if args.customer_bridge:
         return FileBridge(args.customer_bridge)
     if args.customer_openai:
-        return _openai(args.customer_openai, args.customer_base_url or args.base_url, args.customer_api_key_env or args.api_key_env, 0.7, _extra_body(args))
+        return _openai(args.customer_openai, args.customer_base_url or args.base_url, args.customer_api_key_env or args.api_key_env, 0.7,
+                       _extra_body(args), args.retries, args.backoff)
     sys.exit("--customer llm 需要 --customer-openai 或 --customer-bridge")
 
 
@@ -337,6 +338,8 @@ def main(argv=None):
     aftersales_parser.add_argument("--api-key-env", default="OPENAI_API_KEY", help="从哪个环境变量读 API key")
     aftersales_parser.add_argument("--extra-body", metavar="JSON", help='并进每个请求的字段，如 \'{"thinking": {"type": "disabled"}}\'')
     aftersales_parser.add_argument("--temperature", type=float, default=0.0)
+    aftersales_parser.add_argument("--retries", type=int, default=2, help="接口超时、429、5xx 时重试几次；限流严的接口用 8")
+    aftersales_parser.add_argument("--backoff", type=float, default=1.0, help="第一次重试等几秒，之后翻倍，最多 60 秒")
     aftersales_parser.add_argument("--max-new-tokens", type=int, default=512, help="--hf 每次生成最多多少 token")
     aftersales_parser.add_argument("--thinking", action="store_true", help="--hf 时开深度思考")
     aftersales_parser.add_argument("--seed", type=int, default=0, help="--hf 采样的随机种子")

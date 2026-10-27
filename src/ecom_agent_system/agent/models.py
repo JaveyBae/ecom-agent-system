@@ -61,10 +61,13 @@ class OpenAIModel:
 
 
 class RetryingModel:
-    """超时、网络错误、429 和 5xx 自动重试，等待时间按 backoff 翻倍。其他错误直接抛出。"""
+    """超时、网络错误、429 和 5xx 自动重试，等待时间按 backoff 翻倍、不超过 max_wait 秒。其他错误直接抛出。
 
-    def __init__(self, model, *, retries=2, backoff=1.0, sleep=time.sleep):
-        self.model, self.retries, self.backoff, self.sleep = model, retries, backoff, sleep
+    限流严的接口（智谱的免费模型并发 1 都会间歇 429）要把 retries 调到 8 左右、backoff 调到 2 秒，并且串行跑。
+    """
+
+    def __init__(self, model, *, retries=2, backoff=1.0, max_wait=60.0, sleep=time.sleep):
+        self.model, self.retries, self.backoff, self.max_wait, self.sleep = model, retries, backoff, max_wait, sleep
         self.last_usage = None
         self.retried = 0  # 累计重试次数
 
@@ -82,7 +85,7 @@ class RetryingModel:
                 failure = error
             if attempt < self.retries:
                 self.retried += 1
-                self.sleep(self.backoff * 2**attempt)
+                self.sleep(min(self.backoff * 2**attempt, self.max_wait))
         raise failure
 
 
