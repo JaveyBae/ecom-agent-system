@@ -473,3 +473,20 @@ def test_nothing_in_the_same_batch_runs_after_a_transfer(shop, knowledge_base):
     assert shop.conn.execute("SELECT cancelled_at FROM orders WHERE order_id = ?", (order_id,)).fetchone()[0] is None
     assert [m["name"] for m in result["messages"] if m["role"] == "tool"] == ["transfer_to_human", "cancel_order"]  # 两个调用都有回执
     assert [e["tool"] for e in result["trace"]] == ["transfer_to_human", "cancel_order"] and "没有执行" in result["trace"][-1]["result"]["error"]
+
+
+def test_tracking_hints_carry_the_agent_authority(shop, knowledge_base):
+    """物流提示说“可以申请全额退款”时，同一条结果里写明这单超没超智能客服的权限（P-SVC-04）；旧版 harness 不写。"""
+    for amount, expected in ((30, None), (300, "人工审核"), (1500, "转人工")):
+        order_id = shop.place_order("U000003", "A1", BLACK, now=T0, scenario="丢件", unit_price=amount)
+        last = parse(shop.conn.execute(
+            "SELECT MAX(e.time) FROM shipment_events e JOIN shipments s USING (tracking_no) WHERE s.order_id = ?", (order_id,)
+        ).fetchone()[0])
+        now = last + timedelta(days=logistics.stall_days(shop.rules, "一般"), hours=1)
+        tracked = Toolbox(shop, knowledge_base, "U000003", now, yes).call("track_shipment", {"order_id": order_id})
+        assert any("全额退款" in note for shipment in tracked["shipments"] for note in shipment["notes"])
+        assert tracked.get("authority") == expected and ("P-SVC-04" in "".join(tracked["notes"])) == (expected is not None), tracked["notes"]
+        legacy = Toolbox(shop, knowledge_base, "U000003", now, yes, legacy=True).call("track_shipment", {"order_id": order_id})
+        assert "authority" not in legacy and "P-SVC-04" not in "".join(legacy["notes"])
+    normal = shop.place_order("U000003", "A1", BLACK, now=T0, scenario="正常")
+    assert "authority" not in Toolbox(shop, knowledge_base, "U000003", T0 + timedelta(hours=1), yes).call("track_shipment", {"order_id": normal})

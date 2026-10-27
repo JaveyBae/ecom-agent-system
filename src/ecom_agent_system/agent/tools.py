@@ -340,7 +340,29 @@ class Toolbox:
 
     def _track_shipment(self, order_id):
         self._own_order(order_id)
-        return self.shop.track_shipment(order_id, now=self.now)
+        return self._with_authority(order_id, self.shop.track_shipment(order_id, now=self.now))
+
+    def _with_authority(self, order_id, tracked):
+        """物流提示说“可以申请补发或全额退款”时，把办理权限写在同一条结果里（P-SVC-04、P-RISK-01）：约束写在模型正在看的地方，
+        不指望它回头翻系统提示。旧版 harness 和关掉权限那一关时不加。"""
+        if self.legacy or "tier" not in self.gates:
+            return tracked
+        if not any("全额退款" in note for shipment in tracked["shipments"] for note in shipment["notes"]):
+            return tracked
+        amount = self.shop.conn.execute("SELECT total_amount FROM orders WHERE order_id = ?", (order_id,)).fetchone()["total_amount"]
+        tier = self.shop.policy.review_tier("仅退款", amount, high_risk=self._high_risk())
+        if tier == "转人工":
+            limit = self.shop.rules.get("P-SVC-04", "escalate_amount")
+            note = f"订单金额 {amount:g} 元超过 {limit} 元，全额退款智能客服不能办理，必须转人工（P-SVC-04）"
+        elif tier == "人工审核":
+            limit = self.shop.rules.get("P-SVC-04", "auto_refund_limit")
+            if amount > limit:
+                note = f"全额退款 {amount:g} 元超过 {limit} 元，提交后要先人工审核，审核通过后退款（P-SVC-04）"
+            else:
+                note = "账户近期售后申请较多，仅退款提交后要先人工审核（P-RISK-01），对顾客只说按平台规则需要审核"
+        else:
+            return tracked
+        return {**tracked, "notes": [*tracked["notes"], note], "authority": tier}
 
     def _check_after_sales(self, order_id, type, reason, opened=False, activated=False):
         """政策判断，再加上办理权限（P-SVC-04、P-RISK-01）：模型不用自己拿金额去对额度。"""
