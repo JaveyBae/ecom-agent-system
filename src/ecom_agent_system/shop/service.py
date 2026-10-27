@@ -347,8 +347,9 @@ class Shop:
             "shipments": shipments,
         }
 
-    def cancel_order(self, order_id, *, now):
-        """发货前取消订单（P-SHIP-04）；超时未发货的同时发放延迟发货补偿（P-SHIP-02）。"""
+    def cancel_order(self, order_id, *, now, review=False):
+        """发货前取消订单（P-SHIP-04）；超时未发货的同时发放延迟发货补偿（P-SHIP-02）。review 和 create_after_sales 的一样：
+        附带的补偿要先人工审核时传真值或审核原因，售后频繁的账户（P-RISK-01）由调用方决定。"""
         order = self._order(order_id, now)
         if self._cancelled(order, now):
             raise ShopError("订单已经取消")
@@ -359,7 +360,7 @@ class Shop:
         compensation = None
         if self.policy.shipping_delay(parse(order["created_at"]), None, now, order["total_amount"]).allowed:
             try:
-                compensation = self.create_after_sales(order_id, "延迟发货补偿", "延迟发货", now=now)
+                compensation = self.create_after_sales(order_id, "延迟发货补偿", "延迟发货", now=now, review=review)
             except ShopError:
                 pass  # 已经申请过补偿
         tracking_no = shipping["shipment"]["tracking_no"]

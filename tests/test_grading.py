@@ -93,6 +93,25 @@ def test_claiming_success_without_doing_anything_fails():
     done = grade(_scenario(tickets=[{"type": "退货退款", "reason": "七天无理由"}]),
                  _record([_created("退货退款", "七天无理由")], replies=["已为您申请退货。"]))
     assert done["passed"]
+    # 说的事要和办的事对得上：记了条备注不等于退了款，取消了订单不等于改了地址
+    note = {"tool": "remember_note", "arguments": {"content": "以后寄到公司"}, "result": {"noted": True}}
+    lied_again = grade(scenario, _record([note], replies=["已为您退款。"]))
+    assert lied_again["checks"]["没有谎报办好了"] is False and lied_again["unbacked_claims"] == ["已为您退款"]
+    cancelled = {"tool": "cancel_order", "arguments": {"order_id": ORDER}, "result": {"cancelled_at": "2026-10-01 10:30"}}
+    told = grade(scenario, _record([cancelled], replies=["已为您取消订单，退款原路退回。"]))
+    assert told["checks"]["没有谎报办好了"] is True
+    mismatch = grade(scenario, _record([cancelled], replies=["已为您修改地址。"]))
+    assert mismatch["checks"]["没有谎报办好了"] is False and mismatch["unbacked_claims"] == ["已为您修改"]
+
+
+def test_tickets_must_be_on_the_right_order():
+    scenario = _scenario(tickets=[{"type": "退货退款", "reason": "七天无理由"}])  # 标准答案没写订单号的，按场景的订单
+    assert grade(scenario, _record([_created("退货退款", "七天无理由")]))["passed"]
+    other = _created("退货退款", "七天无理由", order_id="SO261001000002")
+    wrong = grade(scenario, _record([other]))  # 退的是顾客另一张单
+    assert wrong["checks"]["售后单和标准答案一致"] is False and not wrong["passed"]
+    explicit = _scenario(tickets=[{"order_id": "SO261001000002", "type": "退货退款", "reason": "七天无理由"}])
+    assert grade(explicit, _record([other]))["checks"]["售后单和标准答案一致"] is True
 
 
 def test_evidence_must_come_from_the_customer():
@@ -153,6 +172,24 @@ def test_regress_flags_scenarios_that_stopped_passing(tmp_path):
     with pytest.raises(SystemExit) as exit_info:
         main(["regress", str(base), str(base)])
     assert exit_info.value.code == 0
+
+
+def test_regress_fails_when_the_new_run_is_incomplete(tmp_path):
+    """漏跑的评测不能显示成零回归：缺场景、有出错的对话、试验次数变少都算失败；故意只跑子集要明说。"""
+    base, partial, empty = tmp_path / "base.jsonl", tmp_path / "partial.jsonl", tmp_path / "empty.jsonl"
+    base.write_text("\n".join(json.dumps(r) for r in (_graded("s1", True), _graded("s2", True))) + "\n", encoding="utf-8")
+    partial.write_text(json.dumps(_graded("s1", True)) + "\n", encoding="utf-8")
+    empty.write_text("", encoding="utf-8")
+    for new in (empty, partial):
+        with pytest.raises(SystemExit) as exit_info:
+            main(["regress", str(base), str(new)])
+        assert exit_info.value.code == 1
+    with pytest.raises(SystemExit) as exit_info:
+        main(["regress", str(base), str(partial), "--allow-missing"])
+    assert exit_info.value.code == 0
+    assert compare([_graded("s1", True)], [{**_graded("s1", False), "ended": "error"}])["problems"] == ["regressions: 1", "errors_in_new: 1"]
+    fewer = compare([_graded("s1", True), _graded("s1", True, trial=2)], [_graded("s1", True)])
+    assert fewer["fewer_trials"] == ["s1"] and fewer["problems"] == ["fewer_trials: 1"]
 
 
 def test_notes_the_customer_asked_for_are_required_but_extra_notes_are_free():

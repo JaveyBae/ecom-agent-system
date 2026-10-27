@@ -92,3 +92,35 @@ def test_the_conversation_loop_feeds_what_the_customer_says_to_the_toolbox(shop,
     result = run_conversation(toolbox, Model(), customer)
     assert [e["tool"] for e in toolbox.executed] == ["remember_note"] and result["ended"] == "customer_done"
     assert "remember_note" in system_prompt(shop, "U000002", T0) and "风控信息只给你看" in system_prompt(shop, "U000002", T0)
+
+
+def test_risk_is_recomputed_at_each_refund_so_a_run_of_requests_in_one_conversation_gets_reviewed(shop, knowledge_base):
+    """同一段对话里连续申请：第一笔办完账户就到了风控线，第二笔就要审核，不等下次对话。"""
+    orders = sorted((_lost_order(shop, "U000001", 30, day) for day in range(3)), key=lambda pair: pair[1])
+    _refund(shop, knowledge_base, "U000001", *orders[0])  # 之前办过一次
+    toolbox = Toolbox(shop, knowledge_base, "U000001", orders[2][1], yes)
+    assert not toolbox.risk["high"]
+    first = toolbox.call("create_after_sales", {"order_id": orders[1][0], "type": "仅退款", "reason": "物流异常"})
+    assert "待人工审核" not in _statuses(first)
+    check = toolbox.call("check_after_sales", {"order_id": orders[2][0], "type": "仅退款", "reason": "物流异常"})
+    assert check["authority"] == "人工审核" and "P-RISK-01" in check["explanation"]  # 判断时就按新的风控标识
+    second = toolbox.call("create_after_sales", {"order_id": orders[2][0], "type": "仅退款", "reason": "物流异常"})
+    assert toolbox.risk["refunds"] == 2 and _statuses(second) == ["待商家处理", "待人工审核"]
+
+
+def test_the_compensation_that_comes_with_a_late_cancellation_passes_the_same_risk_gate(shop, knowledge_base):
+    """售后频繁的账户取消超时未发货的订单：附带的延迟发货补偿也先人工审核，不能从这条路绕过 P-RISK-01。"""
+    orders = sorted((_lost_order(shop, "U000001", 30, day) for day in range(2)), key=lambda pair: pair[1])
+    for order_id, when in orders:
+        _refund(shop, knowledge_base, "U000001", order_id, when)  # 两次仅退款，账户到风控线
+    paid = orders[1][1]
+    late = shop.place_order("U000001", "A1", BLACK, now=paid, scenario="延迟发货")
+    now = paid + timedelta(hours=shop.rules.get("P-SHIP-01", "ship_hours"), minutes=1)  # 刚过发货时限，还没发货
+    toolbox = Toolbox(shop, knowledge_base, "U000001", now, yes)
+    assert toolbox.risk["high"]
+    result = toolbox.call("cancel_order", {"order_id": late})
+    assert result["compensation"] and _statuses(result["compensation"]) == ["平台处理中", "待人工审核"]
+    assert "P-RISK-01" in json.dumps(result["compensation"]["history"], ensure_ascii=False)
+    relaxed = Toolbox(shop, knowledge_base, "U000001", now, yes, gates=set(GATES) - {"risk"})
+    other = shop.place_order("U000001", "A1", BLACK, now=paid, scenario="延迟发货")
+    assert "待人工审核" not in _statuses(relaxed.call("cancel_order", {"order_id": other})["compensation"])  # 关掉风控那一关照旧直接发

@@ -129,12 +129,12 @@ def test_scenarios_follow_each_orders_timeline(shop):
     headphones = _buy(shop, "A1", "gold_purchase", "正常", task_id=3)
     scenarios = {scenario["order_id"]: scenario for scenario in build_scenarios(shop, "claude")}
     assert scenarios[late]["kind"] == "late_shipping"
-    assert scenarios[late]["expected"]["tickets"] == [{"type": "延迟发货补偿", "reason": "延迟发货"}]
+    assert scenarios[late]["expected"]["tickets"] == [{"order_id": late, "type": "延迟发货补偿", "reason": "延迟发货"}]  # 标准答案带订单号
     food = scenarios[noodles]
     assert (food["kind"], food["expected"]["tickets"], food["follow_ups"]) == ("return_denied", [], [{"say": LAW_PUSHBACK, "when": "always"}])
     assert "P-RET-02" in food["expected"]["rule_ids"] and "《中华人民共和国消费者权益保护法》第二十五条" in food["expected"]["legal_basis"]
     returnable = scenarios[headphones]
-    assert returnable["expected"]["tickets"] == [{"type": "退货退款", "reason": "七天无理由"}]
+    assert returnable["expected"]["tickets"] == [{"order_id": headphones, "type": "退货退款", "reason": "七天无理由"}]
     assert returnable["expected"]["legal_basis"] == FREIGHT_LAW  # 第一个能退货的场景追问运费
     assert "用不上了" in returnable["opening"]
 
@@ -157,7 +157,7 @@ def test_fake_shipping_counts_as_late_only_after_the_pickup_window(shop):
     scenario = build_scenarios(shop, "claude")[0]
     assert scenario["kind"] == "late_shipping" and "显示已经发货了" in scenario["opening"]
     # 顾客来问时，填单已经超过 24 小时还没揽收，按 P-SHIP-03 视为没发货，可以申请补偿
-    assert scenario["expected"]["tickets"] == [{"type": "延迟发货补偿", "reason": "延迟发货"}]
+    assert scenario["expected"]["tickets"] == [{"order_id": order, "type": "延迟发货补偿", "reason": "延迟发货"}]
     assert shop.track_shipment(order, now=parse(scenario["now"]))["status"] == "已发货，待揽收"
 
 

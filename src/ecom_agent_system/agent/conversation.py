@@ -135,6 +135,14 @@ def _merge_delegation(usage, delegation):
     usage["estimated"] = usage["estimated"] or bool(inner.get("estimated"))
 
 
+def _arguments(call):
+    """工具调用的参数；不是合法 JSON 的返回 None。"""
+    try:
+        return json.loads(call["function"].get("arguments") or "{}")
+    except json.JSONDecodeError:
+        return None
+
+
 def _agent_turn(toolbox, model, messages, trace, max_steps, usage):
     """agent 的一个回合：调用工具直到给出回复文本。超过步数或转人工返回 None。
 
@@ -150,15 +158,10 @@ def _agent_turn(toolbox, model, messages, trace, max_steps, usage):
         if not calls:
             return assistant.get("content") or ""
         turn = sum(m["role"] == "user" for m in messages)
-        for call in calls:
-            name = call["function"]["name"]
+        for index, call in enumerate(calls):
+            name, arguments = call["function"]["name"], _arguments(call)
             started = time.perf_counter()
-            try:
-                arguments = json.loads(call["function"].get("arguments") or "{}")
-            except json.JSONDecodeError:
-                arguments, result = None, {"error": "参数不是合法的 JSON"}
-            else:
-                result = toolbox.call(name, arguments)
+            result = toolbox.call(name, arguments) if arguments is not None else {"error": "参数不是合法的 JSON"}
             seconds = time.perf_counter() - started
             usage["tool_calls"] += 1
             usage["tool_seconds"] += seconds
@@ -171,6 +174,15 @@ def _agent_turn(toolbox, model, messages, trace, max_steps, usage):
             messages.append(
                 {"role": "tool", "tool_call_id": call.get("id"), "name": name, "content": json.dumps(result, ensure_ascii=False)}
             )
+            if toolbox.transferred is not None:
+                for skipped in calls[index + 1:]:  # 转人工就是这段对话的终点：同一批里排在后面的调用不再执行，只给回执
+                    name, arguments = skipped["function"]["name"], _arguments(skipped)
+                    result = toolbox.skip_after_transfer(name, arguments)
+                    trace.append({"turn": turn, "tool": name, "arguments": arguments, "result": result, "seconds": 0.0})
+                    messages.append(
+                        {"role": "tool", "tool_call_id": skipped.get("id"), "name": name, "content": json.dumps(result, ensure_ascii=False)}
+                    )
+                break
         if toolbox.transferred is not None:
             return None
     return None

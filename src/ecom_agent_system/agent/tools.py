@@ -2,7 +2,7 @@
 
 顾客已经登录，工具只能看到和操作这位顾客自己的订单，别人的订单一律当作不存在。办理类工具依次过这几关：
 
-1. 参数检查；
+1. 参数检查：按 schema 查字段、类型、枚举和嵌套参数，不对的退回给模型改，不中断对话；
 2. 身份隔离：只能操作本人的订单和售后单；
 3. 政策判断：不允许的把原因和规则编号还给模型，不打扰顾客；
 4. 凭证：质量问题等要有具体的问题描述（P-QA-05）；
@@ -165,6 +165,43 @@ def _overlaps(text, heard, size=4):
     return any(text[i:i + size] in heard for i in range(max(len(text) - size + 1, 1))) if heard else False
 
 
+_TYPES = {"string": str, "integer": int, "number": (int, float), "boolean": bool, "object": dict, "array": list}
+
+
+def _invalid(value, schema, path):
+    """按 JSON Schema 的子集检查参数：类型、枚举、对象的字段和必填项、数组的元素。返回第一处不对的说明，都对返回 None。
+
+    小模型会生成 order_id=["x"]、content=42 这样的参数，不在这里拦住就会在工具里抛异常，整段对话结束。
+    """
+    expected = schema.get("type")
+    if expected in _TYPES:
+        wrong_type = not isinstance(value, _TYPES[expected]) or (isinstance(value, bool) and expected in ("integer", "number"))
+        if wrong_type:
+            return f"{path} 应该是 {expected}，给的是 {type(value).__name__}"
+    if "enum" in schema and value not in schema["enum"]:
+        return f"{path} 只能是 {schema['enum']}"
+    if expected == "object":
+        properties, extra = schema.get("properties", {}), schema.get("additionalProperties", True)
+        for key, item in value.items():
+            if key in properties:
+                problem = _invalid(item, properties[key], f"{path}.{key}")
+            elif extra is False:
+                problem = f"多了 {key}"
+            else:
+                problem = _invalid(item, extra, f"{path}.{key}") if isinstance(extra, dict) else None
+            if problem:
+                return problem
+        missing = [key for key in schema.get("required", []) if key not in value]
+        if missing:
+            return f"缺少 {missing}"
+    if expected == "array" and "items" in schema:
+        for index, item in enumerate(value):
+            problem = _invalid(item, schema["items"], f"{path}[{index}]")
+            if problem:
+                return problem
+    return None
+
+
 class Blocked(Exception):
     """harness 拦下的调用。outcome 记进审计日志：越权、政策不允许、凭证不足、需转人工、顾客未确认等。"""
 
@@ -220,10 +257,10 @@ class Toolbox:
                 raise Blocked("参数错误", f"没有 {name} 这个工具")
             if not isinstance(arguments, dict):
                 raise Blocked("参数错误", "参数必须是 JSON 对象")
-            unknown = sorted(set(arguments) - set(parameters["properties"]))
-            missing = [key for key in parameters["required"] if key not in arguments]
-            if unknown or missing:
-                raise Blocked("参数错误", f"参数不对：多了 {unknown}，缺少 {missing}")
+            arguments = {key: value for key, value in arguments.items() if value is not None or key in parameters["required"]}  # 可选参数传 null 当没传
+            problem = _invalid(arguments, parameters, "参数")
+            if problem:
+                raise Blocked("参数错误", f"参数不对：{problem}")
             key = name + json.dumps(arguments, ensure_ascii=False, sort_keys=True)
             if name in WRITE_TOOLS and key in self._done and "dedupe" in self.gates:
                 self._audit(name, arguments, "重复请求", "返回第一次的结果")
@@ -241,12 +278,18 @@ class Toolbox:
         except ShopError as error:
             decision = error.decision.to_dict() if error.decision else None
             return self._refuse(name, arguments, "政策不允许" if decision else "业务错误", str(error), decision)
+        except Exception as failure:  # 工具自己出了错：还给模型一条错误，对话继续；写了一半的内容已经在保存点里撤销
+            return self._refuse(name, arguments, "工具错误", f"工具内部错误：{type(failure).__name__}: {failure}", None)
 
     def _refuse(self, name, arguments, outcome, message, decision):
         self.blocked.append({"tool": name, "arguments": arguments, "outcome": outcome, "message": message})
         if name in WRITE_TOOLS or outcome == "越权":
             self._audit(name, arguments, outcome, message)
         return {"error": message, "decision": decision}
+
+    def skip_after_transfer(self, name, arguments):
+        """转人工之后同一批里排在后面的调用：不执行，记下来。"""
+        return self._refuse(name, arguments, "转人工后未执行", "已转人工客服，对话结束，这个调用没有执行", None)
 
     def _audit(self, name, arguments, outcome, detail):
         self.shop.conn.execute(
@@ -279,6 +322,15 @@ class Toolbox:
         if "confirm" in self.gates and not self.confirm(name, arguments):
             raise Blocked("顾客未确认", "顾客没有确认，这次没有办理")
 
+    def _high_risk(self):
+        """办理那一刻重新算风控标识（P-RISK-01）：这次对话里刚办的退款也计入，连续申请到线了下一笔就要审核。"""
+        self.risk = risk_profile(self.shop, self.user_id, self.now)
+        return "risk" in self.gates and self.risk["high"]
+
+    def _risk_review(self):
+        """风控要求的审核原因，写进售后单的进度；金额没超额度时用。"""
+        return f"账户{'，'.join(self.risk['reasons'])}，按 P-RISK-01 提交人工审核"
+
     # ---------------------------------------------------------------- 只读
     def _list_orders(self):
         return {"orders": self.shop.list_orders(self.user_id, now=self.now)}
@@ -296,8 +348,7 @@ class Toolbox:
         decision = self.shop.check_after_sales(order_id, type, reason, now=self.now, opened=opened, activated=activated)
         if not decision.get("allowed") or self.legacy:
             return decision
-        high_risk = "risk" in self.gates and self.risk["high"]
-        tier = self.shop.policy.review_tier(type, decision["refund_amount"], high_risk=high_risk) if "tier" in self.gates else "直接办理"
+        tier = self.shop.policy.review_tier(type, decision["refund_amount"], high_risk=self._high_risk()) if "tier" in self.gates else "直接办理"
         decision["authority"] = tier
         if tier == "转人工":
             limit = self.shop.rules.get("P-SVC-04", "escalate_amount")
@@ -379,8 +430,7 @@ class Toolbox:
                 lacking = self.shop.policy.evidence(reason, evidence)
                 if lacking:
                     raise Blocked("凭证不足", lacking.explanation, lacking.to_dict())
-        high_risk = "risk" in self.gates and self.risk["high"]
-        tier = self.shop.policy.review_tier(type, decision["refund_amount"], high_risk=high_risk) if "tier" in self.gates else "直接办理"
+        tier = self.shop.policy.review_tier(type, decision["refund_amount"], high_risk=self._high_risk()) if "tier" in self.gates else "直接办理"
         if tier == "转人工":
             limit = self.shop.rules.get("P-SVC-04", "escalate_amount")
             raise Blocked("需转人工", f"金额 {decision['refund_amount']:g} 元超过 {limit} 元，智能客服不能办理，必须转人工（P-SVC-04）", decision)
@@ -388,7 +438,7 @@ class Toolbox:
         self._confirmed("create_after_sales", arguments)
         review = tier == "人工审核"
         if review and decision["refund_amount"] <= self.shop.rules.get("P-SVC-04", "auto_refund_limit"):
-            review = f"账户{'，'.join(self.risk['reasons'])}，按 P-RISK-01 提交人工审核"  # 金额没超额度，是风控要求的审核
+            review = self._risk_review()  # 金额没超额度，是风控要求的审核
         return self.shop.create_after_sales(
             order_id, type, reason, now=self.now, opened=opened, activated=activated, evidence=evidence, review=review,
             evidence_verified=reviewed or "evidence" not in self.gates,
@@ -402,7 +452,8 @@ class Toolbox:
     def _cancel_order(self, order_id):
         self._own_order(order_id)
         self._confirmed("cancel_order", {"order_id": order_id})
-        return self.shop.cancel_order(order_id, now=self.now)
+        review = self._risk_review() if self._high_risk() else False  # 超时取消附带的补偿和别的补偿过同一道风控
+        return self.shop.cancel_order(order_id, now=self.now, review=review)
 
     def _change_address(self, order_id, address):
         self._own_order(order_id)

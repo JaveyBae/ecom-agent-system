@@ -148,7 +148,7 @@ def standard_scenario(shop, order, item, *, wrong=False, ask_freight=False):
             else:  # 金额没超额度，是账户近期售后较多（P-RISK-01）；不对顾客提“风控”
                 reply += "按平台规则，您的账户近期售后申请较多，这笔需要先人工审核，审核通过后到账（P-RISK-01）。"
             expected.update(review=True, mention=["审核"])
-        expected.update(tickets=[{"type": request_type, "reason": reason}],
+        expected.update(tickets=[{"order_id": order_id, "type": request_type, "reason": reason}],
                         refund_total=decision["refund_amount"] if request_type in MONEY_TYPES else 0.0)
         reference = [[check, {"tool": "create_after_sales", "arguments": submit}, {"content": reply}]]
         if kind == "return" and ask_freight:

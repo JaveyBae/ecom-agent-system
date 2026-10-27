@@ -285,8 +285,11 @@ def regrade(args):
 def regress(args):
     base, new = load_records(args.base), load_records(args.new)
     result = {"compare": compare(base, new), "base": summarize_records(base), "new": summarize_records(new)}
+    # 有回归、新结果缺场景、有出错的对话、试验次数变少都算失败：漏跑一半的评测不能放行
+    problems = [p for p in result["compare"]["problems"] if not (args.allow_missing and p.startswith("only_in_base"))]
+    result["failed"] = problems
     print(json.dumps(result, ensure_ascii=False, indent=2))
-    return 1 if result["compare"]["regressions"] else 0
+    return 1 if problems else 0
 
 
 def main(argv=None):
@@ -365,9 +368,10 @@ def main(argv=None):
     regrade_parser.add_argument("--out", required=True, help="重新打分后的记录写到哪里")
     regrade_parser.add_argument("--scenarios", help="新的场景文件：同编号场景的标准答案换成新的再打分")
 
-    regress_parser = commands.add_parser("regress", help="两次运行逐个场景对比，有回归时退出码为 1")
+    regress_parser = commands.add_parser("regress", help="两次运行逐个场景对比：有回归、新结果缺场景、有出错的对话或试验次数变少时退出码为 1")
     regress_parser.add_argument("base")
     regress_parser.add_argument("new")
+    regress_parser.add_argument("--allow-missing", action="store_true", help="新结果故意只跑了子集（--only、--shard）时，缺场景不算失败")
 
     harvest_parser = commands.add_parser("harvest", help="数据回流：对话记录 → 新场景（顾客的原话）或回归集")
     harvest_parser.add_argument("records", nargs="+", help="aftersales 输出的 JSONL")

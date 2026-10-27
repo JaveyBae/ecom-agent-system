@@ -416,3 +416,60 @@ def test_without_a_knowledge_base_there_is_no_search_tool(shop):
     model = ScriptedModel([{"content": "您好。"}])
     result = run_conversation(toolbox, model, ScriptedCustomer({"opening": "在吗", "follow_ups": [], "accept": []}))
     assert "search_policy" not in result["messages"][0]["content"] and order_id
+
+
+# ---------------------------------------------------------------- 参数校验、工具内部错误、转人工后的同批调用
+
+
+def test_arguments_are_checked_against_the_schema_and_a_broken_tool_does_not_end_the_conversation(shop, knowledge_base, monkeypatch):
+    """小模型会生成 order_id=["x"]、content=42 这样的参数：退回“参数错误”让它改，不能抛异常结束整段对话。"""
+    order_id = shop.place_order("U000001", "A1", BLACK, now=T0, scenario="正常")
+    toolbox = Toolbox(shop, knowledge_base, "U000001", T0 + timedelta(minutes=30), yes)
+    bad = (
+        ("get_order", {"order_id": [order_id]}),
+        ("remember_note", {"content": 42}),
+        ("check_after_sales", {"order_id": order_id, "type": "退货", "reason": "七天无理由"}),  # 枚举外
+        ("check_after_sales", {"order_id": order_id, "type": "退货退款", "reason": "七天无理由", "opened": "true"}),
+        ("buy_now", {"asin": "A1", "options": "黑色"}),  # 嵌套参数的类型
+        ("get_order", {"order_id": order_id, "extra": 1}),
+    )
+    for name, arguments in bad:
+        result = toolbox.call(name, arguments)
+        assert "参数不对" in result["error"], (name, result)
+    assert toolbox.executed == [] and {b["outcome"] for b in toolbox.blocked} == {"参数错误"}
+    nulled = toolbox.call("check_after_sales", {"order_id": order_id, "type": "退货退款", "reason": "七天无理由", "opened": None})  # 可选参数传 null 当没传
+    assert "error" not in nulled and nulled["allowed"] is False
+
+    original = shop.change_address
+
+    def broken(order_id, address, *, now):
+        original(order_id, address, now=now)  # 已经写了一条修改记录
+        raise RuntimeError("地址服务崩了")
+
+    monkeypatch.setattr(shop, "change_address", broken)
+    result = toolbox.call("change_address", {"order_id": order_id, "address": "文三路88号3幢501室"})
+    assert result["error"].startswith("工具内部错误：RuntimeError") and toolbox.blocked[-1]["outcome"] == "工具错误"
+    assert shop.conn.execute("SELECT COUNT(*) FROM order_changes").fetchone()[0] == 0  # 写了一半的内容撤销了
+    assert _audit(shop)[-1] == ("change_address", "工具错误")
+
+
+def test_nothing_in_the_same_batch_runs_after_a_transfer(shop, knowledge_base):
+    """模型一次回复里既转人工又取消订单：转人工是对话的终点，排在它后面的调用不执行，只给回执。"""
+    order_id = shop.place_order("U000001", "A1", BLACK, now=T0, scenario="正常")
+
+    class Model:
+        def complete(self, messages, tools):
+            calls = [("transfer_to_human", {"summary": f"订单 {order_id}，顾客要人工", "order_id": order_id}), ("cancel_order", {"order_id": order_id})]
+            return {"role": "assistant", "content": "", "tool_calls": [
+                {"id": f"call_{i}", "type": "function", "function": {"name": name, "arguments": json.dumps(args, ensure_ascii=False)}}
+                for i, (name, args) in enumerate(calls)
+            ]}
+
+    toolbox = Toolbox(shop, knowledge_base, "U000001", T0 + timedelta(minutes=30), yes)
+    customer = ScriptedCustomer({"opening": "给我转人工，顺便把这单取消了", "follow_ups": [], "accept": []})
+    result = run_conversation(toolbox, Model(), customer)
+    assert result["ended"] == "transferred" and [e["tool"] for e in toolbox.executed] == ["transfer_to_human"]
+    assert toolbox.blocked[-1]["outcome"] == "转人工后未执行"
+    assert shop.conn.execute("SELECT cancelled_at FROM orders WHERE order_id = ?", (order_id,)).fetchone()[0] is None
+    assert [m["name"] for m in result["messages"] if m["role"] == "tool"] == ["transfer_to_human", "cancel_order"]  # 两个调用都有回执
+    assert [e["tool"] for e in result["trace"]] == ["transfer_to_human", "cancel_order"] and "没有执行" in result["trace"][-1]["result"]["error"]

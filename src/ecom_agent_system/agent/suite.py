@@ -98,6 +98,12 @@ def _ticket(kind, reason):
     return {"type": kind, "reason": reason}
 
 
+def _with_order(order_id, expected):
+    """标准答案里的售后单带上订单号：评分比的是订单、类型、原因三项，退了顾客另一张单不算过。"""
+    stamped = {key: [{"order_id": order_id, **ticket} for ticket in expected.get(key) or []] for key in ("tickets", "optional_tickets")}
+    return {**expected, **stamped}
+
+
 def _request(order_id, kind, reason):
     return {"order_id": order_id, "type": kind, "reason": reason}
 
@@ -125,7 +131,7 @@ def _make(kind, order, now, opening, rng, *, accept, expected, reference, brief,
         "goal": goal,
         "style": rng.choice(STYLES),
         "setup": setup or [],
-        "expected": {**DEFAULTS, **expected},
+        "expected": _with_order(order["order_id"], {**DEFAULTS, **expected}),
         "reference": reference,
     }
 
@@ -153,7 +159,7 @@ def _standard(kind, wanted):
             scenario = {**scenario, "scenario_id": f"{order['order_id']}-review", "kind": "review"}
         scenario.pop("intent", None)
         return {**scenario, "category": CATEGORIES[kind], "style": rng.choice(STYLES), "setup": [],
-                "expected": {**DEFAULTS, **scenario["expected"]}}
+                "expected": _with_order(order["order_id"], {**DEFAULTS, **scenario["expected"]})}
 
     return build
 
