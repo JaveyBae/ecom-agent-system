@@ -1,0 +1,48 @@
+flowchart TB
+    subgraph C["顾客与模型"]
+        direction LR
+        U["顾客<br/>脚本 / 带错别字 / 大模型扮演 / 真实用户"] <--> A["售后 agent（任意模型）<br/>DeepSeek · GLM · Qwen3.5-2B · Claude 文件桥<br/>系统提示 = 规则 + 这位顾客的档案"]
+        SG["购物 agent<br/>Qwen3.5-2B，SFT + GRPO<br/>在 ShopSimulator 里搜索、选规格、购买"] --> GW["订单网关<br/>购买记成订单<br/>（规划：Buy Now 先过确认卡片）"]
+    end
+    subgraph H["Harness：模型只决定调什么，关卡决定能不能"]
+        direction LR
+        G1["参数校验"] --> G2["身份隔离"] --> G3["政策判断"] --> G4["凭证检查"] --> G5["权限与风控<br/>P-SVC-04 / P-RISK-01"] --> G6["顾客确认卡片"] --> G7["保存点执行<br/>去重 · 审计日志"]
+    end
+    subgraph S["子 agent（受限工具箱）"]
+        direction LR
+        L["法规顾问<br/>自己检索，只交回结论和条号"]
+        E["凭证审核员<br/>问题描述是不是顾客说的"]
+    end
+    subgraph D["环境与数据"]
+        direction LR
+        SHOP["模拟商城（SQLite）<br/>23,421 件商品 · 订单 · 9 种物流情形<br/>政策引擎 · 售后流程 · 工单 · 审计 · 顾客记忆"]
+        KB["知识库<br/>27 部法规 + 40 条平台规则 = 2,590 条<br/>BM25 + 向量混合检索"]
+    end
+    subgraph V["评测与数据回流"]
+        direction LR
+        SC["场景生成<br/>30 种情形 × 8 = 237 段<br/>标准答案由政策引擎算出"]
+        REF["参考解法（天花板）<br/>4 个作弊基线（地板）"]
+        GR["评分<br/>16 项硬性要求 + 过程检查"]
+        RP["报告<br/>通过率 · pass^k · 资损 · 泄露<br/>regress 回归对比"]
+        FW["数据回流<br/>harvest → 新场景 / 回归集<br/>export-sft → SFT 样本"]
+        CON["控制台（只读网页）"]
+    end
+    A -->|"工具调用"| G1
+    G2 -->|"只读查询"| SHOP
+    G7 -->|"过了全部关卡的写操作"| SHOP
+    G1 -->|"search_policy"| KB
+    G1 -->|"consult_legal"| L
+    L --> KB
+    G4 --> E
+    H -. "被拦下的调用：记审计，算 agent 失败" .-> RP
+    GW --> SHOP
+    SC -->|"台词与确认规则"| U
+    SC -->|"标准答案"| GR
+    REF -. "校准" .-> GR
+    A -->|"对话记录"| GR
+    GR --> RP
+    GR --> FW
+    FW --> SC
+    FW -->|"SFT 样本"| SG
+    SHOP --> CON
+    GR --> CON

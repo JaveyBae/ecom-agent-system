@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>系统架构图</title>
+<style>
+  body { margin: 0; padding: 16px; font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", sans-serif; background: #fff; color: #222; }
+  .bar { display: flex; gap: 8px; align-items: center; margin-bottom: 12px; flex-wrap: wrap; }
+  button { font: inherit; padding: 6px 12px; border: 1px solid #999; border-radius: 6px; background: #f6f6f6; cursor: pointer; }
+  #diagram svg { max-width: 100%; height: auto; }
+  .hint { color: #666; font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="bar">
+  <button id="png">下载 PNG（3 倍清晰度）</button>
+  <button id="svg">下载 SVG</button>
+  <span class="hint">图的源码在 docs/architecture.mmd，和 README 里的一致；改了源码刷新这页就行。</span>
+</div>
+<div id="diagram">正在渲染……</div>
+<script type="text/plain" id="src">
+flowchart TB
+    subgraph C["顾客与模型"]
+        direction LR
+        U["顾客<br/>脚本 / 带错别字 / 大模型扮演 / 真实用户"] <--> A["售后 agent（任意模型）<br/>DeepSeek · GLM · Qwen3.5-2B · Claude 文件桥<br/>系统提示 = 规则 + 这位顾客的档案"]
+        SG["购物 agent<br/>Qwen3.5-2B，SFT + GRPO<br/>在 ShopSimulator 里搜索、选规格、购买"] --> GW["订单网关<br/>购买记成订单<br/>（规划：Buy Now 先过确认卡片）"]
+    end
+    subgraph H["Harness：模型只决定调什么，关卡决定能不能"]
+        direction LR
+        G1["参数校验"] --> G2["身份隔离"] --> G3["政策判断"] --> G4["凭证检查"] --> G5["权限与风控<br/>P-SVC-04 / P-RISK-01"] --> G6["顾客确认卡片"] --> G7["保存点执行<br/>去重 · 审计日志"]
+    end
+    subgraph S["子 agent（受限工具箱）"]
+        direction LR
+        L["法规顾问<br/>自己检索，只交回结论和条号"]
+        E["凭证审核员<br/>问题描述是不是顾客说的"]
+    end
+    subgraph D["环境与数据"]
+        direction LR
+        SHOP["模拟商城（SQLite）<br/>23,421 件商品 · 订单 · 9 种物流情形<br/>政策引擎 · 售后流程 · 工单 · 审计 · 顾客记忆"]
+        KB["知识库<br/>27 部法规 + 40 条平台规则 = 2,590 条<br/>BM25 + 向量混合检索"]
+    end
+    subgraph V["评测与数据回流"]
+        direction LR
+        SC["场景生成<br/>30 种情形 × 8 = 237 段<br/>标准答案由政策引擎算出"]
+        REF["参考解法（天花板）<br/>4 个作弊基线（地板）"]
+        GR["评分<br/>16 项硬性要求 + 过程检查"]
+        RP["报告<br/>通过率 · pass^k · 资损 · 泄露<br/>regress 回归对比"]
+        FW["数据回流<br/>harvest → 新场景 / 回归集<br/>export-sft → SFT 样本"]
+        CON["控制台（只读网页）"]
+    end
+    A -->|"工具调用"| G1
+    G2 -->|"只读查询"| SHOP
+    G7 -->|"过了全部关卡的写操作"| SHOP
+    G1 -->|"search_policy"| KB
+    G1 -->|"consult_legal"| L
+    L --> KB
+    G4 --> E
+    H -. "被拦下的调用：记审计，算 agent 失败" .-> RP
+    GW --> SHOP
+    SC -->|"台词与确认规则"| U
+    SC -->|"标准答案"| GR
+    REF -. "校准" .-> GR
+    A -->|"对话记录"| GR
+    GR --> RP
+    GR --> FW
+    FW --> SC
+    FW -->|"SFT 样本"| SG
+    SHOP --> CON
+    GR --> CON
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
+<script>
+  const source = document.getElementById('src').textContent.trim();
+  mermaid.initialize({
+    startOnLoad: false, theme: 'neutral', securityLevel: 'loose',
+    themeVariables: { fontFamily: '-apple-system, "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", sans-serif', fontSize: '15px' },
+    flowchart: { htmlLabels: false, curve: 'basis', nodeSpacing: 36, rankSpacing: 56, padding: 12 },
+  });
+  let svgText = '';
+  mermaid.render('arch', source).then(({ svg }) => {
+    svgText = svg;
+    document.getElementById('diagram').innerHTML = svg;
+  }).catch(err => { document.getElementById('diagram').textContent = '渲染失败：' + err; });
+
+  function download(name, blob) {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = name; a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  }
+  function standalone() {  // 给 SVG 写死宽高，画到 canvas 时才不会缩成 300×150
+    const doc = new DOMParser().parseFromString(svgText, 'image/svg+xml');
+    const el = doc.documentElement;
+    const vb = (el.getAttribute('viewBox') || '').split(/[\s,]+/).map(Number);
+    const w = vb[2] || 1600, h = vb[3] || 900;
+    el.setAttribute('width', w); el.setAttribute('height', h); el.removeAttribute('style');
+    return { text: new XMLSerializer().serializeToString(el), w, h };
+  }
+  document.getElementById('svg').onclick = () => download('architecture.svg', new Blob([standalone().text], { type: 'image/svg+xml;charset=utf-8' }));
+  document.getElementById('png').onclick = () => {
+    const { text, w, h } = standalone();
+    const scale = 3;
+    const url = URL.createObjectURL(new Blob([text], { type: 'image/svg+xml;charset=utf-8' }));
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.round(w * scale); canvas.height = Math.round(h * scale);
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      canvas.toBlob(blob => download('architecture.png', blob), 'image/png');
+      URL.revokeObjectURL(url);
+    };
+    img.onerror = () => alert('浏览器拒绝把 SVG 画成图片，请改用“下载 SVG”，或者截图。');
+    img.src = url;
+  };
+</script>
+</body>
+</html>
