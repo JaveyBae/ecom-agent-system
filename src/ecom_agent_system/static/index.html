@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>售后知识库检索台</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234338ca'/%3E%3Ctext x='16' y='23' font-size='19' text-anchor='middle' fill='white' font-family='PingFang SC,sans-serif'%3E%E5%BE%8B%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">律</div>
+        <div>
+          <h1>售后知识库检索台</h1>
+          <p>ShopSim 电商售后 Agent · 法律法规与平台规则检索</p>
+        </div>
+      </div>
+      <dl class="stats" id="stats"></dl>
+    </div>
+  </header>
+
+  <main class="page">
+    <form class="search" id="search-form" role="search">
+      <input id="query" name="q" type="search" autocomplete="off" aria-label="检索问题"
+        placeholder="像顾客一样提问，例如：耳机拆封试了一下，还能七天无理由退货吗">
+      <button type="submit" class="primary">检索</button>
+    </form>
+    <div class="examples" id="examples" aria-label="示例问题"></div>
+
+    <section class="controls" aria-label="检索设置">
+      <div class="control">
+        <span class="control-label">检索范围</span>
+        <div class="levels" id="levels"></div>
+        <div class="scope-shortcuts" id="scope-shortcuts">
+          <button type="button" class="link" data-scope="all">全部</button>
+          <button type="button" class="link" data-scope="law">只看法规</button>
+          <button type="button" class="link" data-scope="platform">只看平台规则</button>
+        </div>
+      </div>
+      <div class="control">
+        <span class="control-label">融合方式</span>
+        <div class="segmented" id="presets" role="group" aria-label="检索方式">
+          <button type="button" data-preset="bm25" aria-pressed="false">只用 BM25</button>
+          <button type="button" data-preset="hybrid" aria-pressed="true">混合</button>
+          <button type="button" data-preset="dense" aria-pressed="false">只用向量</button>
+        </div>
+        <label class="slider">
+          <span>BM25</span>
+          <input id="weight" type="range" min="0" max="1" step="0.05" aria-label="向量权重">
+          <span>向量</span>
+          <output id="weight-value" for="weight"></output>
+        </label>
+      </div>
+      <div class="control">
+        <span class="control-label">查询扩展</span>
+        <label class="switch">
+          <input id="expand" type="checkbox" checked>
+          <span class="switch-track" aria-hidden="true"></span>
+          <span>同义词扩展<small>（只作用于 BM25）</small></span>
+        </label>
+      </div>
+    </section>
+
+    <section class="analysis" id="analysis" hidden>
+      <div class="analysis-row">
+        <span class="analysis-label">BM25 查询词</span>
+        <div class="tokens" id="tokens"></div>
+      </div>
+      <div class="analysis-row">
+        <span class="analysis-label">同义词</span>
+        <div class="tokens" id="synonyms"></div>
+      </div>
+    </section>
+
+    <p class="status" id="status" role="status" aria-live="polite"></p>
+
+    <section class="results" id="results" hidden>
+      <div class="fused">
+        <div class="section-head">
+          <h2>融合结果</h2>
+          <span class="muted" id="fused-meta"></span>
+        </div>
+        <ol class="cards" id="fused-list"></ol>
+      </div>
+      <aside class="sources" aria-label="两路检索各自的名次">
+        <div class="column">
+          <div class="section-head">
+            <h3><span class="dot bm25" aria-hidden="true"></span>BM25</h3>
+            <span class="muted">按字面匹配</span>
+          </div>
+          <ol class="compact" id="bm25-list"></ol>
+        </div>
+        <div class="column">
+          <div class="section-head">
+            <h3><span class="dot dense" aria-hidden="true"></span>向量</h3>
+            <span class="muted">按语义匹配</span>
+          </div>
+          <ol class="compact" id="dense-list"></ol>
+        </div>
+      </aside>
+    </section>
+
+    <section class="intro" id="intro">
+      <h2>怎么看这个页面</h2>
+      <ul>
+        <li>同一个问题同时用 <b>BM25</b>（jieba 分词、按字面匹配）和<b>向量</b>（Qwen3-Embedding）检索，再用加权 RRF 融合成“融合结果”。</li>
+        <li>“BM25”“向量”两栏是两路各自的前 10 名。鼠标移到任意一条上，三栏里的同一条会一起高亮；“融合 #n”是它融合后的名次。</li>
+        <li>拖动权重滑块只重新融合，不重新检索，可以直接看到名次怎么变。</li>
+        <li>正文里<mark class="hl-q">黄色</mark>是问题里的词，<mark class="hl-x">绿色</mark>是同义词扩展出来的法规用语。</li>
+        <li>平台规则下面的“依据”可以点开，直接看它引用的法条。</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="footer" id="footer"></footer>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+[
+  {
+    "scenario_id": "SO261024003001-late_shipping",
+    "order_id": "SO261024003001",
+    "user_id": "U001048",
+    "outcome": "gold_purchase",
+    "kind": "late_shipping",
+    "now": "2026-10-27 00:00:37",
+    "opening": "我10月24日买的「时尚大容量羽毛球包男网球」，到现在还没发货，怎么回事？",
+    "follow_ups": [
+      {
+        "say": "那能给点补偿吗？",
+        "when": "pending"
+      }
+    ],
+    "intent": {
+      "tool": "create_after_sales",
+      "arguments": {
+        "order_id": "SO261024003001",
+        "type": "延迟发货补偿",
+        "reason": "延迟发货"
+      }
+    },
+    "expected": {
+      "tickets": [
+        {
+          "type": "延迟发货补偿",
+          "reason": "延迟发货"
+        }
+      ],
+      "rule_ids": [
+        "P-SHIP-01",
+        "P-SHIP-02"
+      ],
+      "deadline": "2026-10-26 12:00:37",
+      "legal_basis": []
+    }
+  },
+  {
+    "scenario_id": "SO261024003002-return",
+    "order_id": "SO261024003002",
+    "user_id": "U001402",
+    "outcome": "gold_purchase",
+    "kind": "return",
+    "now": "2026-10-30 20:27:00",
+    "opening": "我买的「河北沧州铁狮牌磨浆机滤网」收到了，用不上了，想退掉。",
+    "follow_ups": [
+      {
+        "say": "可以，麻烦帮我办理。",
+        "when": "pending"
+      },
+      {
+        "say": "顺便问一下，退货的运费一般是谁出？法律上是怎么规定的？",
+        "when": "always"
+      }
+    ],
+    "intent": {
+      "tool": "create_after_sales",
+      "arguments": {
+        "order_id": "SO261024003002",
+        "type": "退货退款",
+        "reason": "七天无理由"
+      }
+    },
+    "expected": {
+      "tickets": [
+        {
+          "type": "退货退款",
+          "reason": "七天无理由"
+        }
+      ],
+      "rule_ids": [
+        "P-MEM-01",
+        "P-RET-05",
+        "P-RET-07"
+      ],
+      "deadline": "2026-11-12 23:59:59",
+      "legal_basis": [
+        "《中华人民共和国消费者权益保护法》第二十五条",
+        "《网络购买商品七日无理由退货暂行办法》第十八条"
+      ]
+    }
+  },
+  {
+    "scenario_id": "SO261024003003-late_shipping",
+    "order_id": "SO261024003003",
+    "user_id": "U001867",
+    "outcome": "gold_purchase",
+    "kind": "late_shipping",
+    "now": "2026-10-27 13:42:36",
+    "opening": "我10月24日买的「许昌胖东来超市自由爱白酒」，显示已经发货了，可物流一直没动静，怎么回事？",
+    "follow_ups": [
+      {
+        "say": "那能给点补偿吗？",
+        "when": "pending"
+      }
+    ],
+    "intent": {
+      "tool": "create_after_sales",
+      "arguments": {
+        "order_id": "SO261024003003",
+        "type": "延迟发货补偿",
+        "reason": "延迟发货"
+      }
+    },
+    "expected": {
+      "tickets": [
+        {
+          "type": "延迟发货补偿",
+          "reason": "延迟发货"
+        }
+      ],
+      "rule_ids": [
+        "P-SHIP-01",
+        "P-SHIP-02"
+      ],
+      "deadline": "2026-10-26 12:01:27",
+      "legal_basis": []
+    }
+  }
+]

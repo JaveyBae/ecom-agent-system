@@ -1,0 +1,35 @@
+[project]
+name = "ecom-agent-system"
+version = "0.1.0"
+description = "电商购物与售后 Agent 系统：法规知识库、业务模拟后端与 harness"
+authors = [
+    { name = "Jiawei", email = "Javeybae@outlook.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "certifi>=2026.10.23",
+    "fastapi>=0.162.0",
+    "jieba>=0.42.1",
+    "numpy>=2.5.4",
+    "pypdf>=6.21.2",
+    "pyyaml>=6.0.3",
+    "rank-bm25>=0.2.2",
+    "sentence-transformers>=3",
+    "uvicorn>=0.54.0",
+]
+
+[project.scripts]
+ecom-kb = "ecom_agent_system.knowledge_base:main"
+ecom-shop = "ecom_agent_system.shop.cli:main"
+ecom-agent = "ecom_agent_system.agent.cli:main"
+ecom-console = "ecom_agent_system.console:main"
+
+[build-system]
+requires = ["uv_build>=0.12.10,<0.13.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "httpx>=0.28.1",
+    "pytest>=9.1.1",
+]

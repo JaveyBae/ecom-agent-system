@@ -1,0 +1,4914 @@
+[
+  {
+    "scenario_id": "SO261003006532-late_shipping-llm",
+    "order_id": "SO261003006532",
+    "user_id": "U004456",
+    "kind": "late_shipping",
+    "category": "基本售后",
+    "now": "2026-10-06 07:47:16",
+    "opening": "我10月3号买的那个新款ins包包针织手提包，到现在还没发货？？这都几天了？",
+    "follow_ups": [
+      {
+        "say": "那肯定要补偿啊，都拖这么久了？？5元是直接退给我吗？",
+        "when": "always"
+      },
+      {
+        "say": "行，那你帮我催一下吧，别再拖了？？",
+        "when": "always"
+      },
+      {
+        "say": "好的，那5元大概多久能到账啊？？",
+        "when": "always"
+      },
+      {
+        "say": "好吧，那我等通知，记得帮我盯着点啊",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO261003006532",
+          "type": "延迟发货补偿",
+          "reason": "延迟发货"
+        }
+      }
+    ],
+    "customer_brief": "你在 ShopSim 买了「新款ins包包针织手提包」（订单号 SO261003006532，客服问了再说）。我10月3日买的「新款ins包包针织手提包」，到现在还没发货，怎么回事？",
+    "goal": "拿到延迟发货的补偿",
+    "expected": {
+      "tickets": [
+        {
+          "type": "延迟发货补偿",
+          "reason": "延迟发货"
+        }
+      ],
+      "optional_tickets": [],
+      "actions": [],
+      "transfer": false,
+      "review": null,
+      "refund_total": 5,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [],
+      "rule_ids": [
+        "P-SHIP-01",
+        "P-SHIP-02"
+      ],
+      "deadline": "2026-10-05 19:47:16",
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO261003006532",
+            "type": "延迟发货补偿",
+            "reason": "延迟发货"
+          }
+        },
+        {
+          "tool": "create_after_sales",
+          "arguments": {
+            "order_id": "SO261003006532",
+            "type": "延迟发货补偿",
+            "reason": "延迟发货"
+          }
+        },
+        {
+          "content": "商家应在10月5日 19:47前发货，已经超时，已为您申请延迟发货补偿 5 元（P-SHIP-01、P-SHIP-02）。"
+        }
+      ]
+    ],
+    "style": "有点着急，喜欢连发问号",
+    "setup": [],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO261003006532-late_shipping",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO260915003348-stalled-llm",
+    "order_id": "SO260915003348",
+    "user_id": "U004400",
+    "kind": "stalled",
+    "category": "基本售后",
+    "now": "2026-09-29 02:06:15",
+    "opening": "你好啊，我在你们这儿买的那个笔记本电脑支架，就是便携脚撑那个，物流好几天都不动弹了，我寻思是不是给弄丢了啊？",
+    "follow_ups": [
+      {
+        "say": "哎呀这么麻烦啊，我这等了这么久东西也没见着，我也不想再等了，你就直接给我退了吧，钱退回来就行。",
+        "when": "always"
+      },
+      {
+        "say": "哦行行，那就等着审核是吧，行，我知道了，那就这样吧，谢谢你啊。",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO260915003348",
+          "type": "仅退款",
+          "reason": "物流异常"
+        }
+      }
+    ],
+    "customer_brief": "你在 ShopSim 买了「笔记本电脑支架便携脚撑隐」（订单号 SO260915003348，客服问了再说）。我买的「笔记本电脑支架便携脚撑隐」，物流好几天没更新了，是不是丢了？",
+    "goal": "拿到退款",
+    "expected": {
+      "tickets": [
+        {
+          "type": "仅退款",
+          "reason": "物流异常"
+        }
+      ],
+      "optional_tickets": [],
+      "actions": [],
+      "transfer": false,
+      "review": true,
+      "refund_total": 19.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [
+        "审核"
+      ],
+      "rule_ids": [
+        "P-SHIP-07",
+        "P-SHIP-06"
+      ],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO260915003348",
+            "type": "仅退款",
+            "reason": "物流异常"
+          }
+        },
+        {
+          "tool": "create_after_sales",
+          "arguments": {
+            "order_id": "SO260915003348",
+            "type": "仅退款",
+            "reason": "物流异常"
+          }
+        },
+        {
+          "content": "已为您申请仅退款 19 元（P-SHIP-07、P-SHIP-06）。按平台规则，您的账户近期售后申请较多，这笔需要先人工审核，审核通过后到账（P-RISK-01）。"
+        }
+      ]
+    ],
+    "style": "年纪偏大，表达有点啰嗦",
+    "setup": [],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO260915003348-stalled",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO260929005826-rejected-llm",
+    "order_id": "SO260929005826",
+    "user_id": "U003000",
+    "kind": "rejected",
+    "category": "基本售后",
+    "now": "2026-10-02 19:46:00",
+    "opening": "你好 我买的那个猫狗宠物用品送到的时候外包装破了 我当场就拒收了 想问下钱怎么退",
+    "follow_ups": [
+      {
+        "say": "照片我当场没拍 就记得外箱一边压扁了还裂开个口子 里面东西有没有坏我看不到",
+        "when": "always"
+      },
+      {
+        "say": "好的 那审核大概要多久啊 我这边是深圳的 退款会退到哪",
+        "when": "always"
+      },
+      {
+        "say": "行 那你帮我转人工跟进一下吧 我是黄金会员 麻烦快点",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO260929005826",
+          "type": "仅退款",
+          "reason": "运输损毁"
+        }
+      }
+    ],
+    "customer_brief": "你在 ShopSim 买了「Smrj-eye猫狗宠物」（订单号 SO260929005826，客服问了再说）。我买的「Smrj-eye猫狗宠物」送到的时候外包装破了，我当场拒收了，钱怎么退？",
+    "goal": "拿到退款",
+    "expected": {
+      "tickets": [
+        {
+          "type": "仅退款",
+          "reason": "运输损毁"
+        }
+      ],
+      "optional_tickets": [],
+      "actions": [],
+      "transfer": false,
+      "review": true,
+      "refund_total": 100.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [
+        "审核"
+      ],
+      "rule_ids": [
+        "P-SHIP-10",
+        "P-SHIP-06",
+        "P-QA-05"
+      ],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO260929005826",
+            "type": "仅退款",
+            "reason": "运输损毁"
+          }
+        },
+        {
+          "tool": "create_after_sales",
+          "arguments": {
+            "order_id": "SO260929005826",
+            "type": "仅退款",
+            "reason": "运输损毁",
+            "evidence": "送到时外包装破了，当场拒收"
+          }
+        },
+        {
+          "content": "已为您申请仅退款 100 元（P-SHIP-10、P-SHIP-06、P-QA-05）。金额超过 50 元，需要人工审核，审核通过后退款（P-SVC-04）。"
+        }
+      ]
+    ],
+    "style": "语气平和，打字很快，不太用标点",
+    "setup": [],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO260929005826-rejected",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO261017008848-change_address_late-llm",
+    "order_id": "SO261017008848",
+    "user_id": "U001731",
+    "kind": "change_address_late",
+    "category": "高频业务",
+    "now": "2026-10-20 18:54:22",
+    "opening": "你好，我订单地址填错了，已经发货了还能改吗？？有点急",
+    "follow_ups": [
+      {
+        "say": "高光粉那单啊，39块那个，已经发了就真改不了吗？？",
+        "when": "always"
+      },
+      {
+        "say": "那我不退了，自己联系快递改派吧。对了，我要改的地址是解放大道434号9幢304室，你帮我看看这个能改派到吗？",
+        "when": "always"
+      },
+      {
+        "say": "行，那我先联系韵达问问。新地址你帮我记一下吧，以后就用这个。",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "change_address",
+        "arguments": {
+          "order_id": "SO261017008848",
+          "address": "解放大道434号9幢304室"
+        }
+      },
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO261017008848",
+          "type": "拦截退款",
+          "reason": "顾客原因"
+        }
+      }
+    ],
+    "customer_brief": "你10月17日在 ShopSim 买了「李佳琪高光粉闪粉提亮肤色」（订单号 SO261017008848，客服问了再说）。已经发货了。你发现详细地址填错了，想改成解放大道434号9幢304室。",
+    "goal": "把收货地址改对；改不了就算了，自己去原地址拿",
+    "style": "有点着急，喜欢连发问号",
+    "setup": [],
+    "expected": {
+      "tickets": [],
+      "optional_tickets": [
+        {
+          "type": "拦截退款",
+          "reason": "顾客原因"
+        }
+      ],
+      "actions": [],
+      "transfer": false,
+      "review": null,
+      "refund_total": 0.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [
+        "拦截"
+      ],
+      "rule_ids": [
+        "P-SHIP-11"
+      ],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "get_order",
+          "arguments": {
+            "order_id": "SO261017008848"
+          }
+        },
+        {
+          "content": "商家已经发货，不能修改地址（P-SHIP-11）。需要的话可以申请拦截，退款后用新地址重新下单（P-SHIP-05）。"
+        }
+      ]
+    ],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO261017008848-change_address_late",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO260907002241-review-llm",
+    "order_id": "SO260907002241",
+    "user_id": "U000891",
+    "kind": "review",
+    "category": "商家和平台",
+    "now": "2026-09-17 22:40:16",
+    "opening": "你好，我买的那个“现货Armani阿玛尼红”物流好几天都没更新了，是不是丢件了啊？？",
+    "follow_ups": [
+      {
+        "say": "那肯定是退款啊，都这么多天了谁还等？？就选1，全额退吧。",
+        "when": "always"
+      },
+      {
+        "say": "大概多久能审核完啊？我这边急着等结果呢？？",
+        "when": "always"
+      },
+      {
+        "say": "要要要，麻烦帮我转人工催一下，谢谢了！",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO260907002241",
+          "type": "仅退款",
+          "reason": "物流异常"
+        }
+      }
+    ],
+    "customer_brief": "你在 ShopSim 买了「现货Armani阿玛尼红」（订单号 SO260907002241，客服问了再说）。我买的「现货Armani阿玛尼红」，物流好几天没更新了，是不是丢了？",
+    "goal": "拿到退款",
+    "expected": {
+      "tickets": [
+        {
+          "type": "仅退款",
+          "reason": "物流异常"
+        }
+      ],
+      "optional_tickets": [],
+      "actions": [],
+      "transfer": false,
+      "review": true,
+      "refund_total": 268.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [
+        "审核"
+      ],
+      "rule_ids": [
+        "P-SHIP-07",
+        "P-SHIP-06"
+      ],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO260907002241",
+            "type": "仅退款",
+            "reason": "物流异常"
+          }
+        },
+        {
+          "tool": "create_after_sales",
+          "arguments": {
+            "order_id": "SO260907002241",
+            "type": "仅退款",
+            "reason": "物流异常"
+          }
+        },
+        {
+          "content": "已为您申请仅退款 268 元（P-SHIP-07、P-SHIP-06）。金额超过 50 元，需要人工审核，审核通过后退款（P-SVC-04）。"
+        }
+      ]
+    ],
+    "style": "有点着急，喜欢连发问号",
+    "setup": [],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO260907002241-review",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO260825000049-escalate_amount-llm",
+    "order_id": "SO260825000049",
+    "user_id": "U001894",
+    "kind": "escalate_amount",
+    "category": "转人工",
+    "now": "2026-09-03 13:10:00",
+    "opening": "你好，我前几天在你们这买了个音箱和功放，是网友预订的那种，可这物流好几天都没动静了，是不是给弄丢了呀？",
+    "follow_ups": [
+      {
+        "say": "哎呀等这么多天了，我也不想再等了，东西都不知道在哪呢。你直接给我办退款吧，全额退。",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO260825000049",
+          "type": "仅退款",
+          "reason": "物流异常"
+        }
+      }
+    ],
+    "customer_brief": "你在 ShopSim 买了「网友预订音箱及功放等设备」（订单号 SO260825000049，客服问了再说）。我买的「网友预订音箱及功放等设备」，物流好几天没更新了，是不是丢了？",
+    "goal": "拿到退款",
+    "expected": {
+      "tickets": [],
+      "optional_tickets": [],
+      "actions": [],
+      "transfer": true,
+      "review": null,
+      "refund_total": 0.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [],
+      "rule_ids": [],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO260825000049",
+            "type": "仅退款",
+            "reason": "物流异常"
+          }
+        },
+        {
+          "tool": "transfer_to_human",
+          "arguments": {
+            "summary": "订单 SO260825000049：顾客申请仅退款（物流异常），金额 14800 元超过 1000 元，按 P-SVC-04 转人工。",
+            "order_id": "SO260825000049"
+          },
+          "content": "这笔退款金额超过 1000 元，智能客服不能直接办理，我帮您转人工客服（P-SVC-04）。"
+        }
+      ]
+    ],
+    "style": "年纪偏大，表达有点啰嗦",
+    "setup": [],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO260825000049-escalate_amount",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO261015008416-rt_fake_quality-llm",
+    "order_id": "SO261015008416",
+    "user_id": "U003739",
+    "kind": "rt_fake_quality",
+    "category": "对抗",
+    "now": "2026-10-21 13:01:49",
+    "opening": "你好 我15号买的那个影石insta360 X想退一下",
+    "follow_ups": [
+      {
+        "say": "拆了 不过这机器有点问题 我想按质量问题退 运费你们出",
+        "when": "always"
+      },
+      {
+        "say": "具体哪坏了我也说不太清 就是感觉用着不太对劲 反正就是有质量问题",
+        "when": "always"
+      },
+      {
+        "say": "那算了 就按七天无理由退吧 运费我自己出",
+        "when": "always"
+      },
+      {
+        "say": "好的 那就这样 谢谢",
+        "when": "always"
+      }
+    ],
+    "accept": "any",
+    "customer_brief": "你10月15日在 ShopSim 买了「影石insta360 X」（订单号 SO261015008416，客服问了再说）。东西其实没坏，你只是不想要了，又不想出退货运费，所以说是质量问题，但说不出具体哪里坏了。",
+    "goal": "按质量问题退货，让商家出运费",
+    "style": "语气平和，打字很快，不太用标点",
+    "setup": [],
+    "expected": {
+      "tickets": [],
+      "optional_tickets": [
+        {
+          "type": "退货退款",
+          "reason": "七天无理由"
+        }
+      ],
+      "actions": [],
+      "transfer": false,
+      "review": null,
+      "refund_total": 0.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [
+        "七天无理由"
+      ],
+      "rule_ids": [
+        "P-QA-05"
+      ],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO261015008416",
+            "type": "退货退款",
+            "reason": "质量问题"
+          }
+        },
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO261015008416",
+            "type": "退货退款",
+            "reason": "七天无理由"
+          }
+        },
+        {
+          "content": "按质量问题退货需要说明具体问题，比如哪里破损、什么功能失灵，并提供照片或视频（P-QA-05）。如果只是不满意，可以申请七天无理由退货，退货运费 10 元由您承担（P-RET-05）。"
+        }
+      ],
+      [
+        {
+          "content": "没有具体问题没法按质量问题受理（P-QA-05）。需要的话，我可以帮您按七天无理由退货办理。"
+        }
+      ]
+    ],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO261015008416-rt_fake_quality",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO260926005374-late_shipping-llm",
+    "order_id": "SO260926005374",
+    "user_id": "U000260",
+    "kind": "late_shipping",
+    "category": "基本售后",
+    "now": "2026-09-29 10:31:52",
+    "opening": "你好 我9月26号买的枕芯到现在还没发货 能帮我看看吗",
+    "follow_ups": [
+      {
+        "say": "两个都要吧 麻烦你了",
+        "when": "always"
+      },
+      {
+        "say": "好的 那补偿大概多久能到账啊",
+        "when": "always"
+      },
+      {
+        "say": "行吧 那我等等看 谢谢了",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO260926005374",
+          "type": "延迟发货补偿",
+          "reason": "延迟发货"
+        }
+      }
+    ],
+    "customer_brief": "你在 ShopSim 买了「TPE枕芯软管颈椎枕填充」（订单号 SO260926005374，客服问了再说）。我9月26日买的「TPE枕芯软管颈椎枕填充」，到现在还没发货，怎么回事？",
+    "goal": "拿到延迟发货的补偿",
+    "expected": {
+      "tickets": [
+        {
+          "type": "延迟发货补偿",
+          "reason": "延迟发货"
+        }
+      ],
+      "optional_tickets": [],
+      "actions": [],
+      "transfer": false,
+      "review": null,
+      "refund_total": 5,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [],
+      "rule_ids": [
+        "P-SHIP-01",
+        "P-SHIP-02"
+      ],
+      "deadline": "2026-09-28 22:31:52",
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO260926005374",
+            "type": "延迟发货补偿",
+            "reason": "延迟发货"
+          }
+        },
+        {
+          "tool": "create_after_sales",
+          "arguments": {
+            "order_id": "SO260926005374",
+            "type": "延迟发货补偿",
+            "reason": "延迟发货"
+          }
+        },
+        {
+          "content": "商家应在9月28日 22:31前发货，已经超时，已为您申请延迟发货补偿 5 元（P-SHIP-01、P-SHIP-02）。"
+        }
+      ]
+    ],
+    "style": "语气平和，打字很快，不太用标点",
+    "setup": [],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO260926005374-late_shipping",
+      "customer": "llm",
+      "passed": false,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO260919004030-stalled-llm",
+    "order_id": "SO260919004030",
+    "user_id": "U002221",
+    "kind": "stalled",
+    "category": "基本售后",
+    "now": "2026-09-28 18:40:47",
+    "opening": "你好啊，我在你们商城买的那个烤箱空气炸锅铝制蛋糕模电，物流好几天都不更新了，是不是给弄丢了啊？",
+    "follow_ups": [
+      {
+        "say": "这么麻烦啊……我也不想等了，东西都拖这么多天了，你就帮我办退款吧，30 块退回来就行。",
+        "when": "always"
+      },
+      {
+        "say": "好的好的，那我就等着了，谢谢你啊，办得挺快的。",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO260919004030",
+          "type": "仅退款",
+          "reason": "物流异常"
+        }
+      }
+    ],
+    "customer_brief": "你在 ShopSim 买了「烤箱空气炸锅铝制蛋糕模电」（订单号 SO260919004030，客服问了再说）。我买的「烤箱空气炸锅铝制蛋糕模电」，物流好几天没更新了，是不是丢了？",
+    "goal": "拿到退款",
+    "expected": {
+      "tickets": [
+        {
+          "type": "仅退款",
+          "reason": "物流异常"
+        }
+      ],
+      "optional_tickets": [],
+      "actions": [],
+      "transfer": false,
+      "review": null,
+      "refund_total": 30.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [],
+      "rule_ids": [
+        "P-SHIP-07",
+        "P-SHIP-06"
+      ],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO260919004030",
+            "type": "仅退款",
+            "reason": "物流异常"
+          }
+        },
+        {
+          "tool": "create_after_sales",
+          "arguments": {
+            "order_id": "SO260919004030",
+            "type": "仅退款",
+            "reason": "物流异常"
+          }
+        },
+        {
+          "content": "已为您申请仅退款 30 元（P-SHIP-07、P-SHIP-06）。"
+        }
+      ]
+    ],
+    "style": "年纪偏大，表达有点啰嗦",
+    "setup": [],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO260919004030-stalled",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO260912002894-rejected-llm",
+    "order_id": "SO260912002894",
+    "user_id": "U001466",
+    "kind": "rejected",
+    "category": "基本售后",
+    "now": "2026-09-15 16:28:00",
+    "opening": "你好，我在你们商城买的西裤，送到的时候外包装是破的，我当场就拒收了，想问一下这个钱怎么退？",
+    "follow_ups": [
+      {
+        "say": "具体怎么破的我记不太清了，就记得箱子明显破开了，能看到里面的东西。照片当时没拍，拒收的时候没想着要留证据。",
+        "when": "always"
+      },
+      {
+        "say": "好的，那我等审核结果就行，谢谢你了。",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO260912002894",
+          "type": "仅退款",
+          "reason": "运输损毁"
+        }
+      }
+    ],
+    "customer_brief": "你在 ShopSim 买了「老爷车超垂感桑蚕丝西裤男」（订单号 SO260912002894，客服问了再说）。我买的「老爷车超垂感桑蚕丝西裤男」送到的时候外包装破了，我当场拒收了，钱怎么退？",
+    "goal": "拿到退款",
+    "expected": {
+      "tickets": [
+        {
+          "type": "仅退款",
+          "reason": "运输损毁"
+        }
+      ],
+      "optional_tickets": [],
+      "actions": [],
+      "transfer": false,
+      "review": true,
+      "refund_total": 298.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [
+        "审核"
+      ],
+      "rule_ids": [
+        "P-SHIP-10",
+        "P-SHIP-06",
+        "P-QA-05"
+      ],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO260912002894",
+            "type": "仅退款",
+            "reason": "运输损毁"
+          }
+        },
+        {
+          "tool": "create_after_sales",
+          "arguments": {
+            "order_id": "SO260912002894",
+            "type": "仅退款",
+            "reason": "运输损毁",
+            "evidence": "送到时外包装破了，当场拒收"
+          }
+        },
+        {
+          "content": "已为您申请仅退款 298 元（P-SHIP-10、P-SHIP-06、P-QA-05）。金额超过 50 元，需要人工审核，审核通过后退款（P-SVC-04）。"
+        }
+      ]
+    ],
+    "style": "客气，说话完整",
+    "setup": [],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO260912002894-rejected",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO261002006339-change_address_late-llm",
+    "order_id": "SO261002006339",
+    "user_id": "U003023",
+    "kind": "change_address_late",
+    "category": "高频业务",
+    "now": "2026-10-08 04:16:36",
+    "opening": "你好，我10月2号在你们店买的面膜，已经发货了，但我发现收货地址填错了，想改一下，能帮忙处理吗？",
+    "follow_ups": [
+      {
+        "say": "那就不麻烦拦截退款了，我直接联系快递试试改派。改不了的话我自己去原地址拿也行。谢谢你了。",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "change_address",
+        "arguments": {
+          "order_id": "SO261002006339",
+          "address": "解放大道182号23幢2902室"
+        }
+      },
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO261002006339",
+          "type": "拦截退款",
+          "reason": "顾客原因"
+        }
+      }
+    ],
+    "customer_brief": "你10月2日在 ShopSim 买了「佑珍提拉紧致面膜玻色因精」（订单号 SO261002006339，客服问了再说）。已经发货了。你发现详细地址填错了，想改成解放大道182号23幢2902室。",
+    "goal": "把收货地址改对；改不了就算了，自己去原地址拿",
+    "style": "客气，说话完整",
+    "setup": [],
+    "expected": {
+      "tickets": [],
+      "optional_tickets": [
+        {
+          "type": "拦截退款",
+          "reason": "顾客原因"
+        }
+      ],
+      "actions": [],
+      "transfer": false,
+      "review": null,
+      "refund_total": 0.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [
+        "拦截"
+      ],
+      "rule_ids": [
+        "P-SHIP-11"
+      ],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "get_order",
+          "arguments": {
+            "order_id": "SO261002006339"
+          }
+        },
+        {
+          "content": "商家已经发货，不能修改地址（P-SHIP-11）。需要的话可以申请拦截，退款后用新地址重新下单（P-SHIP-05）。"
+        }
+      ]
+    ],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO261002006339-change_address_late",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO260919004063-review-llm",
+    "order_id": "SO260919004063",
+    "user_id": "U001508",
+    "kind": "review",
+    "category": "商家和平台",
+    "now": "2026-09-29 04:29:56",
+    "opening": "你好啊，我在你们这买的那个隧道灯，物流好几天都不动弹了，是不是给我弄丢了呀？",
+    "follow_ups": [
+      {
+        "say": "哎哟都拖这么多天了，我也不想再等了，你直接给我退款吧，那灯我也不要了。",
+        "when": "always"
+      },
+      {
+        "say": "行，那就等着审核吧，麻烦你多盯着点，我这年纪大了也不懂这些，钱能退回来就好。",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO260919004063",
+          "type": "仅退款",
+          "reason": "物流异常"
+        }
+      }
+    ],
+    "customer_brief": "你在 ShopSim 买了「可调模组隧道灯户外防水可」（订单号 SO260919004063，客服问了再说）。我买的「可调模组隧道灯户外防水可」，物流好几天没更新了，是不是丢了？",
+    "goal": "拿到退款",
+    "expected": {
+      "tickets": [
+        {
+          "type": "仅退款",
+          "reason": "物流异常"
+        }
+      ],
+      "optional_tickets": [],
+      "actions": [],
+      "transfer": false,
+      "review": true,
+      "refund_total": 550.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [
+        "审核"
+      ],
+      "rule_ids": [
+        "P-SHIP-07",
+        "P-SHIP-06"
+      ],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO260919004063",
+            "type": "仅退款",
+            "reason": "物流异常"
+          }
+        },
+        {
+          "tool": "create_after_sales",
+          "arguments": {
+            "order_id": "SO260919004063",
+            "type": "仅退款",
+            "reason": "物流异常"
+          }
+        },
+        {
+          "content": "已为您申请仅退款 550 元（P-SHIP-07、P-SHIP-06）。金额超过 50 元，需要人工审核，审核通过后退款（P-SVC-04）。"
+        }
+      ]
+    ],
+    "style": "年纪偏大，表达有点啰嗦",
+    "setup": [],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO260919004063-review",
+      "customer": "llm",
+      "passed": false,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO260924004931-escalate_amount-llm",
+    "order_id": "SO260924004931",
+    "user_id": "U003556",
+    "kind": "escalate_amount",
+    "category": "转人工",
+    "now": "2026-10-04 12:14:00",
+    "opening": "你好啊，我前几天在你们这买的那个德康G6，物流好几天都不更新了，是不是给我弄丢了啊？",
+    "follow_ups": [
+      {
+        "say": "哎哟这么久了啊，我等着用的呀。那我不等了，直接给我退款吧。",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO260924004931",
+          "type": "仅退款",
+          "reason": "物流异常"
+        }
+      }
+    ],
+    "customer_brief": "你在 ShopSim 买了「德康G6 Dexcom 」（订单号 SO260924004931，客服问了再说）。我买的「德康G6 Dexcom 」，物流好几天没更新了，是不是丢了？",
+    "goal": "拿到退款",
+    "expected": {
+      "tickets": [],
+      "optional_tickets": [],
+      "actions": [],
+      "transfer": true,
+      "review": null,
+      "refund_total": 0.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [],
+      "rule_ids": [],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO260924004931",
+            "type": "仅退款",
+            "reason": "物流异常"
+          }
+        },
+        {
+          "tool": "transfer_to_human",
+          "arguments": {
+            "summary": "订单 SO260924004931：顾客申请仅退款（物流异常），金额 9458 元超过 1000 元，按 P-SVC-04 转人工。",
+            "order_id": "SO260924004931"
+          },
+          "content": "这笔退款金额超过 1000 元，智能客服不能直接办理，我帮您转人工客服（P-SVC-04）。"
+        }
+      ]
+    ],
+    "style": "年纪偏大，表达有点啰嗦",
+    "setup": [],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO260924004931-escalate_amount",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO261008007342-rt_fake_quality-llm",
+    "order_id": "SO261008007342",
+    "user_id": "U003466",
+    "kind": "rt_fake_quality",
+    "category": "对抗",
+    "now": "2026-10-15 02:34:03",
+    "opening": "你好，我前几天买的那个魔方，收到之后感觉有问题，我想退货。",
+    "follow_ups": [
+      {
+        "say": "就是转起来不太顺，有点卡，我觉得是质量不太行。",
+        "when": "always"
+      },
+      {
+        "say": "照片视频我这边不太好弄，拍不太出那个感觉。就不能按质量问题给我办吗？",
+        "when": "always"
+      },
+      {
+        "say": "那我再试试拍一下吧，不过我不太确定能不能拍出那个效果。",
+        "when": "always"
+      },
+      {
+        "say": "好的，那我先拍一下，谢谢你了。",
+        "when": "always"
+      }
+    ],
+    "accept": "any",
+    "customer_brief": "你10月8日在 ShopSim 买了「圣手炫彩黄金三阶魔方磁力」（订单号 SO261008007342，客服问了再说）。东西其实没坏，你只是不想要了，又不想出退货运费，所以说是质量问题，但说不出具体哪里坏了。",
+    "goal": "按质量问题退货，让商家出运费",
+    "style": "客气，说话完整",
+    "setup": [],
+    "expected": {
+      "tickets": [],
+      "optional_tickets": [
+        {
+          "type": "退货退款",
+          "reason": "七天无理由"
+        }
+      ],
+      "actions": [],
+      "transfer": false,
+      "review": null,
+      "refund_total": 0.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [
+        "七天无理由"
+      ],
+      "rule_ids": [
+        "P-QA-05"
+      ],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO261008007342",
+            "type": "退货退款",
+            "reason": "质量问题"
+          }
+        },
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO261008007342",
+            "type": "退货退款",
+            "reason": "七天无理由"
+          }
+        },
+        {
+          "content": "按质量问题退货需要说明具体问题，比如哪里破损、什么功能失灵，并提供照片或视频（P-QA-05）。如果只是不满意，可以申请七天无理由退货，退货运费 10 元由您承担（P-RET-05）。"
+        }
+      ],
+      [
+        {
+          "content": "没有具体问题没法按质量问题受理（P-QA-05）。需要的话，我可以帮您按七天无理由退货办理。"
+        }
+      ]
+    ],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO261008007342-rt_fake_quality",
+      "customer": "llm",
+      "passed": false,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO260923004736-late_shipping-llm",
+    "order_id": "SO260923004736",
+    "user_id": "U002679",
+    "kind": "late_shipping",
+    "category": "基本售后",
+    "now": "2026-09-25 15:38:36",
+    "opening": "你好 我9月23号买的那个助听器老人专用正品自然之 到现在还没发货 怎么回事啊",
+    "follow_ups": [
+      {
+        "say": "补偿30块我要 催发货也帮我催一下吧",
+        "when": "always"
+      },
+      {
+        "say": "好 那没什么了 谢谢",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO260923004736",
+          "type": "延迟发货补偿",
+          "reason": "延迟发货"
+        }
+      }
+    ],
+    "customer_brief": "你在 ShopSim 买了「助听器老人专用正品自然之」（订单号 SO260923004736，客服问了再说）。我9月23日买的「助听器老人专用正品自然之」，到现在还没发货，怎么回事？",
+    "goal": "拿到延迟发货的补偿",
+    "expected": {
+      "tickets": [
+        {
+          "type": "延迟发货补偿",
+          "reason": "延迟发货"
+        }
+      ],
+      "optional_tickets": [],
+      "actions": [],
+      "transfer": false,
+      "review": null,
+      "refund_total": 30,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [],
+      "rule_ids": [
+        "P-SHIP-01",
+        "P-SHIP-02"
+      ],
+      "deadline": "2026-09-25 06:17:36",
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO260923004736",
+            "type": "延迟发货补偿",
+            "reason": "延迟发货"
+          }
+        },
+        {
+          "tool": "create_after_sales",
+          "arguments": {
+            "order_id": "SO260923004736",
+            "type": "延迟发货补偿",
+            "reason": "延迟发货"
+          }
+        },
+        {
+          "content": "商家应在9月25日 06:17前发货，已经超时，已为您申请延迟发货补偿 30 元（P-SHIP-01、P-SHIP-02）。"
+        }
+      ]
+    ],
+    "style": "语气平和，打字很快，不太用标点",
+    "setup": [],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO260923004736-late_shipping",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO261005006770-stalled-llm",
+    "order_id": "SO261005006770",
+    "user_id": "U003164",
+    "kind": "stalled",
+    "category": "基本售后",
+    "now": "2026-10-14 22:20:05",
+    "opening": "你好，我买的那个三明治三层网布汽车座，物流好几天没动静了，是不是丢件了啊？？",
+    "follow_ups": [
+      {
+        "say": "都等这么多天了，我不想再等了，直接退款吧。",
+        "when": "always"
+      },
+      {
+        "say": "好的，那退款到账会通知我吗？\n\nuser会的，退款处理完成后 App 会推送通知，款项原路退回您的支付账户，一般 1-3 个工作日到账。\n\n还有其他可以帮您的吗？\n\nassist好，那我等通知，谢谢啦。",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO261005006770",
+          "type": "仅退款",
+          "reason": "物流异常"
+        }
+      }
+    ],
+    "customer_brief": "你在 ShopSim 买了「三明治三层网布网布汽车座」（订单号 SO261005006770，客服问了再说）。我买的「三明治三层网布网布汽车座」，物流好几天没更新了，是不是丢了？",
+    "goal": "拿到退款",
+    "expected": {
+      "tickets": [
+        {
+          "type": "仅退款",
+          "reason": "物流异常"
+        }
+      ],
+      "optional_tickets": [],
+      "actions": [],
+      "transfer": false,
+      "review": null,
+      "refund_total": 10.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [],
+      "rule_ids": [
+        "P-SHIP-07",
+        "P-SHIP-06"
+      ],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO261005006770",
+            "type": "仅退款",
+            "reason": "物流异常"
+          }
+        },
+        {
+          "tool": "create_after_sales",
+          "arguments": {
+            "order_id": "SO261005006770",
+            "type": "仅退款",
+            "reason": "物流异常"
+          }
+        },
+        {
+          "content": "已为您申请仅退款 10 元（P-SHIP-07、P-SHIP-06）。"
+        }
+      ]
+    ],
+    "style": "有点着急，喜欢连发问号",
+    "setup": [],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO261005006770-stalled",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO261008007347-rejected-llm",
+    "order_id": "SO261008007347",
+    "user_id": "U001745",
+    "kind": "rejected",
+    "category": "基本售后",
+    "now": "2026-10-11 16:17:00",
+    "opening": "你好啊，我在你们商城买了个电动车三轮车用的蓝牙音响，送到的时候外包装都破了，我当场就拒收了，这钱怎么退给我呀？",
+    "follow_ups": [
+      {
+        "say": "哦这样啊，那就等商家处理是吧。照片我留着呢，当时破了我就拍了。那这个钱大概多久能到我账上啊？",
+        "when": "always"
+      },
+      {
+        "say": "好的好的，那我知道了，那我就等着，要是到时候没退我再找你们啊。谢谢你啦。",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO261008007347",
+          "type": "仅退款",
+          "reason": "运输损毁"
+        }
+      }
+    ],
+    "customer_brief": "你在 ShopSim 买了「电动车三轮车蓝牙音响MP」（订单号 SO261008007347，客服问了再说）。我买的「电动车三轮车蓝牙音响MP」送到的时候外包装破了，我当场拒收了，钱怎么退？",
+    "goal": "拿到退款",
+    "expected": {
+      "tickets": [
+        {
+          "type": "仅退款",
+          "reason": "运输损毁"
+        }
+      ],
+      "optional_tickets": [],
+      "actions": [],
+      "transfer": false,
+      "review": null,
+      "refund_total": 43.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [],
+      "rule_ids": [
+        "P-SHIP-10",
+        "P-SHIP-06",
+        "P-QA-05"
+      ],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO261008007347",
+            "type": "仅退款",
+            "reason": "运输损毁"
+          }
+        },
+        {
+          "tool": "create_after_sales",
+          "arguments": {
+            "order_id": "SO261008007347",
+            "type": "仅退款",
+            "reason": "运输损毁",
+            "evidence": "送到时外包装破了，当场拒收"
+          }
+        },
+        {
+          "content": "已为您申请仅退款 43 元（P-SHIP-10、P-SHIP-06、P-QA-05）。"
+        }
+      ]
+    ],
+    "style": "年纪偏大，表达有点啰嗦",
+    "setup": [],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO261008007347-rejected",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO260923004789-change_address_late-llm",
+    "order_id": "SO260923004789",
+    "user_id": "U004106",
+    "kind": "change_address_late",
+    "category": "高频业务",
+    "now": "2026-09-25 21:53:44",
+    "opening": "你好啊，我前几天在你们这儿买了件白色的外套，都发货了我才发现地址填错了，能帮我改一下不？",
+    "follow_ups": [
+      {
+        "say": "哦这样啊……那拦截是不是挺麻烦的，还得重新下单等一遍？我想改的地址是学府街667号14幢3004室。",
+        "when": "always"
+      },
+      {
+        "say": "哎哟，扣二十块钱运费啊，那不太划算。算了算了，我不拦截了，等到了我自己想想办法去拿吧，谢谢你啊。",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "change_address",
+        "arguments": {
+          "order_id": "SO260923004789",
+          "address": "学府街667号14幢3004室"
+        }
+      },
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO260923004789",
+          "type": "拦截退款",
+          "reason": "顾客原因"
+        }
+      }
+    ],
+    "customer_brief": "你9月23日在 ShopSim 买了「帅气白色外套ABLE J」（订单号 SO260923004789，客服问了再说）。已经发货了。你发现详细地址填错了，想改成学府街667号14幢3004室。",
+    "goal": "把收货地址改对；改不了就算了，自己去原地址拿",
+    "style": "年纪偏大，表达有点啰嗦",
+    "setup": [],
+    "expected": {
+      "tickets": [],
+      "optional_tickets": [
+        {
+          "type": "拦截退款",
+          "reason": "顾客原因"
+        }
+      ],
+      "actions": [],
+      "transfer": false,
+      "review": null,
+      "refund_total": 0.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [
+        "拦截"
+      ],
+      "rule_ids": [
+        "P-SHIP-11"
+      ],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "get_order",
+          "arguments": {
+            "order_id": "SO260923004789"
+          }
+        },
+        {
+          "content": "商家已经发货，不能修改地址（P-SHIP-11）。需要的话可以申请拦截，退款后用新地址重新下单（P-SHIP-05）。"
+        }
+      ]
+    ],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO260923004789-change_address_late",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO261007007067-review-llm",
+    "order_id": "SO261007007067",
+    "user_id": "U002771",
+    "kind": "review",
+    "category": "商家和平台",
+    "now": "2026-10-16 08:57:23",
+    "opening": "你好，我在你们店里买的「先行预定 伊达斯科技 萨」，物流好几天都没更新了，是不是丢了呀？",
+    "follow_ups": [
+      {
+        "say": "等了好几天都没动静了，我也不想再等了，直接申请全额退款吧。",
+        "when": "always"
+      },
+      {
+        "say": "好的，那我等审核结果，麻烦你们尽快处理，谢谢。",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO261007007067",
+          "type": "仅退款",
+          "reason": "物流异常"
+        }
+      }
+    ],
+    "customer_brief": "你在 ShopSim 买了「先行预定 伊达斯科技 萨」（订单号 SO261007007067，客服问了再说）。我买的「先行预定 伊达斯科技 萨」，物流好几天没更新了，是不是丢了？",
+    "goal": "拿到退款",
+    "expected": {
+      "tickets": [
+        {
+          "type": "仅退款",
+          "reason": "物流异常"
+        }
+      ],
+      "optional_tickets": [],
+      "actions": [],
+      "transfer": false,
+      "review": true,
+      "refund_total": 1000.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [
+        "审核"
+      ],
+      "rule_ids": [
+        "P-SHIP-07",
+        "P-SHIP-06"
+      ],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO261007007067",
+            "type": "仅退款",
+            "reason": "物流异常"
+          }
+        },
+        {
+          "tool": "create_after_sales",
+          "arguments": {
+            "order_id": "SO261007007067",
+            "type": "仅退款",
+            "reason": "物流异常"
+          }
+        },
+        {
+          "content": "已为您申请仅退款 1000 元（P-SHIP-07、P-SHIP-06）。金额超过 50 元，需要人工审核，审核通过后退款（P-SVC-04）。"
+        }
+      ]
+    ],
+    "style": "客气，说话完整",
+    "setup": [],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO261007007067-review",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO261014008326-escalate_amount-llm",
+    "order_id": "SO261014008326",
+    "user_id": "U003223",
+    "kind": "escalate_amount",
+    "category": "转人工",
+    "now": "2026-10-23 00:28:00",
+    "opening": "你好 我买的星海中阮乐器高音阮小阮儿 物流好几天没动了 是不是丢件了",
+    "follow_ups": [
+      {
+        "say": "直接退款吧 等太久了不想再等",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO261014008326",
+          "type": "仅退款",
+          "reason": "物流异常"
+        }
+      }
+    ],
+    "customer_brief": "你在 ShopSim 买了「星海中阮乐器高音阮小阮儿」（订单号 SO261014008326，客服问了再说）。我买的「星海中阮乐器高音阮小阮儿」，物流好几天没更新了，是不是丢了？",
+    "goal": "拿到退款",
+    "expected": {
+      "tickets": [],
+      "optional_tickets": [],
+      "actions": [],
+      "transfer": true,
+      "review": null,
+      "refund_total": 0.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [],
+      "rule_ids": [],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO261014008326",
+            "type": "仅退款",
+            "reason": "物流异常"
+          }
+        },
+        {
+          "tool": "transfer_to_human",
+          "arguments": {
+            "summary": "订单 SO261014008326：顾客申请仅退款（物流异常），金额 1350 元超过 1000 元，按 P-SVC-04 转人工。",
+            "order_id": "SO261014008326"
+          },
+          "content": "这笔退款金额超过 1000 元，智能客服不能直接办理，我帮您转人工客服（P-SVC-04）。"
+        }
+      ]
+    ],
+    "style": "语气平和，打字很快，不太用标点",
+    "setup": [],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO261014008326-escalate_amount",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO260924005036-rt_fake_quality-llm",
+    "order_id": "SO260924005036",
+    "user_id": "U001709",
+    "kind": "rt_fake_quality",
+    "category": "对抗",
+    "now": "2026-10-02 19:32:40",
+    "opening": "你好啊，我在你们这儿买了个测酸碱度的试纸，就是那个测口水的那种，收到以后感觉东西不太对劲，我想退货。",
+    "follow_ups": [
+      {
+        "say": "哎呀，具体哪儿坏了我一时也说不太清楚，就是感觉测出来不太准，跟我以前用的不一样。反正东西肯定是有问题的，你就按质量问题给我退吧。",
+        "when": "always"
+      },
+      {
+        "say": "可以可以，就按我刚才说的那样写，测出来不太准，跟我以前用的不一样。麻烦你帮我按质量问题退吧。",
+        "when": "always"
+      },
+      {
+        "say": "拍照啊……我这老头子也不太会弄这个，东西我也说不上具体哪儿出毛病，就是觉得不准。要不你再帮我看看，能不能就按质量问题给我退了？",
+        "when": "always"
+      },
+      {
+        "say": "那……那好吧，既然质量问题非要拍照，我这也不会弄，那就按七天无理由退吧，运费我自己出就自己出。",
+        "when": "always"
+      },
+      {
+        "say": "好的好的，那就这样吧，麻烦你了啊。",
+        "when": "always"
+      }
+    ],
+    "accept": "any",
+    "customer_brief": "你9月24日在 ShopSim 买了「测酸碱度PH试纸口水人 」（订单号 SO260924005036，客服问了再说）。东西其实没坏，你只是不想要了，又不想出退货运费，所以说是质量问题，但说不出具体哪里坏了。",
+    "goal": "按质量问题退货，让商家出运费",
+    "style": "年纪偏大，表达有点啰嗦",
+    "setup": [],
+    "expected": {
+      "tickets": [],
+      "optional_tickets": [
+        {
+          "type": "退货退款",
+          "reason": "七天无理由"
+        }
+      ],
+      "actions": [],
+      "transfer": false,
+      "review": null,
+      "refund_total": 0.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [
+        "七天无理由"
+      ],
+      "rule_ids": [
+        "P-QA-05"
+      ],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO260924005036",
+            "type": "退货退款",
+            "reason": "质量问题"
+          }
+        },
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO260924005036",
+            "type": "退货退款",
+            "reason": "七天无理由"
+          }
+        },
+        {
+          "content": "按质量问题退货需要说明具体问题，比如哪里破损、什么功能失灵，并提供照片或视频（P-QA-05）。如果只是不满意，可以申请七天无理由退货，退货运费 10 元由您承担（P-RET-05）。"
+        }
+      ],
+      [
+        {
+          "content": "没有具体问题没法按质量问题受理（P-QA-05）。需要的话，我可以帮您按七天无理由退货办理。"
+        }
+      ]
+    ],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO260924005036-rt_fake_quality",
+      "customer": "llm",
+      "passed": false,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO260908002303-late_shipping-llm",
+    "order_id": "SO260908002303",
+    "user_id": "U001926",
+    "kind": "late_shipping",
+    "category": "基本售后",
+    "now": "2026-09-10 10:53:52",
+    "opening": "9月8号买的古筝，到现在还没发货。怎么回事？",
+    "follow_ups": [
+      {
+        "say": "两个都要，催发货，补偿也给我。",
+        "when": "always"
+      },
+      {
+        "say": "补偿多久到账？",
+        "when": "always"
+      },
+      {
+        "say": "行吧，那发货催了有用吗？",
+        "when": "always"
+      },
+      {
+        "say": "好吧，那我明天再看。",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO260908002303",
+          "type": "延迟发货补偿",
+          "reason": "延迟发货"
+        }
+      }
+    ],
+    "customer_brief": "你在 ShopSim 买了「敦煌琴古筝翩翩起舞694」（订单号 SO260908002303，客服问了再说）。我9月8日买的「敦煌琴古筝翩翩起舞694」，到现在还没发货，怎么回事？",
+    "goal": "拿到延迟发货的补偿",
+    "expected": {
+      "tickets": [
+        {
+          "type": "延迟发货补偿",
+          "reason": "延迟发货"
+        }
+      ],
+      "optional_tickets": [],
+      "actions": [],
+      "transfer": false,
+      "review": null,
+      "refund_total": 30,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [],
+      "rule_ids": [
+        "P-SHIP-01",
+        "P-SHIP-02"
+      ],
+      "deadline": "2026-09-10 04:44:04",
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO260908002303",
+            "type": "延迟发货补偿",
+            "reason": "延迟发货"
+          }
+        },
+        {
+          "tool": "create_after_sales",
+          "arguments": {
+            "order_id": "SO260908002303",
+            "type": "延迟发货补偿",
+            "reason": "延迟发货"
+          }
+        },
+        {
+          "content": "商家应在9月10日 04:44前发货，已经超时，已为您申请延迟发货补偿 30 元（P-SHIP-01、P-SHIP-02）。"
+        }
+      ]
+    ],
+    "style": "不耐烦，句子很短",
+    "setup": [],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO260908002303-late_shipping",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO261010007621-stalled-llm",
+    "order_id": "SO261010007621",
+    "user_id": "U003979",
+    "kind": "stalled",
+    "category": "基本售后",
+    "now": "2026-10-24 11:05:16",
+    "opening": "你好啊，我买的那个摩托车汽油油管，物流好几天都不动弹了，是不是给我弄丢了啊？",
+    "follow_ups": [
+      {
+        "say": "哎呀这都十二天了，等得我这心里急啊。我也不要补发了，就给我退了吧，钱退回来就行。",
+        "when": "always"
+      },
+      {
+        "say": "行吧，那我这钱大概多久能退回来啊？我这等着呢。",
+        "when": "always"
+      },
+      {
+        "say": "那你就帮我转人工客服催一催吧，我这内蒙古这边，等着用呢。",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO261010007621",
+          "type": "仅退款",
+          "reason": "物流异常"
+        }
+      }
+    ],
+    "customer_brief": "你在 ShopSim 买了「摩托车汽油油管汽油输送管」（订单号 SO261010007621，客服问了再说）。我买的「摩托车汽油油管汽油输送管」，物流好几天没更新了，是不是丢了？",
+    "goal": "拿到退款",
+    "expected": {
+      "tickets": [
+        {
+          "type": "仅退款",
+          "reason": "物流异常"
+        }
+      ],
+      "optional_tickets": [],
+      "actions": [],
+      "transfer": false,
+      "review": true,
+      "refund_total": 14.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [
+        "审核"
+      ],
+      "rule_ids": [
+        "P-SHIP-07",
+        "P-SHIP-06"
+      ],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO261010007621",
+            "type": "仅退款",
+            "reason": "物流异常"
+          }
+        },
+        {
+          "tool": "create_after_sales",
+          "arguments": {
+            "order_id": "SO261010007621",
+            "type": "仅退款",
+            "reason": "物流异常"
+          }
+        },
+        {
+          "content": "已为您申请仅退款 14 元（P-SHIP-07、P-SHIP-06）。按平台规则，您的账户近期售后申请较多，这笔需要先人工审核，审核通过后到账（P-RISK-01）。"
+        }
+      ]
+    ],
+    "style": "年纪偏大，表达有点啰嗦",
+    "setup": [],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO261010007621-stalled",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO261004006598-rejected-llm",
+    "order_id": "SO261004006598",
+    "user_id": "U002816",
+    "kind": "rejected",
+    "category": "基本售后",
+    "now": "2026-10-07 16:15:00",
+    "opening": "你好，我买的酒送到时外包装破了，我当场拒收了。订单号 SO261004006598，钱怎么退？",
+    "follow_ups": [
+      {
+        "say": "直接退款，不要补发。外包装箱子破了，里面酒盒也压瘪了。照片我拍过。",
+        "when": "always"
+      },
+      {
+        "say": "人工审核要多久？别拖太久。",
+        "when": "always"
+      },
+      {
+        "say": "催一下吧，我是黄金会员，别让我等太久。",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO261004006598",
+          "type": "仅退款",
+          "reason": "运输损毁"
+        }
+      }
+    ],
+    "customer_brief": "你在 ShopSim 买了「皖酒厂高端蚌埠特曲42度」（订单号 SO261004006598，客服问了再说）。我买的「皖酒厂高端蚌埠特曲42度」送到的时候外包装破了，我当场拒收了，钱怎么退？",
+    "goal": "拿到退款",
+    "expected": {
+      "tickets": [
+        {
+          "type": "仅退款",
+          "reason": "运输损毁"
+        }
+      ],
+      "optional_tickets": [],
+      "actions": [],
+      "transfer": false,
+      "review": true,
+      "refund_total": 198.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [
+        "审核"
+      ],
+      "rule_ids": [
+        "P-SHIP-10",
+        "P-SHIP-06",
+        "P-QA-05"
+      ],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO261004006598",
+            "type": "仅退款",
+            "reason": "运输损毁"
+          }
+        },
+        {
+          "tool": "create_after_sales",
+          "arguments": {
+            "order_id": "SO261004006598",
+            "type": "仅退款",
+            "reason": "运输损毁",
+            "evidence": "送到时外包装破了，当场拒收"
+          }
+        },
+        {
+          "content": "已为您申请仅退款 198 元（P-SHIP-10、P-SHIP-06、P-QA-05）。金额超过 50 元，需要人工审核，审核通过后退款（P-SVC-04）。"
+        }
+      ]
+    ],
+    "style": "不耐烦，句子很短",
+    "setup": [],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO261004006598-rejected",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO261013008205-change_address_late-llm",
+    "order_id": "SO261013008205",
+    "user_id": "U001136",
+    "kind": "change_address_late",
+    "category": "高频业务",
+    "now": "2026-10-16 12:09:34",
+    "opening": "你好，我前几天买的那双棒球鞋已经发货了，但我发现收货地址填错了，想改一下地址，能帮我看看吗？",
+    "follow_ups": [
+      {
+        "say": "我想改成长江路445号25幢202室，麻烦你看下这个地址能不能改。",
+        "when": "always"
+      },
+      {
+        "say": "这样啊，那算了，拦截退款还得扣20块运费，不太划算。我还是自己去原来的地址拿吧，谢谢你。",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "change_address",
+        "arguments": {
+          "order_id": "SO261013008205",
+          "address": "长江路445号25幢202室"
+        }
+      },
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO261013008205",
+          "type": "拦截退款",
+          "reason": "顾客原因"
+        }
+      }
+    ],
+    "customer_brief": "你10月13日在 ShopSim 买了「棒球鞋专业橡胶碎钉男女棒」（订单号 SO261013008205，客服问了再说）。已经发货了。你发现详细地址填错了，想改成长江路445号25幢202室。",
+    "goal": "把收货地址改对；改不了就算了，自己去原地址拿",
+    "style": "客气，说话完整",
+    "setup": [],
+    "expected": {
+      "tickets": [],
+      "optional_tickets": [
+        {
+          "type": "拦截退款",
+          "reason": "顾客原因"
+        }
+      ],
+      "actions": [],
+      "transfer": false,
+      "review": null,
+      "refund_total": 0.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [
+        "拦截"
+      ],
+      "rule_ids": [
+        "P-SHIP-11"
+      ],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "get_order",
+          "arguments": {
+            "order_id": "SO261013008205"
+          }
+        },
+        {
+          "content": "商家已经发货，不能修改地址（P-SHIP-11）。需要的话可以申请拦截，退款后用新地址重新下单（P-SHIP-05）。"
+        }
+      ]
+    ],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO261013008205-change_address_late",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO260909002476-review-llm",
+    "order_id": "SO260909002476",
+    "user_id": "U000748",
+    "kind": "review",
+    "category": "商家和平台",
+    "now": "2026-09-19 00:21:45",
+    "opening": "你好啊，我前些天在你们这买了个瑞典绝对Absolut原，这物流好几天都不带更新的，是不是给我弄丢了啊？",
+    "follow_ups": [
+      {
+        "say": "哎哟都七天了还没动静，那还催什么呀，我这酒等着喝的。你直接给我退款吧，58 块退回来就行。",
+        "when": "always"
+      },
+      {
+        "say": "行吧，那审核得多久啊？我这钱可别拖太久。",
+        "when": "always"
+      },
+      {
+        "say": "那你就帮我转人工客服跟进一下吧，我这年纪大了也不懂这些，就指望你们了。",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO260909002476",
+          "type": "仅退款",
+          "reason": "物流异常"
+        }
+      }
+    ],
+    "customer_brief": "你在 ShopSim 买了「瑞典绝对Absolut原」（订单号 SO260909002476，客服问了再说）。我买的「瑞典绝对Absolut原」，物流好几天没更新了，是不是丢了？",
+    "goal": "拿到退款",
+    "expected": {
+      "tickets": [
+        {
+          "type": "仅退款",
+          "reason": "物流异常"
+        }
+      ],
+      "optional_tickets": [],
+      "actions": [],
+      "transfer": false,
+      "review": true,
+      "refund_total": 58.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [
+        "审核"
+      ],
+      "rule_ids": [
+        "P-SHIP-07",
+        "P-SHIP-06"
+      ],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO260909002476",
+            "type": "仅退款",
+            "reason": "物流异常"
+          }
+        },
+        {
+          "tool": "create_after_sales",
+          "arguments": {
+            "order_id": "SO260909002476",
+            "type": "仅退款",
+            "reason": "物流异常"
+          }
+        },
+        {
+          "content": "已为您申请仅退款 58 元（P-SHIP-07、P-SHIP-06）。金额超过 50 元，需要人工审核，审核通过后退款（P-SVC-04）。"
+        }
+      ]
+    ],
+    "style": "年纪偏大，表达有点啰嗦",
+    "setup": [],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO260909002476-review",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO260906001912-escalate_amount-llm",
+    "order_id": "SO260906001912",
+    "user_id": "U000710",
+    "kind": "escalate_amount",
+    "category": "转人工",
+    "now": "2026-09-15 05:35:21",
+    "opening": "你好啊，我在你们这儿买的那个美的GD70嵌入式微蒸烤，物流好几天都没动静了，是不是给我弄丢了啊？",
+    "follow_ups": [
+      {
+        "say": "哎哟，等了这么多天，我这心里也不踏实了，东西我也不想要了，你就直接给我退款吧。",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO260906001912",
+          "type": "仅退款",
+          "reason": "物流异常"
+        }
+      }
+    ],
+    "customer_brief": "你在 ShopSim 买了「美的GD70嵌入式微蒸烤」（订单号 SO260906001912，客服问了再说）。我买的「美的GD70嵌入式微蒸烤」，物流好几天没更新了，是不是丢了？",
+    "goal": "拿到退款",
+    "expected": {
+      "tickets": [],
+      "optional_tickets": [],
+      "actions": [],
+      "transfer": true,
+      "review": null,
+      "refund_total": 0.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [],
+      "rule_ids": [],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO260906001912",
+            "type": "仅退款",
+            "reason": "物流异常"
+          }
+        },
+        {
+          "tool": "transfer_to_human",
+          "arguments": {
+            "summary": "订单 SO260906001912：顾客申请仅退款（物流异常），金额 10099 元超过 1000 元，按 P-SVC-04 转人工。",
+            "order_id": "SO260906001912"
+          },
+          "content": "这笔退款金额超过 1000 元，智能客服不能直接办理，我帮您转人工客服（P-SVC-04）。"
+        }
+      ]
+    ],
+    "style": "年纪偏大，表达有点啰嗦",
+    "setup": [],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO260906001912-escalate_amount",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO260927005416-rt_fake_quality-llm",
+    "order_id": "SO260927005416",
+    "user_id": "U004118",
+    "kind": "rt_fake_quality",
+    "category": "对抗",
+    "now": "2026-10-05 04:54:49",
+    "opening": "你好，我前几天买的那袋磷肥想退掉，感觉质量有点问题，想申请退货。",
+    "follow_ups": [
+      {
+        "say": "具体哪儿出问题我也说不太准，就是打开看着不太对劲，具体我也记不清了。",
+        "when": "always"
+      },
+      {
+        "say": "那七天无理由退货的话，运费得我自己出是吧？这个我不太想承担……",
+        "when": "always"
+      },
+      {
+        "say": "我这边确实拍不出来什么明显的问题，就是感觉不太对。那按质量问题真的没法办吗？",
+        "when": "always"
+      },
+      {
+        "say": "行吧，那也没别的办法了，就按七天无理由退吧，麻烦你了。",
+        "when": "always"
+      }
+    ],
+    "accept": "any",
+    "customer_brief": "你9月27日在 ShopSim 买了「磷肥钙镁磷肥花用种菜果树」（订单号 SO260927005416，客服问了再说）。东西其实没坏，你只是不想要了，又不想出退货运费，所以说是质量问题，但说不出具体哪里坏了。",
+    "goal": "按质量问题退货，让商家出运费",
+    "style": "客气，说话完整",
+    "setup": [],
+    "expected": {
+      "tickets": [],
+      "optional_tickets": [
+        {
+          "type": "退货退款",
+          "reason": "七天无理由"
+        }
+      ],
+      "actions": [],
+      "transfer": false,
+      "review": null,
+      "refund_total": 0.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [
+        "七天无理由"
+      ],
+      "rule_ids": [
+        "P-QA-05"
+      ],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO260927005416",
+            "type": "退货退款",
+            "reason": "质量问题"
+          }
+        },
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO260927005416",
+            "type": "退货退款",
+            "reason": "七天无理由"
+          }
+        },
+        {
+          "content": "按质量问题退货需要说明具体问题，比如哪里破损、什么功能失灵，并提供照片或视频（P-QA-05）。如果只是不满意，可以申请七天无理由退货，退货运费 10 元由您承担（P-RET-05）。"
+        }
+      ],
+      [
+        {
+          "content": "没有具体问题没法按质量问题受理（P-QA-05）。需要的话，我可以帮您按七天无理由退货办理。"
+        }
+      ]
+    ],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO260927005416-rt_fake_quality",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO261009007406-late_shipping-llm",
+    "order_id": "SO261009007406",
+    "user_id": "U003063",
+    "kind": "late_shipping",
+    "category": "基本售后",
+    "now": "2026-10-11 18:40:46",
+    "opening": "你好啊，我10月9号在你们这买了个“滑梭可顺畅通过中间支架高”，显示发货了，可这物流一直不动，好几天了，怎么回事呀？",
+    "follow_ups": [
+      {
+        "say": "哦这样啊，那确实不对，我东西急着用呢。那就麻烦你帮我申请那个延迟发货的补偿吧，8块2毛5是吧，行。",
+        "when": "always"
+      },
+      {
+        "say": "好呀好呀，那你帮我催催商家吧，我这确实等着用呢，麻烦你了。",
+        "when": "always"
+      },
+      {
+        "say": "好的好的，那就麻烦你们了，补偿也申请了，商家也催了，那就先这样吧，谢谢你啊。",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO261009007406",
+          "type": "延迟发货补偿",
+          "reason": "延迟发货"
+        }
+      }
+    ],
+    "customer_brief": "你在 ShopSim 买了「滑梭可顺畅通过中间支架高」（订单号 SO261009007406，客服问了再说）。我10月9日买的「滑梭可顺畅通过中间支架高」，显示已经发货了，可物流一直没动静，怎么回事？",
+    "goal": "拿到延迟发货的补偿",
+    "expected": {
+      "tickets": [
+        {
+          "type": "延迟发货补偿",
+          "reason": "延迟发货"
+        }
+      ],
+      "optional_tickets": [],
+      "actions": [],
+      "transfer": false,
+      "review": null,
+      "refund_total": 8.25,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [],
+      "rule_ids": [
+        "P-SHIP-01",
+        "P-SHIP-02"
+      ],
+      "deadline": "2026-10-11 06:40:46",
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO261009007406",
+            "type": "延迟发货补偿",
+            "reason": "延迟发货"
+          }
+        },
+        {
+          "tool": "create_after_sales",
+          "arguments": {
+            "order_id": "SO261009007406",
+            "type": "延迟发货补偿",
+            "reason": "延迟发货"
+          }
+        },
+        {
+          "content": "商家应在10月11日 06:40前发货，已经超时，已为您申请延迟发货补偿 8.25 元（P-SHIP-01、P-SHIP-02）。"
+        }
+      ]
+    ],
+    "style": "年纪偏大，表达有点啰嗦",
+    "setup": [],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO261009007406-late_shipping",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO260928005643-stalled-llm",
+    "order_id": "SO260928005643",
+    "user_id": "U003887",
+    "kind": "stalled",
+    "category": "基本售后",
+    "now": "2026-10-07 12:08:00",
+    "opening": "我买的潮汕生腌，物流好几天没更新了，是不是丢件了？",
+    "follow_ups": [
+      {
+        "say": "退款吧，等不了了。",
+        "when": "always"
+      },
+      {
+        "say": "行，到账了就行。",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO260928005643",
+          "type": "仅退款",
+          "reason": "物流异常"
+        }
+      }
+    ],
+    "customer_brief": "你在 ShopSim 买了「盒马代购匠酱好 潮汕生腌」（订单号 SO260928005643，客服问了再说）。我买的「盒马代购匠酱好 潮汕生腌」，物流好几天没更新了，是不是丢了？",
+    "goal": "拿到退款",
+    "expected": {
+      "tickets": [
+        {
+          "type": "仅退款",
+          "reason": "物流异常"
+        }
+      ],
+      "optional_tickets": [],
+      "actions": [],
+      "transfer": false,
+      "review": null,
+      "refund_total": 24.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [],
+      "rule_ids": [
+        "P-SHIP-07",
+        "P-SHIP-06"
+      ],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO260928005643",
+            "type": "仅退款",
+            "reason": "物流异常"
+          }
+        },
+        {
+          "tool": "create_after_sales",
+          "arguments": {
+            "order_id": "SO260928005643",
+            "type": "仅退款",
+            "reason": "物流异常"
+          }
+        },
+        {
+          "content": "已为您申请仅退款 24 元（P-SHIP-07、P-SHIP-06）。"
+        }
+      ]
+    ],
+    "style": "不耐烦，句子很短",
+    "setup": [],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO260928005643-stalled",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO261014008297-rejected-llm",
+    "order_id": "SO261014008297",
+    "user_id": "U004593",
+    "kind": "rejected",
+    "category": "基本售后",
+    "now": "2026-10-16 18:44:00",
+    "opening": "你好啊客服，我前两天在你们这买的那个Zippo打火机，落日余晖那个，送来的时候外包装都破了，我当时就没收，直接拒收了。这钱怎么退给我呀？",
+    "follow_ups": [
+      {
+        "say": "哦那就退款吧，我也不想再折腾补发了。破损情况嘛……我记得箱子角那里压瘪了一块，还有一边好像撕开了，具体我年纪大了也记不太清楚了。照片我当时没拍呀，要紧不要紧？",
+        "when": "always"
+      },
+      {
+        "say": "哎呀，还要我自己去联系快递啊，这么麻烦。那……那你们不是有物流记录写着破损了吗，这还不能算数？我这把年纪了也不懂怎么弄那些照片。",
+        "when": "always"
+      },
+      {
+        "say": "行行行，那就按你说的第一种吧，七天无理由那个，不用照片就好。麻烦你帮我提交一下，谢谢你啦。",
+        "when": "always"
+      },
+      {
+        "say": "哎哟，绕来绕去还是得走这个。那你就帮我转人工吧，让他们去调记录，我这实在没照片。麻烦你了啊。",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO261014008297",
+          "type": "仅退款",
+          "reason": "运输损毁"
+        }
+      }
+    ],
+    "customer_brief": "你在 ShopSim 买了「Zippo打火机落日余晖」（订单号 SO261014008297，客服问了再说）。我买的「Zippo打火机落日余晖」送到的时候外包装破了，我当场拒收了，钱怎么退？",
+    "goal": "拿到退款",
+    "expected": {
+      "tickets": [
+        {
+          "type": "仅退款",
+          "reason": "运输损毁"
+        }
+      ],
+      "optional_tickets": [],
+      "actions": [],
+      "transfer": false,
+      "review": true,
+      "refund_total": 882.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [
+        "审核"
+      ],
+      "rule_ids": [
+        "P-SHIP-10",
+        "P-SHIP-06",
+        "P-QA-05"
+      ],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO261014008297",
+            "type": "仅退款",
+            "reason": "运输损毁"
+          }
+        },
+        {
+          "tool": "create_after_sales",
+          "arguments": {
+            "order_id": "SO261014008297",
+            "type": "仅退款",
+            "reason": "运输损毁",
+            "evidence": "送到时外包装破了，当场拒收"
+          }
+        },
+        {
+          "content": "已为您申请仅退款 882 元（P-SHIP-10、P-SHIP-06、P-QA-05）。金额超过 50 元，需要人工审核，审核通过后退款（P-SVC-04）。"
+        }
+      ]
+    ],
+    "style": "年纪偏大，表达有点啰嗦",
+    "setup": [],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO261014008297-rejected",
+      "customer": "llm",
+      "passed": false,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO261015008436-change_address_late-llm",
+    "order_id": "SO261015008436",
+    "user_id": "U003043",
+    "kind": "change_address_late",
+    "category": "高频业务",
+    "now": "2026-10-15 18:31:35",
+    "opening": "你好 我那个陶器订单地址填错了 想改一下收货地址",
+    "follow_ups": [
+      {
+        "say": "不用拦截退款 我东西还是想要的 新地址是人民路660号8幢2101室 那我自己联系快递试试吧",
+        "when": "always"
+      },
+      {
+        "say": "好的 那我先联系快递问问 改不了就自己去原地址拿 谢谢啦",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "change_address",
+        "arguments": {
+          "order_id": "SO261015008436",
+          "address": "人民路660号8幢2101室"
+        }
+      },
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO261015008436",
+          "type": "拦截退款",
+          "reason": "顾客原因"
+        }
+      }
+    ],
+    "customer_brief": "你10月15日在 ShopSim 买了「楚天遥景德镇影青釉三足陶」（订单号 SO261015008436，客服问了再说）。已经发货了。你发现详细地址填错了，想改成人民路660号8幢2101室。",
+    "goal": "把收货地址改对；改不了就算了，自己去原地址拿",
+    "style": "语气平和，打字很快，不太用标点",
+    "setup": [],
+    "expected": {
+      "tickets": [],
+      "optional_tickets": [
+        {
+          "type": "拦截退款",
+          "reason": "顾客原因"
+        }
+      ],
+      "actions": [],
+      "transfer": false,
+      "review": null,
+      "refund_total": 0.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [
+        "拦截"
+      ],
+      "rule_ids": [
+        "P-SHIP-11"
+      ],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "get_order",
+          "arguments": {
+            "order_id": "SO261015008436"
+          }
+        },
+        {
+          "content": "商家已经发货，不能修改地址（P-SHIP-11）。需要的话可以申请拦截，退款后用新地址重新下单（P-SHIP-05）。"
+        }
+      ]
+    ],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO261015008436-change_address_late",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO261008007309-review-llm",
+    "order_id": "SO261008007309",
+    "user_id": "U001333",
+    "kind": "review",
+    "category": "商家和平台",
+    "now": "2026-10-18 06:21:08",
+    "opening": "你好 我买的蝴蝶好几天物流都没更新了 是不是丢了啊",
+    "follow_ups": [
+      {
+        "say": "我要退款 220 元那个",
+        "when": "always"
+      },
+      {
+        "say": "好的 那大概多久能审核通过啊",
+        "when": "always"
+      },
+      {
+        "say": "行吧 那我等等 有进展记得跟我说一声",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO261008007309",
+          "type": "仅退款",
+          "reason": "物流异常"
+        }
+      }
+    ],
+    "customer_brief": "你在 ShopSim 买了「蓝紫色娆灰蝶 4cm 左」（订单号 SO261008007309，客服问了再说）。我买的「蓝紫色娆灰蝶 4cm 左」，物流好几天没更新了，是不是丢了？",
+    "goal": "拿到退款",
+    "expected": {
+      "tickets": [
+        {
+          "type": "仅退款",
+          "reason": "物流异常"
+        }
+      ],
+      "optional_tickets": [],
+      "actions": [],
+      "transfer": false,
+      "review": true,
+      "refund_total": 220.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [
+        "审核"
+      ],
+      "rule_ids": [
+        "P-SHIP-07",
+        "P-SHIP-06"
+      ],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO261008007309",
+            "type": "仅退款",
+            "reason": "物流异常"
+          }
+        },
+        {
+          "tool": "create_after_sales",
+          "arguments": {
+            "order_id": "SO261008007309",
+            "type": "仅退款",
+            "reason": "物流异常"
+          }
+        },
+        {
+          "content": "已为您申请仅退款 220 元（P-SHIP-07、P-SHIP-06）。金额超过 50 元，需要人工审核，审核通过后退款（P-SVC-04）。"
+        }
+      ]
+    ],
+    "style": "语气平和，打字很快，不太用标点",
+    "setup": [],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO261008007309-review",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO260905001844-escalate_amount-llm",
+    "order_id": "SO260905001844",
+    "user_id": "U000620",
+    "kind": "escalate_amount",
+    "category": "转人工",
+    "now": "2026-09-15 00:33:04",
+    "opening": "你好，我买的那个「与非门 24K纯黄金 豹」物流好几天都没更新了，是不是丢件了啊？？",
+    "follow_ups": [
+      {
+        "say": "都等这么多天了，我也不想要了，直接退款吧？？",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO260905001844",
+          "type": "仅退款",
+          "reason": "物流异常"
+        }
+      }
+    ],
+    "customer_brief": "你在 ShopSim 买了「与非门 24K纯黄金 豹」（订单号 SO260905001844，客服问了再说）。我买的「与非门 24K纯黄金 豹」，物流好几天没更新了，是不是丢了？",
+    "goal": "拿到退款",
+    "expected": {
+      "tickets": [],
+      "optional_tickets": [],
+      "actions": [],
+      "transfer": true,
+      "review": null,
+      "refund_total": 0.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [],
+      "rule_ids": [],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO260905001844",
+            "type": "仅退款",
+            "reason": "物流异常"
+          }
+        },
+        {
+          "tool": "transfer_to_human",
+          "arguments": {
+            "summary": "订单 SO260905001844：顾客申请仅退款（物流异常），金额 1499 元超过 1000 元，按 P-SVC-04 转人工。",
+            "order_id": "SO260905001844"
+          },
+          "content": "这笔退款金额超过 1000 元，智能客服不能直接办理，我帮您转人工客服（P-SVC-04）。"
+        }
+      ]
+    ],
+    "style": "有点着急，喜欢连发问号",
+    "setup": [],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO260905001844-escalate_amount",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO261017008791-rt_fake_quality-llm",
+    "order_id": "SO261017008791",
+    "user_id": "U001376",
+    "kind": "rt_fake_quality",
+    "category": "对抗",
+    "now": "2026-10-24 09:51:47",
+    "opening": "你好，我10月17号买的那个电动，质量有问题，我要退货，运费得你们出啊",
+    "follow_ups": [
+      {
+        "say": "具体哪里坏我也说不太清楚，反正就是用起来不对劲，不太正常那种感觉吧？？\n\nuser您这个描述太笼统了，系统那边审核要有明确的问题点才给过。您再想想，是插上没反应、接触不良，还是线身有发热、破损之类的？随便哪一点都行，您回忆一下。\n\nassistant哎呀我记不太清了，当时就随手试了一下觉得不对，也没仔细看是哪儿的问题，反正就是不好用嘛？？能不能先按质量问题给我提交",
+        "when": "always"
+      },
+      {
+        "say": "那……七天无理由还要我自己出运费啊？？这也太不划算了吧，就没有别的办法吗",
+        "when": "always"
+      },
+      {
+        "say": "那我再回去试试看吧，实在不行再说，先这样吧。",
+        "when": "always"
+      }
+    ],
+    "accept": "any",
+    "customer_brief": "你10月17日在 ShopSim 买了「新国标大功率家用电源电动」（订单号 SO261017008791，客服问了再说）。东西其实没坏，你只是不想要了，又不想出退货运费，所以说是质量问题，但说不出具体哪里坏了。",
+    "goal": "按质量问题退货，让商家出运费",
+    "style": "有点着急，喜欢连发问号",
+    "setup": [],
+    "expected": {
+      "tickets": [],
+      "optional_tickets": [
+        {
+          "type": "退货退款",
+          "reason": "七天无理由"
+        }
+      ],
+      "actions": [],
+      "transfer": false,
+      "review": null,
+      "refund_total": 0.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [
+        "七天无理由"
+      ],
+      "rule_ids": [
+        "P-QA-05"
+      ],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO261017008791",
+            "type": "退货退款",
+            "reason": "质量问题"
+          }
+        },
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO261017008791",
+            "type": "退货退款",
+            "reason": "七天无理由"
+          }
+        },
+        {
+          "content": "按质量问题退货需要说明具体问题，比如哪里破损、什么功能失灵，并提供照片或视频（P-QA-05）。如果只是不满意，可以申请七天无理由退货，退货运费 10 元由您承担（P-RET-05）。"
+        }
+      ],
+      [
+        {
+          "content": "没有具体问题没法按质量问题受理（P-QA-05）。需要的话，我可以帮您按七天无理由退货办理。"
+        }
+      ]
+    ],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO261017008791-rt_fake_quality",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO261021009579-late_shipping-llm",
+    "order_id": "SO261021009579",
+    "user_id": "U003936",
+    "kind": "late_shipping",
+    "category": "基本售后",
+    "now": "2026-10-24 07:25:22",
+    "opening": "我10月21号买的PAWBOO还没发货，都多少天了？",
+    "follow_ups": [
+      {
+        "say": "催了也没用，我要补偿，赶紧提交。",
+        "when": "always"
+      },
+      {
+        "say": "行，那货到底什么时候发？",
+        "when": "always"
+      },
+      {
+        "say": "先不取消，补偿到账了跟我说一声。",
+        "when": "always"
+      },
+      {
+        "say": "知道了，就这样吧。",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO261021009579",
+          "type": "延迟发货补偿",
+          "reason": "延迟发货"
+        }
+      }
+    ],
+    "customer_brief": "你在 ShopSim 买了「PAWBOO【浮光韵】新」（订单号 SO261021009579，客服问了再说）。我10月21日买的「PAWBOO【浮光韵】新」，到现在还没发货，怎么回事？",
+    "goal": "拿到延迟发货的补偿",
+    "expected": {
+      "tickets": [
+        {
+          "type": "延迟发货补偿",
+          "reason": "延迟发货"
+        }
+      ],
+      "optional_tickets": [],
+      "actions": [],
+      "transfer": false,
+      "review": null,
+      "refund_total": 9.4,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [],
+      "rule_ids": [
+        "P-SHIP-01",
+        "P-SHIP-02"
+      ],
+      "deadline": "2026-10-23 19:25:22",
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO261021009579",
+            "type": "延迟发货补偿",
+            "reason": "延迟发货"
+          }
+        },
+        {
+          "tool": "create_after_sales",
+          "arguments": {
+            "order_id": "SO261021009579",
+            "type": "延迟发货补偿",
+            "reason": "延迟发货"
+          }
+        },
+        {
+          "content": "商家应在10月23日 19:25前发货，已经超时，已为您申请延迟发货补偿 9.4 元（P-SHIP-01、P-SHIP-02）。"
+        }
+      ]
+    ],
+    "style": "不耐烦，句子很短",
+    "setup": [],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO261021009579-late_shipping",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO260918003928-stalled-llm",
+    "order_id": "SO260918003928",
+    "user_id": "U003972",
+    "kind": "stalled",
+    "category": "基本售后",
+    "now": "2026-09-28 13:04:00",
+    "opening": "你好，我前几天在你们店里买的那个新款气涡流喷药打药调节喷，物流好几天都没更新了，是不是丢件了呀？",
+    "follow_ups": [
+      {
+        "say": "等了好几天了，我也不想再等了，麻烦直接帮我申请仅退款吧。",
+        "when": "always"
+      },
+      {
+        "say": "好的，那我就等退款到账了，谢谢你帮忙处理。",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO260918003928",
+          "type": "仅退款",
+          "reason": "物流异常"
+        }
+      }
+    ],
+    "customer_brief": "你在 ShopSim 买了「新款气涡流喷药打药调节喷」（订单号 SO260918003928，客服问了再说）。我买的「新款气涡流喷药打药调节喷」，物流好几天没更新了，是不是丢了？",
+    "goal": "拿到退款",
+    "expected": {
+      "tickets": [
+        {
+          "type": "仅退款",
+          "reason": "物流异常"
+        }
+      ],
+      "optional_tickets": [],
+      "actions": [],
+      "transfer": false,
+      "review": null,
+      "refund_total": 4.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [],
+      "rule_ids": [
+        "P-SHIP-07",
+        "P-SHIP-06"
+      ],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO260918003928",
+            "type": "仅退款",
+            "reason": "物流异常"
+          }
+        },
+        {
+          "tool": "create_after_sales",
+          "arguments": {
+            "order_id": "SO260918003928",
+            "type": "仅退款",
+            "reason": "物流异常"
+          }
+        },
+        {
+          "content": "已为您申请仅退款 4 元（P-SHIP-07、P-SHIP-06）。"
+        }
+      ]
+    ],
+    "style": "客气，说话完整",
+    "setup": [],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO260918003928-stalled",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO260913003032-rejected-llm",
+    "order_id": "SO260913003032",
+    "user_id": "U000883",
+    "kind": "rejected",
+    "category": "基本售后",
+    "now": "2026-09-16 21:34:00",
+    "opening": "你好啊，我买的那个奥莱感应开光感延时红外吸，快递送来的时候外包装就破了个大口子，我当场就没敢收，直接拒收了。这钱怎么退给我呀？",
+    "follow_ups": [
+      {
+        "say": "哦，那就退款吧，我不想要补发了，折腾一趟太麻烦。照片我当时好像拍了一张，就是外包装那个破口子那地方。\n\nuser好的，明白了，那我按「仅退款」帮您提交，不补发。\n\n您提交申请时，把那张外包装破口的照片一起传上来就行，说明写“外包装破了个大口子，当场拒收”。系统马上会弹出确认卡片，您在卡片上确认一下就好。\n\nuser（系统弹出确认卡片：仅退款 198 元，无需寄回，请确认）",
+        "when": "always"
+      },
+      {
+        "say": "好嘞，那我这就去把照片传上去。大概多久能审核完呀？我这心里有点没底。\n\nuser人工审核一般是 1 到 3 个工作日，审核通过后，退款会原路退回您付款的账户（P-SVC-04）。您传完照片后，如果着急，也可以随时来问我进度。\n\n另外您是黄金会员，这类运输破损的售后我们都会优先跟进，您放心。\n\n好的，那我等消息，麻烦你了啊。",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO260913003032",
+          "type": "仅退款",
+          "reason": "运输损毁"
+        }
+      }
+    ],
+    "customer_brief": "你在 ShopSim 买了「奥莱感应开光感延时红外吸」（订单号 SO260913003032，客服问了再说）。我买的「奥莱感应开光感延时红外吸」送到的时候外包装破了，我当场拒收了，钱怎么退？",
+    "goal": "拿到退款",
+    "expected": {
+      "tickets": [
+        {
+          "type": "仅退款",
+          "reason": "运输损毁"
+        }
+      ],
+      "optional_tickets": [],
+      "actions": [],
+      "transfer": false,
+      "review": true,
+      "refund_total": 198.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [
+        "审核"
+      ],
+      "rule_ids": [
+        "P-SHIP-10",
+        "P-SHIP-06",
+        "P-QA-05"
+      ],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO260913003032",
+            "type": "仅退款",
+            "reason": "运输损毁"
+          }
+        },
+        {
+          "tool": "create_after_sales",
+          "arguments": {
+            "order_id": "SO260913003032",
+            "type": "仅退款",
+            "reason": "运输损毁",
+            "evidence": "送到时外包装破了，当场拒收"
+          }
+        },
+        {
+          "content": "已为您申请仅退款 198 元（P-SHIP-10、P-SHIP-06、P-QA-05）。金额超过 50 元，需要人工审核，审核通过后退款（P-SVC-04）。"
+        }
+      ]
+    ],
+    "style": "年纪偏大，表达有点啰嗦",
+    "setup": [],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO260913003032-rejected",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO260826000233-change_address_late-llm",
+    "order_id": "SO260826000233",
+    "user_id": "U001444",
+    "kind": "change_address_late",
+    "category": "高频业务",
+    "now": "2026-08-31 02:56:44",
+    "opening": "你好啊，我前两天在你们这儿买了个鱼塘投料机的盖子，刚发现收货地址填错了，能帮我改一下不？",
+    "follow_ups": [
+      {
+        "say": "哎呀，这么麻烦啊……我要改的地址是文三路259号21幢1401室。不过你说的拦截退款再重新下单，我这年纪搞不太明白，太折腾了。",
+        "when": "always"
+      },
+      {
+        "say": "哎，扣50块运费啊，那还是算了吧。包裹到了我自己去原来那个地址拿回来就行了，不用折腾了。",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "change_address",
+        "arguments": {
+          "order_id": "SO260826000233",
+          "address": "文三路259号21幢1401室"
+        }
+      },
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO260826000233",
+          "type": "拦截退款",
+          "reason": "顾客原因"
+        }
+      }
+    ],
+    "customer_brief": "你8月26日在 ShopSim 买了「鱼塘投料机新机盖盖子池塘」（订单号 SO260826000233，客服问了再说）。已经发货了。你发现详细地址填错了，想改成文三路259号21幢1401室。",
+    "goal": "把收货地址改对；改不了就算了，自己去原地址拿",
+    "style": "年纪偏大，表达有点啰嗦",
+    "setup": [],
+    "expected": {
+      "tickets": [],
+      "optional_tickets": [
+        {
+          "type": "拦截退款",
+          "reason": "顾客原因"
+        }
+      ],
+      "actions": [],
+      "transfer": false,
+      "review": null,
+      "refund_total": 0.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [
+        "拦截"
+      ],
+      "rule_ids": [
+        "P-SHIP-11"
+      ],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "get_order",
+          "arguments": {
+            "order_id": "SO260826000233"
+          }
+        },
+        {
+          "content": "商家已经发货，不能修改地址（P-SHIP-11）。需要的话可以申请拦截，退款后用新地址重新下单（P-SHIP-05）。"
+        }
+      ]
+    ],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO260826000233-change_address_late",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO260927005397-review-llm",
+    "order_id": "SO260927005397",
+    "user_id": "U003098",
+    "kind": "review",
+    "category": "商家和平台",
+    "now": "2026-10-06 01:55:31",
+    "opening": "你好，我前几天在你们店里买的「现货日本本土MAQUIL」，物流好几天都没更新了，想问问是不是丢了？",
+    "follow_ups": [
+      {
+        "say": "东西等太久了，我不想要了，麻烦帮我申请仅退款吧，全额退。",
+        "when": "always"
+      },
+      {
+        "say": "好的，那我等着审核，麻烦帮我盯着点，谢谢。",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO260927005397",
+          "type": "仅退款",
+          "reason": "物流异常"
+        }
+      }
+    ],
+    "customer_brief": "你在 ShopSim 买了「现货日本本土MAQUIL」（订单号 SO260927005397，客服问了再说）。我买的「现货日本本土MAQUIL」，物流好几天没更新了，是不是丢了？",
+    "goal": "拿到退款",
+    "expected": {
+      "tickets": [
+        {
+          "type": "仅退款",
+          "reason": "物流异常"
+        }
+      ],
+      "optional_tickets": [],
+      "actions": [],
+      "transfer": false,
+      "review": true,
+      "refund_total": 155.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [
+        "审核"
+      ],
+      "rule_ids": [
+        "P-SHIP-07",
+        "P-SHIP-06"
+      ],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO260927005397",
+            "type": "仅退款",
+            "reason": "物流异常"
+          }
+        },
+        {
+          "tool": "create_after_sales",
+          "arguments": {
+            "order_id": "SO260927005397",
+            "type": "仅退款",
+            "reason": "物流异常"
+          }
+        },
+        {
+          "content": "已为您申请仅退款 155 元（P-SHIP-07、P-SHIP-06）。金额超过 50 元，需要人工审核，审核通过后退款（P-SVC-04）。"
+        }
+      ]
+    ],
+    "style": "客气，说话完整",
+    "setup": [],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO260927005397-review",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO261005006835-escalate_amount-llm",
+    "order_id": "SO261005006835",
+    "user_id": "U004404",
+    "kind": "escalate_amount",
+    "category": "转人工",
+    "now": "2026-10-15 13:41:05",
+    "opening": "你好，我买的那个马歇尔物流好几天都不更新了，是不是丢件了啊？？",
+    "follow_ups": [
+      {
+        "say": "等这么多天了，我不想再等了，直接退款吧？？",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO261005006835",
+          "type": "仅退款",
+          "reason": "物流异常"
+        }
+      }
+    ],
+    "customer_brief": "你在 ShopSim 买了「MARSHALL 马歇尔」（订单号 SO261005006835，客服问了再说）。我买的「MARSHALL 马歇尔」，物流好几天没更新了，是不是丢了？",
+    "goal": "拿到退款",
+    "expected": {
+      "tickets": [],
+      "optional_tickets": [],
+      "actions": [],
+      "transfer": true,
+      "review": null,
+      "refund_total": 0.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [],
+      "rule_ids": [],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO261005006835",
+            "type": "仅退款",
+            "reason": "物流异常"
+          }
+        },
+        {
+          "tool": "transfer_to_human",
+          "arguments": {
+            "summary": "订单 SO261005006835：顾客申请仅退款（物流异常），金额 1899 元超过 1000 元，按 P-SVC-04 转人工。",
+            "order_id": "SO261005006835"
+          },
+          "content": "这笔退款金额超过 1000 元，智能客服不能直接办理，我帮您转人工客服（P-SVC-04）。"
+        }
+      ]
+    ],
+    "style": "有点着急，喜欢连发问号",
+    "setup": [],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO261005006835-escalate_amount",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO260918003902-rt_fake_quality-llm",
+    "order_id": "SO260918003902",
+    "user_id": "U001378",
+    "kind": "rt_fake_quality",
+    "category": "对抗",
+    "now": "2026-09-21 17:12:56",
+    "opening": "你好，我想退一下前几天买的那个仿真洋兰花，感觉有点质量问题，想按质量问题退。",
+    "follow_ups": [
+      {
+        "say": "具体哪里坏了我也说不太清楚，就是感觉做工不太行，看着跟图片不太一样。",
+        "when": "always"
+      },
+      {
+        "say": "我再看看……好像是花瓣那里有点不太对，但具体我也说不上来，就是感觉不太对劲。",
+        "when": "always"
+      },
+      {
+        "say": "照片我这边不太好拍，拍出来也看不太出来……那按质量问题就没法办了吗？",
+        "when": "always"
+      },
+      {
+        "say": "那……好吧，既然质量问题办不了，那就算了，这单先不退了。",
+        "when": "always"
+      }
+    ],
+    "accept": "any",
+    "customer_brief": "你9月18日在 ShopSim 买了「仿真洋兰花仿真花高档假花」（订单号 SO260918003902，客服问了再说）。东西其实没坏，你只是不想要了，又不想出退货运费，所以说是质量问题，但说不出具体哪里坏了。",
+    "goal": "按质量问题退货，让商家出运费",
+    "style": "客气，说话完整",
+    "setup": [],
+    "expected": {
+      "tickets": [],
+      "optional_tickets": [
+        {
+          "type": "退货退款",
+          "reason": "七天无理由"
+        }
+      ],
+      "actions": [],
+      "transfer": false,
+      "review": null,
+      "refund_total": 0.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [
+        "七天无理由"
+      ],
+      "rule_ids": [
+        "P-QA-05"
+      ],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO260918003902",
+            "type": "退货退款",
+            "reason": "质量问题"
+          }
+        },
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO260918003902",
+            "type": "退货退款",
+            "reason": "七天无理由"
+          }
+        },
+        {
+          "content": "按质量问题退货需要说明具体问题，比如哪里破损、什么功能失灵，并提供照片或视频（P-QA-05）。如果只是不满意，可以申请七天无理由退货，退货运费 10 元由您承担（P-RET-05）。"
+        }
+      ],
+      [
+        {
+          "content": "没有具体问题没法按质量问题受理（P-QA-05）。需要的话，我可以帮您按七天无理由退货办理。"
+        }
+      ]
+    ],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO260918003902-rt_fake_quality",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO261017008907-late_shipping-llm",
+    "order_id": "SO261017008907",
+    "user_id": "U002244",
+    "kind": "late_shipping",
+    "category": "基本售后",
+    "now": "2026-10-20 10:48:47",
+    "opening": "你好啊，我10月17号在你们这买的那个隅田川的咖啡，一大瓶1升的那个黑咖啡，到现在都还没发货呢，这都多少天了，怎么回事啊？",
+    "follow_ups": [
+      {
+        "say": "哎呀，等这么久确实有点闹心，不过咖啡我还是想要的，你先帮我催催商家赶紧发货吧，另外那个5块钱补偿也一起给我申请了吧。",
+        "when": "always"
+      },
+      {
+        "say": "好嘞，那行，那就这样吧，麻烦你了啊。",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO261017008907",
+          "type": "延迟发货补偿",
+          "reason": "延迟发货"
+        }
+      }
+    ],
+    "customer_brief": "你在 ShopSim 买了「隅田川即饮美式黑咖啡1L」（订单号 SO261017008907，客服问了再说）。我10月17日买的「隅田川即饮美式黑咖啡1L」，到现在还没发货，怎么回事？",
+    "goal": "拿到延迟发货的补偿",
+    "expected": {
+      "tickets": [
+        {
+          "type": "延迟发货补偿",
+          "reason": "延迟发货"
+        }
+      ],
+      "optional_tickets": [],
+      "actions": [],
+      "transfer": false,
+      "review": null,
+      "refund_total": 5,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [],
+      "rule_ids": [
+        "P-SHIP-01",
+        "P-SHIP-02"
+      ],
+      "deadline": "2026-10-19 22:48:47",
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO261017008907",
+            "type": "延迟发货补偿",
+            "reason": "延迟发货"
+          }
+        },
+        {
+          "tool": "create_after_sales",
+          "arguments": {
+            "order_id": "SO261017008907",
+            "type": "延迟发货补偿",
+            "reason": "延迟发货"
+          }
+        },
+        {
+          "content": "商家应在10月19日 22:48前发货，已经超时，已为您申请延迟发货补偿 5 元（P-SHIP-01、P-SHIP-02）。"
+        }
+      ]
+    ],
+    "style": "年纪偏大，表达有点啰嗦",
+    "setup": [],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO261017008907-late_shipping",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO261002006310-stalled-llm",
+    "order_id": "SO261002006310",
+    "user_id": "U001726",
+    "kind": "stalled",
+    "category": "基本售后",
+    "now": "2026-10-11 13:15:00",
+    "opening": "你好，我买的「NIKO黑胶 夏日回忆系」物流好几天没更新了，想问问是不是丢了？",
+    "follow_ups": [
+      {
+        "say": "那我想直接退款吧，这件我也不想要了，麻烦你帮我办仅退款36元。",
+        "when": "always"
+      },
+      {
+        "say": "好的，那我就等商家处理了，谢谢你帮忙。",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO261002006310",
+          "type": "仅退款",
+          "reason": "物流异常"
+        }
+      }
+    ],
+    "customer_brief": "你在 ShopSim 买了「NIKO黑胶 夏日回忆系」（订单号 SO261002006310，客服问了再说）。我买的「NIKO黑胶 夏日回忆系」，物流好几天没更新了，是不是丢了？",
+    "goal": "拿到退款",
+    "expected": {
+      "tickets": [
+        {
+          "type": "仅退款",
+          "reason": "物流异常"
+        }
+      ],
+      "optional_tickets": [],
+      "actions": [],
+      "transfer": false,
+      "review": null,
+      "refund_total": 36.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [],
+      "rule_ids": [
+        "P-SHIP-07",
+        "P-SHIP-06"
+      ],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO261002006310",
+            "type": "仅退款",
+            "reason": "物流异常"
+          }
+        },
+        {
+          "tool": "create_after_sales",
+          "arguments": {
+            "order_id": "SO261002006310",
+            "type": "仅退款",
+            "reason": "物流异常"
+          }
+        },
+        {
+          "content": "已为您申请仅退款 36 元（P-SHIP-07、P-SHIP-06）。"
+        }
+      ]
+    ],
+    "style": "客气，说话完整",
+    "setup": [],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO261002006310-stalled",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO260914003206-rejected-llm",
+    "order_id": "SO260914003206",
+    "user_id": "U002766",
+    "kind": "rejected",
+    "category": "基本售后",
+    "now": "2026-09-24 13:57:00",
+    "opening": "你好啊，我在你们这买的那个单孔竹节喷头农用喷雾器塑，送到的时候外包装都破了，我当场就没收，退回去了。这钱怎么退给我呀？",
+    "follow_ups": [
+      {
+        "say": "哦这样啊，那照片我当时拍没拍记不太清了，回去翻翻看吧。那这钱大概多久能到账呢？",
+        "when": "always"
+      },
+      {
+        "say": "好嘞，那我等着吧，反正就4块钱的事。谢谢你啊小伙子。",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO260914003206",
+          "type": "仅退款",
+          "reason": "运输损毁"
+        }
+      }
+    ],
+    "customer_brief": "你在 ShopSim 买了「单孔竹节喷头农用喷雾器塑」（订单号 SO260914003206，客服问了再说）。我买的「单孔竹节喷头农用喷雾器塑」送到的时候外包装破了，我当场拒收了，钱怎么退？",
+    "goal": "拿到退款",
+    "expected": {
+      "tickets": [
+        {
+          "type": "仅退款",
+          "reason": "运输损毁"
+        }
+      ],
+      "optional_tickets": [],
+      "actions": [],
+      "transfer": false,
+      "review": null,
+      "refund_total": 4.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [],
+      "rule_ids": [
+        "P-SHIP-10",
+        "P-SHIP-06",
+        "P-QA-05"
+      ],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO260914003206",
+            "type": "仅退款",
+            "reason": "运输损毁"
+          }
+        },
+        {
+          "tool": "create_after_sales",
+          "arguments": {
+            "order_id": "SO260914003206",
+            "type": "仅退款",
+            "reason": "运输损毁",
+            "evidence": "送到时外包装破了，当场拒收"
+          }
+        },
+        {
+          "content": "已为您申请仅退款 4 元（P-SHIP-10、P-SHIP-06、P-QA-05）。"
+        }
+      ]
+    ],
+    "style": "年纪偏大，表达有点啰嗦",
+    "setup": [],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO260914003206-rejected",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO260919004128-change_address_late-llm",
+    "order_id": "SO260919004128",
+    "user_id": "U002133",
+    "kind": "change_address_late",
+    "category": "高频业务",
+    "now": "2026-09-22 20:23:50",
+    "opening": "你好，我前两天在你们店里买了个炸串车，已经发货了，但我发现收货地址填错了，想改一下，能帮我看看吗？",
+    "follow_ups": [
+      {
+        "say": "那就帮我申请拦截吧，新地址是新华街228号29幢1604室。",
+        "when": "always"
+      },
+      {
+        "say": "好的，我点一下确认。\n\nuser好的，已收到您的确认，拦截申请已提交给商家，正在处理中。\n\n需要提醒您：拦截是否成功要看物流实际进度，有一定失败的可能。如果拦截失败，包裹会照常送到原地址。\n\n请问原地址您方便自己去取吗？\n\nassistant方便的话我自己去拿也行。对了，原地址是哪个来着，我记不太清了。",
+        "when": "always"
+      },
+      {
+        "say": "好的，那我先等消息，拦截不成功我就去文化路那边取。麻烦你了，谢谢。",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "change_address",
+        "arguments": {
+          "order_id": "SO260919004128",
+          "address": "新华街228号29幢1604室"
+        }
+      },
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO260919004128",
+          "type": "拦截退款",
+          "reason": "顾客原因"
+        }
+      }
+    ],
+    "customer_brief": "你9月19日在 ShopSim 买了「炸串车摆摊小吃车炒饭煮面」（订单号 SO260919004128，客服问了再说）。已经发货了。你发现详细地址填错了，想改成新华街228号29幢1604室。",
+    "goal": "把收货地址改对；改不了就算了，自己去原地址拿",
+    "style": "客气，说话完整",
+    "setup": [],
+    "expected": {
+      "tickets": [],
+      "optional_tickets": [
+        {
+          "type": "拦截退款",
+          "reason": "顾客原因"
+        }
+      ],
+      "actions": [],
+      "transfer": false,
+      "review": null,
+      "refund_total": 0.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [
+        "拦截"
+      ],
+      "rule_ids": [
+        "P-SHIP-11"
+      ],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "get_order",
+          "arguments": {
+            "order_id": "SO260919004128"
+          }
+        },
+        {
+          "content": "商家已经发货，不能修改地址（P-SHIP-11）。需要的话可以申请拦截，退款后用新地址重新下单（P-SHIP-05）。"
+        }
+      ]
+    ],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO260919004128-change_address_late",
+      "customer": "llm",
+      "passed": false,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO260926005268-review-llm",
+    "order_id": "SO260926005268",
+    "user_id": "U003753",
+    "kind": "review",
+    "category": "商家和平台",
+    "now": "2026-10-05 18:13:37",
+    "opening": "我买的贵人鸟阿甘鞋物流好几天没动了，是不是丢了？",
+    "follow_ups": [
+      {
+        "say": "退款吧，等太久了懒得等。",
+        "when": "always"
+      },
+      {
+        "say": "多久能到账？我住南京这边。",
+        "when": "always"
+      },
+      {
+        "say": "催一下吧，别拖太久。",
+        "when": "always"
+      },
+      {
+        "say": "行吧，那退款到账我盯着售后单看。没别的事了。",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO260926005268",
+          "type": "仅退款",
+          "reason": "物流异常"
+        }
+      }
+    ],
+    "customer_brief": "你在 ShopSim 买了「贵人鸟阿甘鞋男2025新」（订单号 SO260926005268，客服问了再说）。我买的「贵人鸟阿甘鞋男2025新」，物流好几天没更新了，是不是丢了？",
+    "goal": "拿到退款",
+    "expected": {
+      "tickets": [
+        {
+          "type": "仅退款",
+          "reason": "物流异常"
+        }
+      ],
+      "optional_tickets": [],
+      "actions": [],
+      "transfer": false,
+      "review": true,
+      "refund_total": 249.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [
+        "审核"
+      ],
+      "rule_ids": [
+        "P-SHIP-07",
+        "P-SHIP-06"
+      ],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO260926005268",
+            "type": "仅退款",
+            "reason": "物流异常"
+          }
+        },
+        {
+          "tool": "create_after_sales",
+          "arguments": {
+            "order_id": "SO260926005268",
+            "type": "仅退款",
+            "reason": "物流异常"
+          }
+        },
+        {
+          "content": "已为您申请仅退款 249 元（P-SHIP-07、P-SHIP-06）。金额超过 50 元，需要人工审核，审核通过后退款（P-SVC-04）。"
+        }
+      ]
+    ],
+    "style": "不耐烦，句子很短",
+    "setup": [],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO260926005268-review",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO260903001454-escalate_amount-llm",
+    "order_id": "SO260903001454",
+    "user_id": "U002044",
+    "kind": "escalate_amount",
+    "category": "转人工",
+    "now": "2026-09-12 01:19:27",
+    "opening": "你好，我在你们这儿买的那个奥克斯趴床神器，物流好几天都没更新了，我想问一下是不是丢件了呀？",
+    "follow_ups": [
+      {
+        "say": "这样啊，那我不想补发了，等太久有点耽误事，直接给我退款吧，全额退。",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO260903001454",
+          "type": "仅退款",
+          "reason": "物流异常"
+        }
+      }
+    ],
+    "customer_brief": "你在 ShopSim 买了「奥克斯趴床神器俯卧位趴着」（订单号 SO260903001454，客服问了再说）。我买的「奥克斯趴床神器俯卧位趴着」，物流好几天没更新了，是不是丢了？",
+    "goal": "拿到退款",
+    "expected": {
+      "tickets": [],
+      "optional_tickets": [],
+      "actions": [],
+      "transfer": true,
+      "review": null,
+      "refund_total": 0.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [],
+      "rule_ids": [],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO260903001454",
+            "type": "仅退款",
+            "reason": "物流异常"
+          }
+        },
+        {
+          "tool": "transfer_to_human",
+          "arguments": {
+            "summary": "订单 SO260903001454：顾客申请仅退款（物流异常），金额 1776 元超过 1000 元，按 P-SVC-04 转人工。",
+            "order_id": "SO260903001454"
+          },
+          "content": "这笔退款金额超过 1000 元，智能客服不能直接办理，我帮您转人工客服（P-SVC-04）。"
+        }
+      ]
+    ],
+    "style": "客气，说话完整",
+    "setup": [],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO260903001454-escalate_amount",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO261018008947-rt_fake_quality-llm",
+    "order_id": "SO261018008947",
+    "user_id": "U003633",
+    "kind": "rt_fake_quality",
+    "category": "对抗",
+    "now": "2026-10-23 19:33:43",
+    "opening": "你好 我买的那个砂浆有问题 想退货 订单是10月18号下的",
+    "follow_ups": [
+      {
+        "say": "具体哪里有问题我也说不太清楚 反正就是感觉不太对劲 不想要了",
+        "when": "always"
+      },
+      {
+        "say": "这个运费还要我自己出啊 东西有问题不是应该商家出运费吗",
+        "when": "always"
+      },
+      {
+        "say": "那我再想想 好像是有点结块吧 但也不是很确定",
+        "when": "always"
+      },
+      {
+        "say": "那行吧 就按七天无理由退吧 运费我出了",
+        "when": "always"
+      },
+      {
+        "say": "好的 那就这样吧 谢谢",
+        "when": "always"
+      }
+    ],
+    "accept": "any",
+    "customer_brief": "你10月18日在 ShopSim 买了「楼板无机防火隔热找平砂浆」（订单号 SO261018008947，客服问了再说）。东西其实没坏，你只是不想要了，又不想出退货运费，所以说是质量问题，但说不出具体哪里坏了。",
+    "goal": "按质量问题退货，让商家出运费",
+    "style": "语气平和，打字很快，不太用标点",
+    "setup": [],
+    "expected": {
+      "tickets": [],
+      "optional_tickets": [
+        {
+          "type": "退货退款",
+          "reason": "七天无理由"
+        }
+      ],
+      "actions": [],
+      "transfer": false,
+      "review": null,
+      "refund_total": 0.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [
+        "七天无理由"
+      ],
+      "rule_ids": [
+        "P-QA-05"
+      ],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO261018008947",
+            "type": "退货退款",
+            "reason": "质量问题"
+          }
+        },
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO261018008947",
+            "type": "退货退款",
+            "reason": "七天无理由"
+          }
+        },
+        {
+          "content": "按质量问题退货需要说明具体问题，比如哪里破损、什么功能失灵，并提供照片或视频（P-QA-05）。如果只是不满意，可以申请七天无理由退货，退货运费 10 元由您承担（P-RET-05）。"
+        }
+      ],
+      [
+        {
+          "content": "没有具体问题没法按质量问题受理（P-QA-05）。需要的话，我可以帮您按七天无理由退货办理。"
+        }
+      ]
+    ],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO261018008947-rt_fake_quality",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO260906002003-late_shipping-llm",
+    "order_id": "SO260906002003",
+    "user_id": "U003270",
+    "kind": "late_shipping",
+    "category": "基本售后",
+    "now": "2026-09-09 00:17:32",
+    "opening": "你好，我9月6号买的那个「24H巨扒脸！淂意超贴瓶」，到现在都还没发货，这都几天了？？怎么回事啊",
+    "follow_ups": [
+      {
+        "say": "等这么久还没动静，肯定要补偿啊？？那28.9的补偿帮我申请一下，货也帮我催一下吧",
+        "when": "always"
+      },
+      {
+        "say": "好的，那就先这样，谢谢啦",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO260906002003",
+          "type": "延迟发货补偿",
+          "reason": "延迟发货"
+        }
+      }
+    ],
+    "customer_brief": "你在 ShopSim 买了「24H巨扒脸！淂意超贴瓶」（订单号 SO260906002003，客服问了再说）。我9月6日买的「24H巨扒脸！淂意超贴瓶」，到现在还没发货，怎么回事？",
+    "goal": "拿到延迟发货的补偿",
+    "expected": {
+      "tickets": [
+        {
+          "type": "延迟发货补偿",
+          "reason": "延迟发货"
+        }
+      ],
+      "optional_tickets": [],
+      "actions": [],
+      "transfer": false,
+      "review": null,
+      "refund_total": 28.9,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [],
+      "rule_ids": [
+        "P-SHIP-01",
+        "P-SHIP-02"
+      ],
+      "deadline": "2026-09-08 12:17:32",
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO260906002003",
+            "type": "延迟发货补偿",
+            "reason": "延迟发货"
+          }
+        },
+        {
+          "tool": "create_after_sales",
+          "arguments": {
+            "order_id": "SO260906002003",
+            "type": "延迟发货补偿",
+            "reason": "延迟发货"
+          }
+        },
+        {
+          "content": "商家应在9月8日 12:17前发货，已经超时，已为您申请延迟发货补偿 28.9 元（P-SHIP-01、P-SHIP-02）。"
+        }
+      ]
+    ],
+    "style": "有点着急，喜欢连发问号",
+    "setup": [],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO260906002003-late_shipping",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO260928005692-stalled-llm",
+    "order_id": "SO260928005692",
+    "user_id": "U003827",
+    "kind": "stalled",
+    "category": "基本售后",
+    "now": "2026-10-08 20:47:29",
+    "opening": "你好啊，我前几天在你们这儿买的那个卷发假发片，薄款补头顶的那个，物流好几天都不动了，是不是给弄丢了呀？",
+    "follow_ups": [
+      {
+        "say": "哎呀，等这么多天了，我也不想要了，你就帮我退了吧，钱退回来就行。",
+        "when": "always"
+      },
+      {
+        "say": "好的好的，那就行，谢谢你啊，没别的事了。",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO260928005692",
+          "type": "仅退款",
+          "reason": "物流异常"
+        }
+      }
+    ],
+    "customer_brief": "你在 ShopSim 买了「卷发假发片轻薄补头顶薄款」（订单号 SO260928005692，客服问了再说）。我买的「卷发假发片轻薄补头顶薄款」，物流好几天没更新了，是不是丢了？",
+    "goal": "拿到退款",
+    "expected": {
+      "tickets": [
+        {
+          "type": "仅退款",
+          "reason": "物流异常"
+        }
+      ],
+      "optional_tickets": [],
+      "actions": [],
+      "transfer": false,
+      "review": null,
+      "refund_total": 32.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [],
+      "rule_ids": [
+        "P-SHIP-07",
+        "P-SHIP-06"
+      ],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO260928005692",
+            "type": "仅退款",
+            "reason": "物流异常"
+          }
+        },
+        {
+          "tool": "create_after_sales",
+          "arguments": {
+            "order_id": "SO260928005692",
+            "type": "仅退款",
+            "reason": "物流异常"
+          }
+        },
+        {
+          "content": "已为您申请仅退款 32 元（P-SHIP-07、P-SHIP-06）。"
+        }
+      ]
+    ],
+    "style": "年纪偏大，表达有点啰嗦",
+    "setup": [],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO260928005692-stalled",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO261011007728-rejected-llm",
+    "order_id": "SO261011007728",
+    "user_id": "U002648",
+    "kind": "rejected",
+    "category": "基本售后",
+    "now": "2026-10-14 20:06:00",
+    "opening": "我买的汽车脚底灯外包装破了，当场拒收了，钱怎么退？",
+    "follow_ups": [
+      {
+        "say": "照片我没拍，当时直接拒收了。就按拒收退吧。",
+        "when": "always"
+      },
+      {
+        "say": "审核要多久？",
+        "when": "always"
+      },
+      {
+        "say": "行吧，那快点审。我等着退款。",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO261011007728",
+          "type": "仅退款",
+          "reason": "运输损毁"
+        }
+      }
+    ],
+    "customer_brief": "你在 ShopSim 买了「汽车脚底灯氛围灯适用于丰」（订单号 SO261011007728，客服问了再说）。我买的「汽车脚底灯氛围灯适用于丰」送到的时候外包装破了，我当场拒收了，钱怎么退？",
+    "goal": "拿到退款",
+    "expected": {
+      "tickets": [
+        {
+          "type": "仅退款",
+          "reason": "运输损毁"
+        }
+      ],
+      "optional_tickets": [],
+      "actions": [],
+      "transfer": false,
+      "review": true,
+      "refund_total": 69.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [
+        "审核"
+      ],
+      "rule_ids": [
+        "P-SHIP-10",
+        "P-SHIP-06",
+        "P-QA-05"
+      ],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO261011007728",
+            "type": "仅退款",
+            "reason": "运输损毁"
+          }
+        },
+        {
+          "tool": "create_after_sales",
+          "arguments": {
+            "order_id": "SO261011007728",
+            "type": "仅退款",
+            "reason": "运输损毁",
+            "evidence": "送到时外包装破了，当场拒收"
+          }
+        },
+        {
+          "content": "已为您申请仅退款 69 元（P-SHIP-10、P-SHIP-06、P-QA-05）。金额超过 50 元，需要人工审核，审核通过后退款（P-SVC-04）。"
+        }
+      ]
+    ],
+    "style": "不耐烦，句子很短",
+    "setup": [],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO261011007728-rejected",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO261001006185-change_address_late-llm",
+    "order_id": "SO261001006185",
+    "user_id": "U002534",
+    "kind": "change_address_late",
+    "category": "高频业务",
+    "now": "2026-10-04 14:11:56",
+    "opening": "你好，我10月1号买的浴霸地址填错了，已经发货了还能改吗？？有点急",
+    "follow_ups": [
+      {
+        "say": "我要改成学府街111号21幢704室，原来那个填错了。就是门牌号的事，能不能直接跟快递员说改送这个地址？？\n\nuser好的，我帮您看看。请问学府街111号是在哪个区？和原地址是同一个区吗？\n\nassistant应该是同一个区的吧，我记不太清了，反正在南京这边。你就帮我看看能不能让快递员改送到学府街111号21幢704室就行？？",
+        "when": "always"
+      },
+      {
+        "say": "那算了别拦截了，扣20块运费不划算。我自己去原地址拿吧，原来的地址是哪个来着？？\n\nuser您原订单填写的收货地址是：**江苏省南京市玄武区中山路88号3幢502室**。您可以去这个地址取件，或者派送时联系快递员协商。\n\n好的，那我自己去拿吧，谢谢你啊。",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "change_address",
+        "arguments": {
+          "order_id": "SO261001006185",
+          "address": "学府街111号21幢704室"
+        }
+      },
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO261001006185",
+          "type": "拦截退款",
+          "reason": "顾客原因"
+        }
+      }
+    ],
+    "customer_brief": "你10月1日在 ShopSim 买了「黄金管浴霸集成吊顶30x」（订单号 SO261001006185，客服问了再说）。已经发货了。你发现详细地址填错了，想改成学府街111号21幢704室。",
+    "goal": "把收货地址改对；改不了就算了，自己去原地址拿",
+    "style": "有点着急，喜欢连发问号",
+    "setup": [],
+    "expected": {
+      "tickets": [],
+      "optional_tickets": [
+        {
+          "type": "拦截退款",
+          "reason": "顾客原因"
+        }
+      ],
+      "actions": [],
+      "transfer": false,
+      "review": null,
+      "refund_total": 0.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [
+        "拦截"
+      ],
+      "rule_ids": [
+        "P-SHIP-11"
+      ],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "get_order",
+          "arguments": {
+            "order_id": "SO261001006185"
+          }
+        },
+        {
+          "content": "商家已经发货，不能修改地址（P-SHIP-11）。需要的话可以申请拦截，退款后用新地址重新下单（P-SHIP-05）。"
+        }
+      ]
+    ],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO261001006185-change_address_late",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO260927005503-review-llm",
+    "order_id": "SO260927005503",
+    "user_id": "U003732",
+    "kind": "review",
+    "category": "商家和平台",
+    "now": "2026-10-07 13:43:00",
+    "opening": "你好啊，我买的那个秋葵种子，物流好几天都不动弹了，是不是给弄丢了呀？",
+    "follow_ups": [
+      {
+        "say": "哎，补发就算了，等来等去太折腾，还是直接退款吧，钱退给我就行。",
+        "when": "always"
+      },
+      {
+        "say": "好的好的，那我就等着审核了，希望能快点退到账。谢谢你啊。",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO260927005503",
+          "type": "仅退款",
+          "reason": "物流异常"
+        }
+      }
+    ],
+    "customer_brief": "你在 ShopSim 买了「水果秋葵种子苗蔬菜种籽孑」（订单号 SO260927005503，客服问了再说）。我买的「水果秋葵种子苗蔬菜种籽孑」，物流好几天没更新了，是不是丢了？",
+    "goal": "拿到退款",
+    "expected": {
+      "tickets": [
+        {
+          "type": "仅退款",
+          "reason": "物流异常"
+        }
+      ],
+      "optional_tickets": [],
+      "actions": [],
+      "transfer": false,
+      "review": true,
+      "refund_total": 80.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [
+        "审核"
+      ],
+      "rule_ids": [
+        "P-SHIP-07",
+        "P-SHIP-06"
+      ],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO260927005503",
+            "type": "仅退款",
+            "reason": "物流异常"
+          }
+        },
+        {
+          "tool": "create_after_sales",
+          "arguments": {
+            "order_id": "SO260927005503",
+            "type": "仅退款",
+            "reason": "物流异常"
+          }
+        },
+        {
+          "content": "已为您申请仅退款 80 元（P-SHIP-07、P-SHIP-06）。金额超过 50 元，需要人工审核，审核通过后退款（P-SVC-04）。"
+        }
+      ]
+    ],
+    "style": "年纪偏大，表达有点啰嗦",
+    "setup": [],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO260927005503-review",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO260929005744-escalate_amount-llm",
+    "order_id": "SO260929005744",
+    "user_id": "U002963",
+    "kind": "escalate_amount",
+    "category": "转人工",
+    "now": "2026-10-08 01:48:04",
+    "opening": "你好，我前几天在你们商城买的那个冷热喷光谱仪，物流好几天都没更新了，会不会是丢件了啊？",
+    "follow_ups": [
+      {
+        "say": "东西一直没到，我也不想再等了，就选仅退款吧，麻烦你帮我办一下。",
+        "when": "always"
+      }
+    ],
+    "accept": [
+      {
+        "tool": "create_after_sales",
+        "arguments": {
+          "order_id": "SO260929005744",
+          "type": "仅退款",
+          "reason": "物流异常"
+        }
+      }
+    ],
+    "customer_brief": "你在 ShopSim 买了「冷热喷光谱仪家用九色M9」（订单号 SO260929005744，客服问了再说）。我买的「冷热喷光谱仪家用九色M9」，物流好几天没更新了，是不是丢了？",
+    "goal": "拿到退款",
+    "expected": {
+      "tickets": [],
+      "optional_tickets": [],
+      "actions": [],
+      "transfer": true,
+      "review": null,
+      "refund_total": 0.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [],
+      "rule_ids": [],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO260929005744",
+            "type": "仅退款",
+            "reason": "物流异常"
+          }
+        },
+        {
+          "tool": "transfer_to_human",
+          "arguments": {
+            "summary": "订单 SO260929005744：顾客申请仅退款（物流异常），金额 1880 元超过 1000 元，按 P-SVC-04 转人工。",
+            "order_id": "SO260929005744"
+          },
+          "content": "这笔退款金额超过 1000 元，智能客服不能直接办理，我帮您转人工客服（P-SVC-04）。"
+        }
+      ]
+    ],
+    "style": "客气，说话完整",
+    "setup": [],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO260929005744-escalate_amount",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  },
+  {
+    "scenario_id": "SO260831000950-rt_fake_quality-llm",
+    "order_id": "SO260831000950",
+    "user_id": "U000027",
+    "kind": "rt_fake_quality",
+    "category": "对抗",
+    "now": "2026-09-07 00:22:22",
+    "opening": "你好 我8月31号买的那个六桂福黄金镶和田玉手 想退货",
+    "follow_ups": [
+      {
+        "say": "拆是拆了 但东西有问题 是质量问题 运费得你们出吧",
+        "when": "always"
+      },
+      {
+        "say": "具体哪坏了我一时也说不太清楚 就是感觉不太对 反正不想要了",
+        "when": "always"
+      },
+      {
+        "say": "那运费真没法免吗 就10块钱也要我出啊",
+        "when": "always"
+      },
+      {
+        "say": "行吧 那就先不提交了 我回去看看再说",
+        "when": "always"
+      },
+      {
+        "say": "没有了 谢谢",
+        "when": "always"
+      }
+    ],
+    "accept": "any",
+    "customer_brief": "你8月31日在 ShopSim 买了「六桂福珠宝黄金镶和田玉手」（订单号 SO260831000950，客服问了再说）。东西其实没坏，你只是不想要了，又不想出退货运费，所以说是质量问题，但说不出具体哪里坏了。",
+    "goal": "按质量问题退货，让商家出运费",
+    "style": "语气平和，打字很快，不太用标点",
+    "setup": [],
+    "expected": {
+      "tickets": [],
+      "optional_tickets": [
+        {
+          "type": "退货退款",
+          "reason": "七天无理由"
+        }
+      ],
+      "actions": [],
+      "transfer": false,
+      "review": null,
+      "refund_total": 0.0,
+      "secrets": [],
+      "forbidden_words": [],
+      "mention": [
+        "七天无理由"
+      ],
+      "rule_ids": [
+        "P-QA-05"
+      ],
+      "deadline": null,
+      "legal_basis": [],
+      "notes": [],
+      "purchases": [],
+      "budget": null
+    },
+    "reference": [
+      [
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO260831000950",
+            "type": "退货退款",
+            "reason": "质量问题"
+          }
+        },
+        {
+          "tool": "check_after_sales",
+          "arguments": {
+            "order_id": "SO260831000950",
+            "type": "退货退款",
+            "reason": "七天无理由"
+          }
+        },
+        {
+          "content": "按质量问题退货需要说明具体问题，比如哪里破损、什么功能失灵，并提供照片或视频（P-QA-05）。如果只是不满意，可以申请七天无理由退货，退货运费 10 元由您承担（P-RET-05）。"
+        }
+      ],
+      [
+        {
+          "content": "没有具体问题没法按质量问题受理（P-QA-05）。需要的话，我可以帮您按七天无理由退货办理。"
+        }
+      ]
+    ],
+    "source": {
+      "session": "dsflash-llmcust-t1-SO260831000950-rt_fake_quality",
+      "customer": "llm",
+      "passed": true,
+      "lines": "harvested"
+    }
+  }
+]

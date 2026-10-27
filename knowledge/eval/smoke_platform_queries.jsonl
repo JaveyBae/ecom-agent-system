@@ -1,0 +1,12 @@
+{"id": "p01", "query": "付款两天了商家还没发货，能要求赔偿吗", "relevant": ["《ShopSim 模拟商城平台规则》P-SHIP-02", "《ShopSim 模拟商城平台规则》P-SHIP-01"]}
+{"id": "p02", "query": "物流一个星期都没更新了怎么办", "relevant": ["《ShopSim 模拟商城平台规则》P-SHIP-07"]}
+{"id": "p03", "query": "满300减50买了两件，退一件能退多少钱", "relevant": ["《ShopSim 模拟商城平台规则》P-PRICE-02"]}
+{"id": "p04", "query": "我是黄金会员，退货期限是多久", "relevant": ["《ShopSim 模拟商城平台规则》P-MEM-01"]}
+{"id": "p05", "query": "我不想跟机器人说了，要人工", "relevant": ["《ShopSim 模拟商城平台规则》P-SVC-04"]}
+{"id": "p06", "query": "预售付了定金，商家说发不了货了，定金怎么办", "relevant": ["《ShopSim 模拟商城平台规则》P-CAT-04"]}
+{"id": "p07", "query": "包裹被放到驿站了，我没同意", "relevant": ["《ShopSim 模拟商城平台规则》P-SHIP-09"]}
+{"id": "p08", "query": "快递在路上丢了，商家让我自己去找快递公司", "relevant": ["《ShopSim 模拟商城平台规则》P-SHIP-06"]}
+{"id": "p09", "query": "买的生鲜收到发现坏了", "relevant": ["《ShopSim 模拟商城平台规则》P-CAT-02"]}
+{"id": "p10", "query": "我住在偏远地区，退货运费要多少", "relevant": ["《ShopSim 模拟商城平台规则》P-RET-05"]}
+{"id": "p11", "query": "签收第三天就降价了能补差价吗", "relevant": ["《ShopSim 模拟商城平台规则》P-PRICE-01"]}
+{"id": "p12", "query": "还没发货我想取消订单", "relevant": ["《ShopSim 模拟商城平台规则》P-SHIP-04"]}

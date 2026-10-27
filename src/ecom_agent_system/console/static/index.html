@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ShopSim Agent 控制台</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234338ca'/%3E%3Ctext x='16' y='23' font-size='19' text-anchor='middle' fill='white' font-family='PingFang SC,sans-serif'%3E%E9%93%BE%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="console.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#overview">
+        <span class="brand-mark" aria-hidden="true">链</span>
+        <span>
+          <span class="brand-title">ShopSim Agent 控制台</span>
+          <span class="brand-sub">购物 agent → 订单 → 物流 → 售后 agent → 评分</span>
+        </span>
+      </a>
+      <div class="run-picker">
+        <label for="run">运行</label>
+        <select id="run" aria-label="选择一次运行"></select>
+        <span class="clock" id="clock" title="库里的“当前时间”"></span>
+      </div>
+    </div>
+    <nav class="tabs" id="tabs" aria-label="页面">
+      <a href="#overview" data-view="overview">总览</a>
+      <a href="#shopping" data-view="shopping">购物回放</a>
+      <a href="#orders" data-view="orders">订单与物流</a>
+      <a href="#aftersales" data-view="aftersales">售后对话</a>
+      <a href="#kb" data-view="kb">知识库</a>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="view" id="view-overview" aria-label="总览"></section>
+
+    <section class="view" id="view-shopping" aria-label="购物回放">
+      <div class="split">
+        <aside class="list" id="shopping-list" aria-label="购物任务"></aside>
+        <div class="detail" id="shopping-detail"></div>
+      </div>
+    </section>
+
+    <section class="view" id="view-orders" aria-label="订单与物流">
+      <div class="split">
+        <aside class="list">
+          <form class="search" id="order-search" role="search">
+            <input id="order-query" type="search" autocomplete="off" placeholder="订单号或用户号，如 SO2610 / U000123" aria-label="查找订单">
+            <button type="submit">查找</button>
+          </form>
+          <p class="list-hint" id="order-hint"></p>
+          <div id="order-list"></div>
+        </aside>
+        <div class="detail" id="order-detail"></div>
+      </div>
+    </section>
+
+    <section class="view" id="view-aftersales" aria-label="售后对话">
+      <div class="split">
+        <aside class="list" id="conversation-list" aria-label="售后对话"></aside>
+        <div class="detail" id="conversation-detail"></div>
+      </div>
+    </section>
+
+    <section class="view view-kb" id="view-kb" aria-label="知识库">
+      <iframe id="kb-frame" title="知识库检索台"></iframe>
+      <p class="empty" id="kb-missing" hidden>控制台启动时没有加载知识库（用了 --no-kb），这一页不可用。</p>
+    </section>
+  </main>
+
+  <div class="popover" id="popover" role="dialog" aria-modal="false" hidden></div>
+  <script src="console.js"></script>
+</body>
+</html>

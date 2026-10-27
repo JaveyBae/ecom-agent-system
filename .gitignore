@@ -1,0 +1,23 @@
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+.pytest_cache/
+.env
+*.log
+
+# 可以重新生成：原始下载文件和向量索引
+knowledge/raw/
+knowledge/index/
+
+# 商品数据来自 ShopSimulator，许可未确认，库不进仓库（ecom-shop build 重新生成）
+shop/shop.db
+shop/eval.db
+shop/*.building
+
+# 本地运行的产物：库的副本、文件桥目录、并发分片的记录、导出的训练数据；合并后的对话记录和场景文件留在仓库里，README 里的数字都出自它们
+runs/**/*.db
+runs/**/bridge*/
+runs/**/tasks.txt
+runs/suite/*.s[0-9].jsonl
+runs/suite/sft-*.jsonl
