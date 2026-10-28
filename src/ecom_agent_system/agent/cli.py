@@ -197,13 +197,18 @@ def _customer_model(args):
     sys.exit("--customer llm 需要 --customer-openai 或 --customer-bridge")
 
 
+def select_scenarios(scenarios, only):
+    """--only：按情形、类别或场景编号挑场景，逗号分隔，三种可以混着写。接口出错的几段要重跑时直接给编号。"""
+    wanted = set(part.strip() for part in only.split(",") if part.strip())
+    return [s for s in scenarios if s["kind"] in wanted or s.get("category") in wanted or s.get("scenario_id") in wanted]
+
+
 def aftersales(args):
     from ecom_agent_system.knowledge_base import KnowledgeBase
 
     scenarios = json.loads(Path(args.scenarios).read_text(encoding="utf-8"))
     if args.only:
-        wanted = set(args.only.split(","))
-        scenarios = [s for s in scenarios if s["kind"] in wanted or s.get("category") in wanted]
+        scenarios = select_scenarios(scenarios, args.only)
     if args.shard:  # 并发：几个进程各跑一份，场景按位置轮流分，之后 report 合并各份记录
         try:
             index, total = (int(part) for part in args.shard.split("/"))
@@ -358,7 +363,7 @@ def main(argv=None):
     aftersales_parser.add_argument("--legacy-harness", action="store_true", help="用旧版提示词第 3、4 条，判断结果不带办理权限档；对照 2026-10-26 的改动")
     aftersales_parser.add_argument("--shopping", action="store_true", help="所有场景都给购物工具（搜商品、看商品、下单）；默认只有混合情形开")
     aftersales_parser.add_argument("--trials", type=int, default=1, help="每个场景跑几次，算 pass^k")
-    aftersales_parser.add_argument("--only", help="只跑这些情形或类别，逗号分隔")
+    aftersales_parser.add_argument("--only", help="只跑这些情形、类别或场景编号，逗号分隔；重跑接口出错的几段时给编号")
     aftersales_parser.add_argument("--shard", metavar="i/n", help="只跑第 i 份（共 n 份），几个进程并发时用；report 能合并各份的记录")
     aftersales_parser.add_argument("--label", default="run", help="会话编号的前缀")
     aftersales_parser.add_argument("--in-place", action="store_true", help="直接在 --db 上跑，不复制")

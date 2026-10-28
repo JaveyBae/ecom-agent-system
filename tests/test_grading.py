@@ -4,7 +4,7 @@ import json
 
 import pytest
 
-from ecom_agent_system.agent.cli import main
+from ecom_agent_system.agent.cli import main, select_scenarios
 from ecom_agent_system.agent.grading import compare, grade, summarize_records
 
 ORDER = "SO261001000001"
@@ -214,3 +214,15 @@ def test_extra_actions_the_customer_explicitly_asked_for_are_not_counted_against
     assert wanted["checks"]["转人工判断正确"] is True
     unwanted = grade(_scenario(transfer=False), _record([transfer], users=["算了"], ended="transferred"))
     assert unwanted["checks"]["转人工判断正确"] is False
+
+
+def test_only_selects_by_kind_category_or_scenario_id():
+    """--only 三种写法混用；重跑接口出错的几段时直接给场景编号。"""
+    scenarios = [
+        {"scenario_id": "SO1-stalled", "kind": "stalled", "category": "基本售后"},
+        {"scenario_id": "SO2-review", "kind": "review", "category": "商家和平台"},
+        {"scenario_id": "SO3-injection", "kind": "injection", "category": "对抗"},
+    ]
+    assert [s["scenario_id"] for s in select_scenarios(scenarios, "review")] == ["SO2-review"]
+    assert [s["scenario_id"] for s in select_scenarios(scenarios, "对抗, SO1-stalled")] == ["SO1-stalled", "SO3-injection"]
+    assert select_scenarios(scenarios, "SO9-missing") == []

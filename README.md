@@ -93,7 +93,7 @@
 
 ```bash
 uv sync
-uv run pytest -q                                   # 145 个测试，用假向量模型和内存数据库，不下载模型
+uv run pytest -q                                   # 147 个测试，用假向量模型和内存数据库，不下载模型
 
 # 1. 模拟商城：演示世界和评测世界（不同种子，订单不重合）
 uv run ecom-shop build --products <ShopSimulator 的 fine_items_eval_train_all.json.gz>

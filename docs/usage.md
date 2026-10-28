@@ -63,7 +63,8 @@ uv run ecom-agent aftersales ... --bridge runs/suite/bridge --out runs/suite/aft
 | 选项 | 作用 |
 |---|---|
 | `--trials 3` | 每个场景跑 3 次，报告里算 pass^3 |
-| `--only 对抗,记忆` 或 `--only rejected,escalate_amount` | 只跑这些类别或情形 |
+| `--only 对抗,记忆`、`--only rejected,escalate_amount` 或 `--only SO260919004030-stalled` | 只跑这些类别、情形或场景编号，可以混着写；接口出错的几段重跑时给编号，另起一个 `--out`，再把记录并进原文件 |
+| `--retries 8 --backoff 2` | 接口超时、429、5xx 时重试几次、第一次等几秒（之后翻倍，最多 60 秒）；默认 2 次、1 秒。限流严的免费模型要串行并调到 8 和 2 |
 | `--customer scripted \| noisy \| llm` | 脚本顾客；带错别字、不打标点、带表情的脚本顾客（种子固定）；大模型扮演的顾客（再给 `--customer-openai`、`--customer-base-url`、`--customer-api-key-env`，或 `--customer-bridge`） |
 | `--gates-off ownership,evidence,tier,risk,confirm,dedupe` 或 `all` | 关掉几道关做对照：身份隔离、凭证、办理权限、风控、确认卡片、去重。参数检查、商城的业务规则和审计一直在 |
 | `--no-kb` | 不接知识库：没有 `search_policy`，提示词改成凭所知说明法规 |
