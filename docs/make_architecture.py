@@ -29,8 +29,8 @@ LABELS = {
                   ["Authority", "& risk tiers"], ["Confirmation", "customer card"], ["Execute", "savepoint · audit"]],
         "read": "read (own orders only)",
         "write": "write",
-        "legal": ["Legal Advisor (sub-agent)", "searches the law itself,", "returns verdict + article numbers"],
-        "reviewer": ["Evidence Reviewer (sub-agent)", "is the defect description", "what the customer actually said?"],
+        "legal": ["Legal Advisor", "sub-agent: searches the law itself,", "returns verdict + article numbers"],
+        "reviewer": ["Evidence Reviewer", "sub-agent: is the defect description", "what the customer actually said?"],
         "kb": ["Knowledge Base", "27 laws + 40 platform rules = 2,590 articles", "BM25 + embeddings, RRF fusion"],
         "consult": "consult_legal",
         "blocked": "blocked call → audit log, counts as agent failure",
@@ -92,6 +92,36 @@ C = {
     "grey": "#5B6678", "grey_fill": "#EEF1F5", "ink": "#1F2933", "red": "#C8352E", "white": "#FFFFFF",
 }
 
+# 图标：Feather Icons（MIT）的 24×24 描边路径，少数自己拼的；画的时候按 size/24 缩放
+ICONS = {
+    "cart": '<circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>',
+    "headphones": '<path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>',
+    "bar-chart": '<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>',
+    "cpu": '<rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/>'
+           '<line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/>'
+           '<line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/>',
+    "server": '<rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/>',
+    "bag": '<path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>',
+    "users": '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+    "user": '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+    "scale": '<line x1="12" y1="3" x2="12" y2="21"/><line x1="4" y1="7" x2="20" y2="7"/><path d="M4 7l-3 7a3 3 0 0 0 6 0z"/><path d="M20 7l-3 7a3 3 0 0 0 6 0z"/><line x1="8" y1="21" x2="16" y2="21"/>',
+    "search": '<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>',
+    "book": '<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>',
+    "edit": '<path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>',
+    "check": '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>',
+    "file": '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>',
+    "refresh": '<polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>',
+    "alert": '<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>',
+    "zap": '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
+    "shield": '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+}
+GATE_ICONS = ["file", "user", "book", "search", "alert", "check", "zap"]
+
+
+def _tw(text, size):
+    """估计文字宽度：中文按一个字号，拉丁字母按 0.58 个字号。只用来摆图标，不用很准。"""
+    return sum(size if ord(ch) > 0x2E80 else size * 0.64 for ch in text)
+
 
 class SVG:
     def __init__(self):
@@ -106,14 +136,32 @@ class SVG:
         stroke = f' stroke="{C["white"]}" stroke-width="{size * 0.45}" paint-order="stroke" stroke-linejoin="round"' if halo else ""
         self.parts.append(f'<text x="{x}" y="{y}" font-size="{size}" font-weight="{weight}" fill="{fill}" text-anchor="{anchor}"{stroke}>{s}</text>')
 
-    def box(self, x, y, w, h, lines, fill, stroke, title_size=26, body_size=20, sw=3):
+    def icon(self, name, x, y, size, color, sw=2):
+        self.parts.append(f'<g transform="translate({x} {y}) scale({size / 24:.4f})" fill="none" stroke="{color}" stroke-width="{sw}"'
+                          f' stroke-linecap="round" stroke-linejoin="round">{ICONS[name]}</g>')
+
+    def box(self, x, y, w, h, lines, fill, stroke, title_size=26, body_size=20, sw=3, icon=None, icon_top=False):
+        """圆角框，标题加几行说明，整体垂直居中。icon 放在标题左边（icon_top=True 时放在框顶居中，给高框用）。"""
         self.rect(x, y, w, h, fill, stroke, sw=sw)
         gap = body_size + 8
         total = title_size + 10 + gap * (len(lines) - 1)
         ty = y + (h - total) / 2 + title_size - 4
-        self.text(x + w / 2, ty, lines[0], title_size, "bold")
+        tx = x + w / 2
+        if icon and icon_top:
+            self.icon(icon, tx - 26, y + 26, 52, stroke)
+        elif icon:
+            size = title_size + 6
+            group = size + 14 + _tw(lines[0], title_size)
+            left = tx - group / 2
+            self.icon(icon, left, ty - title_size + 2, size, stroke)
+            tx = left + size + 14 + _tw(lines[0], title_size) / 2
+        self.text(tx, ty, lines[0], title_size, "bold")
         for i, line in enumerate(lines[1:], 1):
             self.text(x + w / 2, ty + 10 + gap * i, line, body_size, fill="#3A4452")
+
+    def band_title(self, x, y, text, color, icon):
+        self.icon(icon, x, y - 30, 38, color, sw=2.2)
+        self.text(x + 50, y, text, 34, "bold", color, "start")
 
     def arrow(self, points, color, label=None, dash=None, both=False, label_dy=-12, label_anchor="middle", label_at=None, width=4):
         d = " ".join(f"{'M' if i == 0 else 'L'} {x} {y}" for i, (x, y) in enumerate(points))
@@ -146,28 +194,29 @@ def draw(lang):
 
     # ---- 购物带
     s.rect(60, 100, 1680, 215, C["blue_fill"], C["blue"])
-    s.text(104, 142, t["shopping"], 34, "bold", C["blue"], "start")
-    s.box(140, 160, 600, 130, t["shop_agent"], C["white"], C["blue"], 26, 20)
-    s.box(960, 160, 620, 130, t["gateway"], C["white"], C["blue"], 26, 20)
+    s.band_title(100, 142, t["shopping"], C["blue"], "cart")
+    s.box(140, 160, 600, 130, t["shop_agent"], C["white"], C["blue"], 26, 20, icon="cpu")
+    s.box(960, 160, 620, 130, t["gateway"], C["white"], C["blue"], 26, 20, icon="server")
     s.arrow([(740, 225), (960, 225)], "blue", t["buy"])
     s.arrow([(1580, 225), (1800, 225)], "blue", t["to_mall"])
 
     # ---- 模拟商城
-    s.box(1800, 100, 540, 790, t["mall"], C["green_fill"], C["green"], 30, 22, sw=4)
+    s.box(1800, 100, 540, 790, t["mall"], C["green_fill"], C["green"], 30, 22, sw=4, icon="bag", icon_top=True)
 
     # ---- 售后带
     s.rect(60, 340, 1680, 660, C["orange_fill"], C["orange"])
-    s.text(104, 382, t["aftersales"], 34, "bold", C["orange"], "start")
-    s.box(120, 520, 200, 130, t["customers"], C["white"], C["orange"], 26, 19)
-    s.box(400, 505, 340, 160, t["cs_agent"], C["white"], C["orange"], 26, 19)
-    s.arrow([(320, 585), (400, 585)], "orange", both=True)
+    s.band_title(100, 382, t["aftersales"], C["orange"], "headphones")
+    s.box(110, 520, 230, 130, t["customers"], C["white"], C["orange"], 26, 19, icon="users")
+    s.box(400, 505, 340, 160, t["cs_agent"], C["white"], C["orange"], 26, 19, icon="cpu")
+    s.arrow([(340, 585), (400, 585)], "orange", both=True)
     s.arrow([(740, 585), (780, 585)], "orange")
     s.text(760, 566, t["tool_calls"][0], 18, "bold", C["orange"], halo=True)
     s.text(760, 612, t["tool_calls"][1], 18, "bold", C["orange"], halo=True)
 
     # harness 和七道关
     s.rect(780, 420, 970, 300, C["harness_fill"], C["orange"], sw=4)
-    s.text(800, 458, t["harness"], 24, "bold", C["orange"], "start")
+    s.icon("shield", 800, 436, 30, C["orange"], sw=2.2)
+    s.text(840, 458, t["harness"], 24, "bold", C["orange"], "start")
     gx, gw, gap = 792, 126, 12
     centers = []
     for i, (name, sub) in enumerate(t["gates"]):
@@ -177,8 +226,9 @@ def draw(lang):
         centers.append(cx)
         s.parts.append(f'<circle cx="{x + 20}" cy="{520}" r="14" fill="{C["orange"]}"/>')
         s.text(x + 20, 526, str(i + 1), 17, "bold", C["white"])
-        s.text(cx, 590, name, 20, "bold")
-        s.text(cx, 620, sub, 15, fill="#3A4452")
+        s.icon(GATE_ICONS[i], cx - 15, 536, 30, C["orange"])
+        s.text(cx, 598, name, 20, "bold")
+        s.text(cx, 626, sub, 15, fill="#3A4452")
         if i:
             s.arrow([(x - gap, 575), (x, 575)], "orange", width=3)
     s.text(1265, 695, t["harness_note"], 19, "normal", C["orange"])
@@ -188,9 +238,9 @@ def draw(lang):
     s.arrow([(1750, 575), (1800, 575)], "green", t["write"], label_dy=-14)
 
     # 子 agent 和知识库
-    s.box(820, 770, 330, 100, t["legal"], C["purple_fill"], C["purple"], 22, 18)
-    s.box(1230, 770, 330, 100, t["reviewer"], C["purple_fill"], C["purple"], 22, 18)
-    s.box(820, 895, 500, 90, t["kb"], C["purple_fill"], C["purple"], 22, 18)
+    s.box(805, 770, 360, 100, t["legal"], C["purple_fill"], C["purple"], 22, 18, icon="scale")
+    s.box(1215, 770, 360, 100, t["reviewer"], C["purple_fill"], C["purple"], 22, 18, icon="search")
+    s.box(820, 895, 500, 90, t["kb"], C["purple_fill"], C["purple"], 22, 18, icon="book")
     s.arrow([(centers[0], 650), (centers[0], 770)], "purple", t["consult"], label_at=(centers[0] + 12, 710), label_anchor="start", label_dy=0)
     s.arrow([(centers[3], 650), (centers[3], 770)], "purple")
     s.arrow([(985, 870), (985, 895)], "purple")
@@ -200,11 +250,11 @@ def draw(lang):
 
     # ---- 评测带
     s.rect(60, 1030, 2280, 300, C["grey_fill"], C["grey"])
-    s.text(104, 1072, t["eval"], 34, "bold", C["grey"], "start")
-    s.box(120, 1095, 460, 170, t["scenarios"], C["white"], C["grey"], 26, 20)
-    s.box(660, 1095, 520, 170, t["evaluation"], C["white"], C["grey"], 26, 20)
-    s.box(1260, 1095, 400, 170, t["reports"], C["white"], C["grey"], 26, 20)
-    s.box(1740, 1095, 560, 170, t["feedback"], C["white"], C["grey"], 26, 20)
+    s.band_title(100, 1072, t["eval"], C["grey"], "bar-chart")
+    s.box(120, 1095, 460, 170, t["scenarios"], C["white"], C["grey"], 26, 20, icon="edit")
+    s.box(660, 1095, 520, 170, t["evaluation"], C["white"], C["grey"], 26, 20, icon="check")
+    s.box(1260, 1095, 400, 170, t["reports"], C["white"], C["grey"], 26, 20, icon="file")
+    s.box(1740, 1095, 560, 170, t["feedback"], C["white"], C["grey"], 26, 20, icon="refresh")
     s.arrow([(580, 1180), (660, 1180)], "grey", t["ground_truth"], label_dy=-14)
     s.arrow([(1180, 1180), (1260, 1180)], "grey")
     s.arrow([(1660, 1180), (1740, 1180)], "grey", t["records"], label_dy=-14)
