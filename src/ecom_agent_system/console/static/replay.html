@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>售后对话回放</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234338ca'/%3E%3Cpath d='M12 9v14l11-7z' fill='white'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="console.css">
+  <link rel="stylesheet" href="replay.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="./#aftersales">
+        <span class="brand-mark" aria-hidden="true">▶</span>
+        <span>
+          <span class="brand-title">售后对话回放</span>
+          <span class="brand-sub">左边是顾客手机上看到的，右边是 harness 里发生的：工具调用、关卡、政策判断、评分</span>
+        </span>
+      </a>
+      <a class="back" href="./#overview">返回控制台</a>
+    </div>
+    <form class="pickers" id="pickers" onsubmit="return false">
+      <label>运行 <select id="run" aria-label="运行"></select></label>
+      <label>记录 <select id="file" aria-label="对话记录文件"></select></label>
+      <label>对照 <select id="cmp" aria-label="对照的记录文件"></select></label>
+      <label class="grow">场景 <select id="scenario" aria-label="场景"></select></label>
+      <label class="check"><input type="checkbox" id="diff-only"> 只看两边结果不同的</label>
+    </form>
+    <div class="player" role="toolbar" aria-label="播放">
+      <button type="button" id="first" title="回到开头（Home）">⏮</button>
+      <button type="button" id="prev" title="上一步（←）">◀</button>
+      <button type="button" id="play" class="primary" title="播放 / 暂停（空格）">▶ 播放</button>
+      <button type="button" id="next" title="下一步（→）">▶</button>
+      <button type="button" id="last" title="直接看结果（End）">⏭</button>
+      <input type="range" id="scrub" min="0" max="0" value="0" aria-label="进度">
+      <span class="rp-step" id="step">0 / 0</span>
+      <label class="speed">速度
+        <select id="speed" aria-label="播放速度">
+          <option value="1600">慢</option>
+          <option value="900" selected>正常</option>
+          <option value="400">快</option>
+        </select>
+      </label>
+    </div>
+  </header>
+
+  <main class="rp-stage" id="stage"></main>
+  <script src="replay.js"></script>
+</body>
+</html>

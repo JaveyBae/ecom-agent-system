@@ -7,7 +7,7 @@
 
 [![Python](https://img.shields.io/badge/Python-3.12%2B-3776AB?logo=python&logoColor=white)](pyproject.toml)
 [![uv](https://img.shields.io/badge/packaging-uv-DE5FE9?logo=uv&logoColor=white)](https://docs.astral.sh/uv/)
-[![Tests](https://img.shields.io/badge/tests-147%20passed-brightgreen?logo=pytest&logoColor=white)](tests/)
+[![Tests](https://img.shields.io/badge/tests-149%20passed-brightgreen?logo=pytest&logoColor=white)](tests/)
 [![Scenarios](https://img.shields.io/badge/scenarios-237%20%C2%B7%2030%20kinds-blue)](runs/suite/)
 [![pass^3](https://img.shields.io/badge/DeepSeek%20pass%5E3-0.929-success)](#-结果速览)
 [![Docs](https://img.shields.io/badge/docs-devlog%20%C2%B7%20usage-8A2BE2)](docs/)
@@ -36,7 +36,7 @@
 
 ## 📰 最近更新
 
-- **2026-10-28** 56 段困难情形新旧 harness 各跑 3 次：pass^3 0.411 → 0.929；`report` 加 pass@k 和每次试验的通过数；脚本生成的中英文架构图；GLM-4.7-flash 小模型对照（进行中）
+- **2026-10-28** 对话回放页：顾客手机和开发者视角并排、两份记录对照播放；56 段困难情形新旧 harness 各跑 3 次：pass^3 0.411 → 0.929；`report` 加 pass@k 和每次试验的通过数；脚本生成的中英文架构图；GLM-4.7-flash 小模型对照（进行中）
 - **2026-10-27** 全套 205 段新旧 harness 对照 164 → 189；混合对话 32/32；数据回流；按一次外部评审修了评分和 harness 五处；推到 GitHub
 - **2026-10-26** 作弊基线校准评分；Qwen3.5-2B 跑 176 段并分析；子 agent；DeepSeek 对照，harness v1 → v2
 - **2026-10-25** 售后 agent 和 harness、按顾客的记忆、评测套件、控制台
@@ -97,8 +97,16 @@ pass^k 是同一场景 k 次全过的比例（τ-bench 的定义，pass^2 用无
 | 评测 | `agent/suite.py`、`scenarios.py`、`grading.py`、`customers.py`、`baselines.py` | 场景生成、参考解法、三种顾客、评分、汇总、回归对比、基线 |
 | 数据回流 | `agent/flywheel.py` | 对话记录 → 新场景 / 回归集；通过的对话 → SFT 样本 |
 | 模型后端 | `agent/models.py`、`bridge.py` | OpenAI 兼容接口（重试、`--extra-body`、分片并发）、本机 transformers、文件桥（Claude Code 或人扮演模型） |
-| 控制台 | `console/` | 只读网页：评测报告、售后对话和评分、订单与物流（可拨时间）、审计日志、检索台 |
+| 控制台 | `console/` | 只读网页：评测报告、售后对话和评分、订单与物流（可拨时间）、审计日志、检索台；回放页把一段对话按步播放，可两份记录对照 |
 | 接购物 agent | `shop/gateway.py`、`purchases.py` | [shopping-grpo-longhorizon](https://github.com/JaveyBae/shopping-grpo-longhorizon) 的购物 agent 买下的商品记成订单，走后面的发货和售后 |
+
+### 对话回放
+
+<p align="center">
+  <img src="docs/replay.png" alt="回放页：同一场景新旧 harness 对照，左边是顾客手机，右边是工具调用、关卡和评分" width="100%">
+</p>
+
+`uv run ecom-console` 之后打开 http://127.0.0.1:8800/replay.html。每一块左边是顾客手机上看到的（订单卡片、聊天、确认卡片、转人工提示），右边是 harness 里发生的：每次工具调用过了哪几道关、卡在哪一关、政策判断和办理权限档、最后的评分。选一份“对照”记录，同一场景的两次运行一起播放；上图是金额超权限那组，当前 harness 直接转人工，旧 harness 去提交退款，被权限关卡拦下。可以逐步、拖动或自动播放，“只看两边结果不同的”能直接挑出新旧 harness 分叉的场景。地址栏记着选择，链接可以直接分享。
 
 <details>
 <summary><b>一段售后对话是怎么过关卡的</b>（时序图）</summary>
@@ -182,7 +190,7 @@ sequenceDiagram
 
 ```bash
 uv sync
-uv run pytest -q                                   # 147 个测试，用假向量模型和内存数据库，不下载模型
+uv run pytest -q                                   # 149 个测试，用假向量模型和内存数据库，不下载模型
 
 # 1. 模拟商城：演示世界和评测世界（不同种子，订单不重合）
 uv run ecom-shop build --products <ShopSimulator 的 fine_items_eval_train_all.json.gz>
@@ -260,7 +268,7 @@ src/ecom_agent_system/
   agent/                售后 agent：工具和关卡、对话循环、记忆、子 agent、模型后端、文件桥、顾客、场景、套件、评分、回流
   console/              控制台
   knowledge_base.py     混合检索；ecom-kb 命令和检索台
-tests/                  pytest，147 个
+tests/                  pytest，149 个
 runs/suite/             评测套件：场景文件和 README 里引用的全部对话记录（库副本和并发分片不进 git）
 docs/                   详细过程（devlog）、命令参考（usage）、架构图和生成脚本
 ```

@@ -167,3 +167,50 @@ def test_runs_on_database_copies_show_their_audit_log(client, setup, knowledge_b
     assert client.get(f"/api/console/orders/{order_id}", params={"run": "suite"}).json()["work_orders"] == []  # 基础库没被改
     assert client.get(f"/api/console/orders/{order_id}", params={"run": "suite", "db": "../demo/shop.db"}).status_code == 404
     assert client.get("/api/console/aftersales", params={"run": "suite", "file": "../demo/aftersales.jsonl"}).status_code == 404
+
+
+def _call(call_id, name, arguments):
+    return {"id": call_id, "type": "function", "function": {"name": name, "arguments": json.dumps(arguments, ensure_ascii=False)}}
+
+
+def test_replay_timeline_puts_gates_cards_and_grades_in_order():
+    """回放页的帧：先说的话在工具调用前；被拦下的对到卡住的那一关，不出确认卡片；办成的提交带确认卡片；转人工后同批的调用没执行。"""
+    from ecom_agent_system.console.replay import build_timeline, grade_rows
+
+    order = {"order_id": "SO1", "type": "仅退款", "reason": "物流异常"}
+    ticket = {"ticket_id": "AS1", "status": "待人工审核", "refund_amount": 198.0, "rule_ids": ["P-SHIP-07"]}
+    messages = [
+        {"role": "system", "content": "规矩"},
+        {"role": "user", "content": "是不是丢了？"},
+        {"role": "assistant", "content": "我查一下。", "tool_calls": [_call("a", "create_after_sales", order), _call("b", "create_after_sales", order)]},
+        {"role": "tool", "tool_call_id": "a", "content": json.dumps({"error": "金额超过 1000 元，必须转人工（P-SVC-04）"}, ensure_ascii=False)},
+        {"role": "tool", "tool_call_id": "b", "content": json.dumps(ticket, ensure_ascii=False)},
+        {"role": "assistant", "content": None, "tool_calls": [_call("c", "transfer_to_human", {"summary": "SO1"}), _call("d", "urge_order", {"order_id": "SO1"})]},
+        {"role": "tool", "tool_call_id": "c", "content": json.dumps({"transferred": True, "work_order_id": "WO1"})},
+        {"role": "tool", "tool_call_id": "d", "content": json.dumps({"error": "已转人工客服，对话结束，这个调用没有执行"}, ensure_ascii=False)},
+    ]
+    record = {"messages": messages, "ended": "transferred", "blocked": [
+        {"tool": "create_after_sales", "arguments": order, "outcome": "需转人工", "message": "金额超过 1000 元，必须转人工（P-SVC-04）"},
+        {"tool": "urge_order", "arguments": {"order_id": "SO1"}, "outcome": "转人工后未执行", "message": "没有执行"},
+    ]}
+    frames = build_timeline(record)
+    assert [f["type"] for f in frames] == ["customer", "reply", "tool", "tool", "tool", "tool", "end"]
+    blocked, done, transfer, skipped = frames[2:6]
+    assert (blocked["status"], blocked["outcome"], "card" in blocked) == ("blocked", "需转人工", False)
+    assert [g["state"] for g in blocked["gates"]] == ["pass", "pass", "pass", "pass", "fail", "todo", "todo"]
+    assert done["status"] == "ok" and done["card"]["title"] == "提交售后申请" and done["card"]["outcome"] == "售后单 AS1 · 待人工审核"
+    assert {"label": "金额", "value": "198 元"} in done["facts"] and {"label": "规则", "value": "P-SHIP-07"} in done["facts"]
+    assert transfer["notice"] and "确认卡片" in [g["label"] for g in transfer["gates"] if g["state"] == "na"]
+    assert skipped["status"] == "skipped" and all(g["state"] in ("todo", "na") for g in skipped["gates"])
+    rows = grade_rows({"checks": {"售后单和标准答案一致": False, "办理前先判断过": True}, "hard": ["售后单和标准答案一致"]})
+    assert rows == [{"name": "售后单和标准答案一致", "passed": False, "hard": True}, {"name": "办理前先判断过", "passed": True, "hard": False}]
+
+
+def test_replay_endpoint_finds_a_conversation_by_scenario_and_trial(client, setup):
+    replay = client.get("/api/console/replay", params={"run": "demo", "index": 0}).json()
+    assert replay["frames"][0] == {"type": "customer", "text": "耳机不想要了"} and replay["frames"][-1]["type"] == "end"
+    assert replay["order"]["order_id"] == setup["order_id"] and replay["grade"]["passed"] is True
+    scenario = replay["scenario_id"]
+    assert client.get("/api/console/replay", params={"run": "demo", "scenario": scenario}).json()["index"] == 0
+    assert client.get("/api/console/replay", params={"run": "demo", "scenario": scenario, "trial": 2}).status_code == 404
+    assert "售后对话回放" in client.get("/replay.html").text

@@ -19,6 +19,7 @@ from fastapi import FastAPI, HTTPException, Query
 from fastapi.staticfiles import StaticFiles
 
 from ecom_agent_system.agent.grading import summarize_records
+from ecom_agent_system.console.replay import build_timeline, grade_rows
 from ecom_agent_system.server import STATIC_DIR as KNOWLEDGE_STATIC_DIR
 from ecom_agent_system.server import add_knowledge_routes
 from ecom_agent_system.shop.catalog import CategoryPolicy
@@ -397,6 +398,37 @@ def create_app(runs, knowledge_base=None):
             "db": db,
             "audit": audit,
             "grade": record["grade"],
+        }
+
+    @app.get("/api/console/replay")
+    def replay(run: str, file: str | None = None, index: int | None = None, scenario: str | None = None, trial: int = 1):
+        """回放页：一段对话拆成帧。按位置（index）或按场景编号加第几次试验（scenario、trial）找，对照两份记录时用后者。"""
+        chosen, _, records = conversations_of(run, file)
+        if scenario is not None:
+            index = next((i for i, r in enumerate(records)
+                          if r["scenario"]["scenario_id"] == scenario and (r.get("trial") or 1) == trial), None)
+            if index is None:
+                raise HTTPException(404, f"{chosen} 里没有 {scenario} 第 {trial} 次")
+        if index is None or not 0 <= index < len(records):
+            raise HTTPException(404, f"没有第 {index} 段售后对话")
+        record = records[index]
+        scenario_data = record["scenario"]
+        order = None
+        try:  # 对话开始那一刻顾客 App 里的订单：从运行的基础库读，跑完后的库里已经有 agent 办的单
+            with runs.shop(run) as shop:
+                order = shop.get_order(scenario_data["order_id"], now=parse(scenario_data["now"]))
+        except (HTTPException, ShopError):
+            pass
+        return {
+            **_conversation_summary(index, record),
+            "file": chosen,
+            "legacy": record.get("legacy", False),
+            "goal": scenario_data.get("goal"),
+            "expected": scenario_data.get("expected"),
+            "order": order,
+            "frames": build_timeline(record),
+            "grade": {"passed": record["grade"]["passed"], "rows": grade_rows(record["grade"])},
+            "usage": record.get("usage"),
         }
 
     @app.get("/api/console/orders")
