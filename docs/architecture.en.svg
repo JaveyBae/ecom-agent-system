@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 2400 1380" font-family="-apple-system, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans CJK SC', Arial, sans-serif"><defs><marker id="head-blue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M 0 0 L 12 6 L 0 12 z" fill="#2F6FBA"/></marker><marker id="head-blue-r" markerWidth="12" markerHeight="12" refX="2" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M 12 0 L 0 6 L 12 12 z" fill="#2F6FBA"/></marker><marker id="head-orange" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M 0 0 L 12 6 L 0 12 z" fill="#D9742A"/></marker><marker id="head-orange-r" markerWidth="12" markerHeight="12" refX="2" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M 12 0 L 0 6 L 12 12 z" fill="#D9742A"/></marker><marker id="head-green" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M 0 0 L 12 6 L 0 12 z" fill="#3E9A4F"/></marker><marker id="head-green-r" markerWidth="12" markerHeight="12" refX="2" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M 12 0 L 0 6 L 12 12 z" fill="#3E9A4F"/></marker><marker id="head-purple" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M 0 0 L 12 6 L 0 12 z" fill="#7E57C2"/></marker><marker id="head-purple-r" markerWidth="12" markerHeight="12" refX="2" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M 12 0 L 0 6 L 12 12 z" fill="#7E57C2"/></marker><marker id="head-grey" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M 0 0 L 12 6 L 0 12 z" fill="#5B6678"/></marker><marker id="head-grey-r" markerWidth="12" markerHeight="12" refX="2" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M 12 0 L 0 6 L 12 12 z" fill="#5B6678"/></marker><marker id="head-red" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M 0 0 L 12 6 L 0 12 z" fill="#C8352E"/></marker><marker id="head-red-r" markerWidth="12" markerHeight="12" refX="2" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M 12 0 L 0 6 L 12 12 z" fill="#C8352E"/></marker></defs><rect width="2400" height="1380" fill="#FFFFFF"/>
+<text x="1200.0" y="64" font-size="44" font-weight="bold" fill="#1F2933" text-anchor="middle">E-commerce Agent System: trained shopping agent + harness-guarded after-sales agent</text>
+<rect x="60" y="100" width="1680" height="215" rx="18" fill="#E9F1FB" stroke="#2F6FBA" stroke-width="3"/>
+<text x="104" y="142" font-size="34" font-weight="bold" fill="#2F6FBA" text-anchor="start">Shopping</text>
+<rect x="140" y="160" width="600" height="130" rx="18" fill="#FFFFFF" stroke="#2F6FBA" stroke-width="3"/>
+<text x="440.0" y="201.0" font-size="26" font-weight="bold" fill="#1F2933" text-anchor="middle">Shopping Agent</text>
+<text x="440.0" y="239.0" font-size="20" font-weight="normal" fill="#3A4452" text-anchor="middle">Qwen3.5-2B, SFT + GRPO</text>
+<text x="440.0" y="267.0" font-size="20" font-weight="normal" fill="#3A4452" text-anchor="middle">in ShopSimulator: search, compare, choose options, buy</text>
+<rect x="960" y="160" width="620" height="130" rx="18" fill="#FFFFFF" stroke="#2F6FBA" stroke-width="3"/>
+<text x="1270.0" y="201.0" font-size="26" font-weight="bold" fill="#1F2933" text-anchor="middle">Order Gateway</text>
+<text x="1270.0" y="239.0" font-size="20" font-weight="normal" fill="#3A4452" text-anchor="middle">proxies ShopSimulator, records each purchase as an order</text>
+<text x="1270.0" y="267.0" font-size="20" font-weight="normal" fill="#3A4452" text-anchor="middle">planned: Buy Now pauses for a confirmation card</text>
+<path d="M 740 225 L 960 225" fill="none" stroke="#2F6FBA" stroke-width="4" marker-end="url(#head-blue)"/>
+<text x="850.0" y="213.0" font-size="20" font-weight="bold" fill="#2F6FBA" text-anchor="middle" stroke="#FFFFFF" stroke-width="9.0" paint-order="stroke" stroke-linejoin="round">Buy Now</text>
+<path d="M 1580 225 L 1800 225" fill="none" stroke="#2F6FBA" stroke-width="4" marker-end="url(#head-blue)"/>
+<text x="1690.0" y="213.0" font-size="20" font-weight="bold" fill="#2F6FBA" text-anchor="middle" stroke="#FFFFFF" stroke-width="9.0" paint-order="stroke" stroke-linejoin="round">order</text>
+<rect x="1800" y="100" width="540" height="790" rx="18" fill="#E7F4E8" stroke="#3E9A4F" stroke-width="4"/>
+<text x="2070.0" y="396.0" font-size="30" font-weight="bold" fill="#1F2933" text-anchor="middle">Simulated Mall (SQLite)</text>
+<text x="2070.0" y="436.0" font-size="22" font-weight="normal" fill="#3A4452" text-anchor="middle">23,421 products · 4,666 users</text>
+<text x="2070.0" y="466.0" font-size="22" font-weight="normal" fill="#3A4452" text-anchor="middle">orders · 9 logistics scenarios</text>
+<text x="2070.0" y="496.0" font-size="22" font-weight="normal" fill="#3A4452" text-anchor="middle">policy engine (every verdict cites a rule)</text>
+<text x="2070.0" y="526.0" font-size="22" font-weight="normal" fill="#3A4452" text-anchor="middle">after-sales flow · manual review</text>
+<text x="2070.0" y="556.0" font-size="22" font-weight="normal" fill="#3A4452" text-anchor="middle">merchant rejection · platform intervention</text>
+<text x="2070.0" y="586.0" font-size="22" font-weight="normal" fill="#3A4452" text-anchor="middle">work orders · audit log</text>
+<text x="2070.0" y="616.0" font-size="22" font-weight="normal" fill="#3A4452" text-anchor="middle">customer memory</text>
+<rect x="60" y="340" width="1680" height="660" rx="18" fill="#FDEFE2" stroke="#D9742A" stroke-width="3"/>
+<text x="104" y="382" font-size="34" font-weight="bold" fill="#D9742A" text-anchor="start">After-sales</text>
+<rect x="120" y="520" width="200" height="130" rx="18" fill="#FFFFFF" stroke="#D9742A" stroke-width="3"/>
+<text x="220.0" y="562.0" font-size="26" font-weight="bold" fill="#1F2933" text-anchor="middle">Customers</text>
+<text x="220.0" y="599.0" font-size="19" font-weight="normal" fill="#3A4452" text-anchor="middle">scripted / noisy /</text>
+<text x="220.0" y="626.0" font-size="19" font-weight="normal" fill="#3A4452" text-anchor="middle">LLM-played / real</text>
+<rect x="400" y="505" width="340" height="160" rx="18" fill="#FFFFFF" stroke="#D9742A" stroke-width="3"/>
+<text x="570.0" y="548.5" font-size="26" font-weight="bold" fill="#1F2933" text-anchor="middle">After-sales Agent</text>
+<text x="570.0" y="585.5" font-size="19" font-weight="normal" fill="#3A4452" text-anchor="middle">any model: DeepSeek, GLM,</text>
+<text x="570.0" y="612.5" font-size="19" font-weight="normal" fill="#3A4452" text-anchor="middle">Qwen3.5-2B, Claude bridge</text>
+<text x="570.0" y="639.5" font-size="19" font-weight="normal" fill="#3A4452" text-anchor="middle">prompt: rules + customer profile</text>
+<path d="M 320 585 L 400 585" fill="none" stroke="#D9742A" stroke-width="4" marker-end="url(#head-orange)" marker-start="url(#head-orange-r)"/>
+<path d="M 740 585 L 780 585" fill="none" stroke="#D9742A" stroke-width="4" marker-end="url(#head-orange)"/>
+<text x="760" y="566" font-size="18" font-weight="bold" fill="#D9742A" text-anchor="middle" stroke="#FFFFFF" stroke-width="8.1" paint-order="stroke" stroke-linejoin="round">tool</text>
+<text x="760" y="612" font-size="18" font-weight="bold" fill="#D9742A" text-anchor="middle" stroke="#FFFFFF" stroke-width="8.1" paint-order="stroke" stroke-linejoin="round">calls</text>
+<rect x="780" y="420" width="970" height="300" rx="18" fill="#FAE1C9" stroke="#D9742A" stroke-width="4"/>
+<text x="800" y="458" font-size="24" font-weight="bold" fill="#D9742A" text-anchor="start">Harness — the model picks the tool, the gates decide whether it may</text>
+<rect x="792" y="500" width="126" height="150" rx="12" fill="#FFFFFF" stroke="#D9742A" stroke-width="3"/>
+<circle cx="812" cy="520" r="14" fill="#D9742A"/>
+<text x="812" y="526" font-size="17" font-weight="bold" fill="#FFFFFF" text-anchor="middle">1</text>
+<text x="855.0" y="590" font-size="20" font-weight="bold" fill="#1F2933" text-anchor="middle">Arguments</text>
+<text x="855.0" y="620" font-size="15" font-weight="normal" fill="#3A4452" text-anchor="middle">schema check</text>
+<rect x="930" y="500" width="126" height="150" rx="12" fill="#FFFFFF" stroke="#D9742A" stroke-width="3"/>
+<circle cx="950" cy="520" r="14" fill="#D9742A"/>
+<text x="950" y="526" font-size="17" font-weight="bold" fill="#FFFFFF" text-anchor="middle">2</text>
+<text x="993.0" y="590" font-size="20" font-weight="bold" fill="#1F2933" text-anchor="middle">Identity</text>
+<text x="993.0" y="620" font-size="15" font-weight="normal" fill="#3A4452" text-anchor="middle">own orders only</text>
+<path d="M 918 575 L 930 575" fill="none" stroke="#D9742A" stroke-width="3" marker-end="url(#head-orange)"/>
+<rect x="1068" y="500" width="126" height="150" rx="12" fill="#FFFFFF" stroke="#D9742A" stroke-width="3"/>
+<circle cx="1088" cy="520" r="14" fill="#D9742A"/>
+<text x="1088" y="526" font-size="17" font-weight="bold" fill="#FFFFFF" text-anchor="middle">3</text>
+<text x="1131.0" y="590" font-size="20" font-weight="bold" fill="#1F2933" text-anchor="middle">Policy</text>
+<text x="1131.0" y="620" font-size="15" font-weight="normal" fill="#3A4452" text-anchor="middle">engine verdict</text>
+<path d="M 1056 575 L 1068 575" fill="none" stroke="#D9742A" stroke-width="3" marker-end="url(#head-orange)"/>
+<rect x="1206" y="500" width="126" height="150" rx="12" fill="#FFFFFF" stroke="#D9742A" stroke-width="3"/>
+<circle cx="1226" cy="520" r="14" fill="#D9742A"/>
+<text x="1226" y="526" font-size="17" font-weight="bold" fill="#FFFFFF" text-anchor="middle">4</text>
+<text x="1269.0" y="590" font-size="20" font-weight="bold" fill="#1F2933" text-anchor="middle">Evidence</text>
+<text x="1269.0" y="620" font-size="15" font-weight="normal" fill="#3A4452" text-anchor="middle">named defect</text>
+<path d="M 1194 575 L 1206 575" fill="none" stroke="#D9742A" stroke-width="3" marker-end="url(#head-orange)"/>
+<rect x="1344" y="500" width="126" height="150" rx="12" fill="#FFFFFF" stroke="#D9742A" stroke-width="3"/>
+<circle cx="1364" cy="520" r="14" fill="#D9742A"/>
+<text x="1364" y="526" font-size="17" font-weight="bold" fill="#FFFFFF" text-anchor="middle">5</text>
+<text x="1407.0" y="590" font-size="20" font-weight="bold" fill="#1F2933" text-anchor="middle">Authority</text>
+<text x="1407.0" y="620" font-size="15" font-weight="normal" fill="#3A4452" text-anchor="middle">&amp; risk tiers</text>
+<path d="M 1332 575 L 1344 575" fill="none" stroke="#D9742A" stroke-width="3" marker-end="url(#head-orange)"/>
+<rect x="1482" y="500" width="126" height="150" rx="12" fill="#FFFFFF" stroke="#D9742A" stroke-width="3"/>
+<circle cx="1502" cy="520" r="14" fill="#D9742A"/>
+<text x="1502" y="526" font-size="17" font-weight="bold" fill="#FFFFFF" text-anchor="middle">6</text>
+<text x="1545.0" y="590" font-size="20" font-weight="bold" fill="#1F2933" text-anchor="middle">Confirmation</text>
+<text x="1545.0" y="620" font-size="15" font-weight="normal" fill="#3A4452" text-anchor="middle">customer card</text>
+<path d="M 1470 575 L 1482 575" fill="none" stroke="#D9742A" stroke-width="3" marker-end="url(#head-orange)"/>
+<rect x="1620" y="500" width="126" height="150" rx="12" fill="#FFFFFF" stroke="#D9742A" stroke-width="3"/>
+<circle cx="1640" cy="520" r="14" fill="#D9742A"/>
+<text x="1640" y="526" font-size="17" font-weight="bold" fill="#FFFFFF" text-anchor="middle">7</text>
+<text x="1683.0" y="590" font-size="20" font-weight="bold" fill="#1F2933" text-anchor="middle">Execute</text>
+<text x="1683.0" y="620" font-size="15" font-weight="normal" fill="#3A4452" text-anchor="middle">savepoint · audit</text>
+<path d="M 1608 575 L 1620 575" fill="none" stroke="#D9742A" stroke-width="3" marker-end="url(#head-orange)"/>
+<text x="1265" y="695" font-size="19" font-weight="normal" fill="#D9742A" text-anchor="middle">every write passes all gates in order</text>
+<path d="M 993.0 420 L 993.0 390 L 1800 390" fill="none" stroke="#3E9A4F" stroke-width="4" marker-end="url(#head-green)"/>
+<text x="1500" y="378" font-size="20" font-weight="bold" fill="#3E9A4F" text-anchor="middle" stroke="#FFFFFF" stroke-width="9.0" paint-order="stroke" stroke-linejoin="round">read (own orders only)</text>
+<path d="M 1750 575 L 1800 575" fill="none" stroke="#3E9A4F" stroke-width="4" marker-end="url(#head-green)"/>
+<text x="1775.0" y="561.0" font-size="20" font-weight="bold" fill="#3E9A4F" text-anchor="middle" stroke="#FFFFFF" stroke-width="9.0" paint-order="stroke" stroke-linejoin="round">write</text>
+<rect x="820" y="770" width="330" height="100" rx="18" fill="#EEE7F8" stroke="#7E57C2" stroke-width="3"/>
+<text x="985.0" y="796.0" font-size="22" font-weight="bold" fill="#1F2933" text-anchor="middle">Legal Advisor (sub-agent)</text>
+<text x="985.0" y="832.0" font-size="18" font-weight="normal" fill="#3A4452" text-anchor="middle">searches the law itself,</text>
+<text x="985.0" y="858.0" font-size="18" font-weight="normal" fill="#3A4452" text-anchor="middle">returns verdict + article numbers</text>
+<rect x="1230" y="770" width="330" height="100" rx="18" fill="#EEE7F8" stroke="#7E57C2" stroke-width="3"/>
+<text x="1395.0" y="796.0" font-size="22" font-weight="bold" fill="#1F2933" text-anchor="middle">Evidence Reviewer (sub-agent)</text>
+<text x="1395.0" y="832.0" font-size="18" font-weight="normal" fill="#3A4452" text-anchor="middle">is the defect description</text>
+<text x="1395.0" y="858.0" font-size="18" font-weight="normal" fill="#3A4452" text-anchor="middle">what the customer actually said?</text>
+<rect x="820" y="895" width="500" height="90" rx="18" fill="#EEE7F8" stroke="#7E57C2" stroke-width="3"/>
+<text x="1070.0" y="916.0" font-size="22" font-weight="bold" fill="#1F2933" text-anchor="middle">Knowledge Base</text>
+<text x="1070.0" y="952.0" font-size="18" font-weight="normal" fill="#3A4452" text-anchor="middle">27 laws + 40 platform rules = 2,590 articles</text>
+<text x="1070.0" y="978.0" font-size="18" font-weight="normal" fill="#3A4452" text-anchor="middle">BM25 + embeddings, RRF fusion</text>
+<path d="M 855.0 650 L 855.0 770" fill="none" stroke="#7E57C2" stroke-width="4" marker-end="url(#head-purple)"/>
+<text x="867.0" y="710" font-size="20" font-weight="bold" fill="#7E57C2" text-anchor="start" stroke="#FFFFFF" stroke-width="9.0" paint-order="stroke" stroke-linejoin="round">consult_legal</text>
+<path d="M 1269.0 650 L 1269.0 770" fill="none" stroke="#7E57C2" stroke-width="4" marker-end="url(#head-purple)"/>
+<path d="M 985 870 L 985 895" fill="none" stroke="#7E57C2" stroke-width="4" marker-end="url(#head-purple)"/>
+<path d="M 1640 720 L 1640 1015 L 1430 1015 L 1430 1090" fill="none" stroke="#C8352E" stroke-width="4" stroke-dasharray="12 9" marker-end="url(#head-red)"/>
+<text x="1655" y="960" font-size="20" font-weight="bold" fill="#C8352E" text-anchor="start" stroke="#FFFFFF" stroke-width="9.0" paint-order="stroke" stroke-linejoin="round">blocked call → audit log, counts as agent failure</text>
+<rect x="60" y="1030" width="2280" height="300" rx="18" fill="#EEF1F5" stroke="#5B6678" stroke-width="3"/>
+<text x="104" y="1072" font-size="34" font-weight="bold" fill="#5B6678" text-anchor="start">Evaluation &amp; Feedback</text>
+<rect x="120" y="1095" width="460" height="170" rx="18" fill="#FFFFFF" stroke="#5B6678" stroke-width="3"/>
+<text x="350.0" y="1142.0" font-size="26" font-weight="bold" fill="#1F2933" text-anchor="middle">Scenario Generation</text>
+<text x="350.0" y="1180.0" font-size="20" font-weight="normal" fill="#3A4452" text-anchor="middle">30 kinds × 8 = 237 scenarios</text>
+<text x="350.0" y="1208.0" font-size="20" font-weight="normal" fill="#3A4452" text-anchor="middle">ground truth = policy engine's verdict</text>
+<text x="350.0" y="1236.0" font-size="20" font-weight="normal" fill="#3A4452" text-anchor="middle">at the moment the customer asks</text>
+<rect x="660" y="1095" width="520" height="170" rx="18" fill="#FFFFFF" stroke="#5B6678" stroke-width="3"/>
+<text x="920.0" y="1142.0" font-size="26" font-weight="bold" fill="#1F2933" text-anchor="middle">Evaluation</text>
+<text x="920.0" y="1180.0" font-size="20" font-weight="normal" fill="#3A4452" text-anchor="middle">16 hard checks + process checks</text>
+<text x="920.0" y="1208.0" font-size="20" font-weight="normal" fill="#3A4452" text-anchor="middle">calibrated by the reference solution (ceiling)</text>
+<text x="920.0" y="1236.0" font-size="20" font-weight="normal" fill="#3A4452" text-anchor="middle">and 4 cheating baselines (floor)</text>
+<rect x="1260" y="1095" width="400" height="170" rx="18" fill="#FFFFFF" stroke="#5B6678" stroke-width="3"/>
+<text x="1460.0" y="1156.0" font-size="26" font-weight="bold" fill="#1F2933" text-anchor="middle">Reports</text>
+<text x="1460.0" y="1194.0" font-size="20" font-weight="normal" fill="#3A4452" text-anchor="middle">pass rate · pass^k · money lost · leaks</text>
+<text x="1460.0" y="1222.0" font-size="20" font-weight="normal" fill="#3A4452" text-anchor="middle">blocked calls · regress (CI)</text>
+<rect x="1740" y="1095" width="560" height="170" rx="18" fill="#FFFFFF" stroke="#5B6678" stroke-width="3"/>
+<text x="2020.0" y="1156.0" font-size="26" font-weight="bold" fill="#1F2933" text-anchor="middle">Data Feedback</text>
+<text x="2020.0" y="1194.0" font-size="20" font-weight="normal" fill="#3A4452" text-anchor="middle">harvest: dialogues → new scenarios / regression set</text>
+<text x="2020.0" y="1222.0" font-size="20" font-weight="normal" fill="#3A4452" text-anchor="middle">export-sft: passing dialogues → SFT samples</text>
+<path d="M 580 1180 L 660 1180" fill="none" stroke="#5B6678" stroke-width="4" marker-end="url(#head-grey)"/>
+<text x="620.0" y="1166.0" font-size="20" font-weight="bold" fill="#5B6678" text-anchor="middle" stroke="#FFFFFF" stroke-width="9.0" paint-order="stroke" stroke-linejoin="round">ground truth</text>
+<path d="M 1180 1180 L 1260 1180" fill="none" stroke="#5B6678" stroke-width="4" marker-end="url(#head-grey)"/>
+<path d="M 1660 1180 L 1740 1180" fill="none" stroke="#5B6678" stroke-width="4" marker-end="url(#head-grey)"/>
+<text x="1700.0" y="1166.0" font-size="20" font-weight="bold" fill="#5B6678" text-anchor="middle" stroke="#FFFFFF" stroke-width="9.0" paint-order="stroke" stroke-linejoin="round">records</text>
+<path d="M 220 1095 L 220 650" fill="none" stroke="#5B6678" stroke-width="4" marker-end="url(#head-grey)"/>
+<text x="232" y="880" font-size="20" font-weight="bold" fill="#5B6678" text-anchor="start" stroke="#FFFFFF" stroke-width="9.0" paint-order="stroke" stroke-linejoin="round">scripts + confirm rules</text>
+<path d="M 570 665 L 570 1015 L 920 1015 L 920 1095" fill="none" stroke="#5B6678" stroke-width="4" marker-end="url(#head-grey)"/>
+<text x="585" y="850" font-size="20" font-weight="bold" fill="#5B6678" text-anchor="start" stroke="#FFFFFF" stroke-width="9.0" paint-order="stroke" stroke-linejoin="round">dialogues</text>
+<path d="M 1900 1265 L 1900 1288 L 350 1288 L 350 1265" fill="none" stroke="#2F6FBA" stroke-width="4" stroke-dasharray="12 9" marker-end="url(#head-blue)"/>
+<text x="1120" y="1295" font-size="20" font-weight="bold" fill="#2F6FBA" text-anchor="middle" stroke="#FFFFFF" stroke-width="9.0" paint-order="stroke" stroke-linejoin="round">harvest → new scenarios</text>
+<path d="M 2100 1265 L 2100 1313 L 78 1313 L 78 225 L 140 225" fill="none" stroke="#2F6FBA" stroke-width="4" stroke-dasharray="12 9" marker-end="url(#head-blue)"/>
+<text x="700" y="1320" font-size="20" font-weight="bold" fill="#2F6FBA" text-anchor="middle" stroke="#FFFFFF" stroke-width="9.0" paint-order="stroke" stroke-linejoin="round">export-sft → SFT samples for the 2B</text>
+</svg>
