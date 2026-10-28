@@ -62,7 +62,7 @@ uv run ecom-agent aftersales ... --bridge runs/suite/bridge --out runs/suite/aft
 
 | 选项 | 作用 |
 |---|---|
-| `--trials 3` | 每个场景跑 3 次，报告里算 pass^3 |
+| `--trials 3` | 每个场景跑 3 次（每次从同一份库副本开始），报告里给 pass^3（3 次全过的场景比例）、pass@3（至少过 1 次）和每次试验各过了多少 |
 | `--only 对抗,记忆`、`--only rejected,escalate_amount` 或 `--only SO260919004030-stalled` | 只跑这些类别、情形或场景编号，可以混着写；接口出错的几段重跑时给编号，另起一个 `--out`，再把记录并进原文件 |
 | `--retries 8 --backoff 2` | 接口超时、429、5xx 时重试几次、第一次等几秒（之后翻倍，最多 60 秒）；默认 2 次、1 秒。限流严的免费模型要串行并调到 8 和 2 |
 | `--customer scripted \| noisy \| llm` | 脚本顾客；带错别字、不打标点、带表情的脚本顾客（种子固定）；大模型扮演的顾客（再给 `--customer-openai`、`--customer-base-url`、`--customer-api-key-env`，或 `--customer-bridge`） |
@@ -77,7 +77,7 @@ uv run ecom-agent aftersales ... --bridge runs/suite/bridge --out runs/suite/aft
 ### 汇总、重新打分、回归
 
 ```bash
-uv run ecom-agent report runs/suite/aftersales-dsflash.jsonl                 # 通过率、pass^k、按类别和情形、资损、泄露、转人工、被拦下的调用、用量、耗时
+uv run ecom-agent report runs/suite/aftersales-dsflash.jsonl                 # 通过率、pass^k、pass@k、每次试验、按类别和情形、资损、泄露、转人工、被拦下的调用、用量、耗时
 uv run ecom-agent regrade runs/suite/aftersales-old.jsonl --out runs/suite/aftersales-old.regraded.jsonl   # 评分规则改了，不重跑模型
 #   --scenarios 新的场景文件：同编号场景的标准答案换成新的再打分
 uv run ecom-agent regress runs/suite/aftersales-v1.jsonl runs/suite/aftersales-v2.jsonl                    # 逐场景对比

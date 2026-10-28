@@ -151,10 +151,12 @@ def _graded(scenario_id, passed, trial=1, kind="return"):
 
 
 def test_summary_reports_pass_power_k_and_old_records_still_load():
-    records = [_graded("s1", True), _graded("s1", False, trial=2), _graded("s2", True), _graded("s2", True, trial=2)]
+    records = [_graded("s1", True), _graded("s1", False, trial=2), _graded("s2", True), _graded("s2", True, trial=2),
+               _graded("s3", False), _graded("s3", False, trial=2)]
     summary = summarize_records(records)
-    assert (summary["pass_rate"], summary["pass^2"], summary["trials"]) == (0.75, 0.5, 2)
-    assert summary["hard_failures"] == {"售后单和标准答案一致": 1} and summary["blocked_calls"] == {"越权": 4}
+    assert (summary["pass_rate"], summary["pass^2"], summary["pass@2"], summary["trials"]) == (0.5, 0.333, 0.667, 2)
+    assert summary["by_trial"] == {"t1": "2/3", "t2": "1/3"}
+    assert summary["hard_failures"] == {"售后单和标准答案一致": 3} and summary["blocked_calls"] == {"越权": 6}
     old = {"scenario": {"scenario_id": "s3", "kind": "return", "expected": {"tickets": []}}, "executed": [],
            "grade": {"passed": True, "checks": {"售后单和标准答案一致": True}}}  # 加这些字段之前的记录
     assert summarize_records([old])["pass_rate"] == 1.0

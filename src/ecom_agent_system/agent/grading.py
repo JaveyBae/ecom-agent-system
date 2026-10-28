@@ -333,10 +333,13 @@ def grade(scenario, record, shop=None):
 
 
 def summarize_records(records):
-    """把一批对话的评分汇总成报告：通过率、pass^k、资损、泄露、被拦下的调用、转人工、用量。"""
-    by_scenario = {}
+    """把一批对话的评分汇总成报告：通过率、pass^k（k 次试验全过）、pass@k（至少过 1 次）、每次试验的通过数、资损、泄露、被拦下的调用、转人工、用量。"""
+    by_scenario, by_trial = {}, {}
     for record in records:
         by_scenario.setdefault(record["scenario"]["scenario_id"], []).append(record)
+        counts = by_trial.setdefault(record.get("trial", 1), [0, 0])
+        counts[0] += record["grade"]["passed"]
+        counts[1] += 1
     kinds, categories = {}, {}
     for record in records:
         for table, key in ((kinds, record["scenario"]["kind"]), (categories, record["scenario"].get("category", "基本售后"))):
@@ -384,6 +387,8 @@ def summarize_records(records):
         "trials": trials,
         "pass_rate": round(sum(r["grade"]["passed"] for r in records) / len(records), 3) if records else None,
         f"pass^{trials}": round(sum(all(r["grade"]["passed"] for r in g) for g in by_scenario.values()) / len(by_scenario), 3) if by_scenario else None,
+        f"pass@{trials}": round(sum(any(r["grade"]["passed"] for r in g) for g in by_scenario.values()) / len(by_scenario), 3) if by_scenario else None,
+        "by_trial": {f"t{trial}": f"{passed}/{total}" for trial, (passed, total) in sorted(by_trial.items())},
         "by_category": {key: f"{passed}/{total}" for key, (passed, total) in categories.items()},
         "by_kind": {kind: f"{passed}/{total}" for kind, (passed, total) in sorted(kinds.items())},
         "errors": sum(r.get("ended") == "error" for r in records),
