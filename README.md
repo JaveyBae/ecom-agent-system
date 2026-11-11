@@ -12,6 +12,8 @@
 [![pass^3](https://img.shields.io/badge/DeepSeek%20pass%5E3-0.929-success)](#-结果速览)
 [![Docs](https://img.shields.io/badge/docs-devlog%20%C2%B7%20usage-8A2BE2)](docs/)
 
+**简体中文** | [English](README.en.md)
+
 [结果速览](#-结果速览) · [它是怎么工作的](#-它是怎么工作的) · [设计要点](#-设计要点) · [快速开始](#-快速开始) · [路线图](#-路线图) · [详细过程](docs/devlog.md) · [命令参考](docs/usage.md)
 
 </div>
@@ -306,6 +308,7 @@ docs/                   详细过程（devlog）、命令参考（usage）、架
 | [knowledge/README.md](knowledge/README.md) | 法规来源、平台规则、检索方式和检索评测 |
 | [shop/README.md](shop/README.md) | 时间模型、物流模拟、政策引擎、售后流程、接购物 agent |
 | [docs/make_architecture.py](docs/make_architecture.py) | 架构图的生成脚本（中英文，SVG → PNG） |
+| [README.en.md](README.en.md) | 这份概览的英文版 |
 
 ## 📄 数据来源与许可
 
